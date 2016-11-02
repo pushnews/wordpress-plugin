@@ -1,0 +1,141 @@
+# Copyright (C) 2016 Pushnews
+# This file is distributed under the same license as the Pushnews package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Pushnews 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pushnews\n"
+"POT-Creation-Date: 2016-11-02 16:42:30+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: class.pushnews.php:121
+msgid "Get our latest news!"
+msgstr ""
+
+#: class.pushnews.php:122
+msgid "Subscribe to our latest news via push notifications."
+msgstr ""
+
+#: class.pushnews.php:123
+msgid "Subscribe!"
+msgstr ""
+
+#: class.pushnews.php:124
+msgid "Not interested"
+msgstr ""
+
+#: class.pushnews.php:125
+msgid "wants to send notifications:"
+msgstr ""
+
+#: class.pushnews.php:126
+msgid "Sample notification"
+msgstr ""
+
+#: class.pushnews.php:127
+msgid "Will appear on your phone/desktop"
+msgstr ""
+
+#: class.pushnews.php:128
+msgid "(You can disable them at any time)"
+msgstr ""
+
+#. #-#-#-#-#  pushnews.pot (Pushnews 1.0.0)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: class.pushnews.php:146 views/config.php:8 views/send.php:8
+msgid "Pushnews"
+msgstr ""
+
+#: class.pushnews.php:154 class.pushnews.php:155
+msgid "Send Push Notification"
+msgstr ""
+
+#: class.pushnews.php:178
+msgid "Active"
+msgstr ""
+
+#: class.pushnews.php:179
+msgid "Website name"
+msgstr ""
+
+#: class.pushnews.php:180
+msgid "Square logo (url)"
+msgstr ""
+
+#: class.pushnews.php:181
+msgid "App ID"
+msgstr ""
+
+#: class.pushnews.php:182
+msgid "Pushnews subdomain"
+msgstr ""
+
+#: class.pushnews.php:186
+msgid "Title"
+msgstr ""
+
+#: class.pushnews.php:187
+msgid "Body"
+msgstr ""
+
+#: class.pushnews.php:188
+msgid "Button Yes"
+msgstr ""
+
+#: class.pushnews.php:189
+msgid "Button No"
+msgstr ""
+
+#: class.pushnews.php:192
+msgid "Message"
+msgstr ""
+
+#: class.pushnews.php:193
+msgid "Sample notification title"
+msgstr ""
+
+#: class.pushnews.php:194
+msgid "Sample notification body"
+msgstr ""
+
+#: class.pushnews.php:195
+msgid "Caption"
+msgstr ""
+
+#: class.pushnews.php:202
+msgid "Basic"
+msgstr ""
+
+#: class.pushnews.php:204
+msgid "Subscription Request"
+msgstr ""
+
+#: class.pushnews.php:206
+msgid "Confirmation Popup"
+msgstr ""
+
+#: views/config.php:13
+msgid "Save"
+msgstr ""
+
+#. #-#-#-#-#  pushnews.pot (Pushnews 1.0.0)  #-#-#-#-#
+#. Plugin URI of the plugin/theme
+#. #-#-#-#-#  pushnews.pot (Pushnews 1.0.0)  #-#-#-#-#
+#. Author URI of the plugin/theme
+msgid "https://www.pushnews.eu/"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Send Web Push Notifications to your visitors. Increase your website traffic "
+"- Simple and fast UI - Automate push notifications via Facebook Page "
+"integration."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Tiago Carvalho <tiago.carvalho@impacting.digital>"
+msgstr ""
