@@ -1,7 +1,7 @@
 === Pushnews ===
-Contributors: Tiago Carvalho <tiago.carvalho@impacting.digital>
+Contributors: impactingdigital
 Donate link: https://www.pushnews.eu/
-Tags: chrome, firefox, safari, push, push notifications, push notification, chrome push, safari push, firefox push, notification, notifications, web push, notify, mavericks, android, android push, android notifications, android notification, mobile notification, mobile notifications, mobile, desktop notification, roost, goroost, desktop notifications, gcm, push messages, onesignal, pushcrew, pushnews, push news, pushnews.eu
+Tags: push, push notifications, web push, desktop notification, notifications, pushnews, onesignal, goroost, roost, pushcrew, pushengage, pushwoosh
 Requires at least: 3.8
 Tested up to: 4.6
 Stable tag: 4.6
@@ -12,10 +12,7 @@ Increase your website traffic with Pushnews Web Push Notifications.
 
 == Description ==
 
-Pushnews is a web push notifications provider. With push notifications you can increase your
-website traffic by bringing your users back. Pushnews has a simple and intuitive interface -
-no development experience is required! You can even setup a Facebook Page integration in
-order to fully automate you push notification messages.
+Pushnews is a web push notifications provider. With push notifications you can increase your website traffic by bringing your users back. Pushnews has a simple and intuitive interface - no development experience is required! You can even setup a Facebook Page integration in order to fully automate you push notification messages.
 
 Features:
 
@@ -55,7 +52,6 @@ First plugin release
 2. Easy to setup
 3. Customizable opt-in experience
 4. No HTTPS website is required
-5. Sending push notifications
 
 == Changelog ==
 

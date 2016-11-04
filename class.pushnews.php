@@ -26,7 +26,6 @@ class Pushnews {
 	const RESOURCES_VERSION = '1';
 //	const API_URL = 'http://local.admin.pushnews.eu/api.php/v1';
 	const API_URL = 'https://admin.pushnews.eu/api.php/v1';
-	const API_TOKEN = 'XYr9AKSZrroQgeIearfhPk8AH3pezbFl';
 	const CDN_DOMAIN = 'cdn.pushnews.eu';
 
 	const TAG = <<<MYHTML
@@ -88,7 +87,7 @@ MYHTML;
 		$siteUrl64Encoded = PushnewsBase64Url::encode( $siteUrl );
 
 		$endpoint     = self::API_URL . "/sites/{$siteUrl64Encoded}?filterBy=base64_url";
-		$response     = wp_remote_get( $endpoint, array( 'headers' => array( 'X-Pushnews-Token' => self::API_TOKEN ) ) );
+		$response     = wp_remote_get( $endpoint, array( 'headers' => array( 'X-Pushnews-Wp-Version' => self::VERSION ) ) );
 		$pushnewsSite = wp_remote_retrieve_body( $response );
 		$pushnewsSite = json_decode( $pushnewsSite, true );
 		if ( JSON_ERROR_NONE == json_last_error() ) {
