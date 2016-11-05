@@ -1,6 +1,10 @@
 CHANGELOG
 ===
 
+# 1.0.0
+
+- Plugin approved by WordPress.org
+
 # 1.0.0-rc2
 
 Addressed WordPress.org Plugin reviewers' issues:
