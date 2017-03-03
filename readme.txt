@@ -4,7 +4,7 @@ Donate link: https://www.pushnews.eu/
 Tags: push, push notifications, web push, desktop notification, notifications, pushnews, onesignal, goroost, roost, pushcrew, pushengage, pushwoosh
 Requires at least: 3.8
 Tested up to: 4.7.2
-Stable tag: 4.7
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
