@@ -22,10 +22,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 class Pushnews {
-	const VERSION = '1.0.0';
+	const VERSION = '1.1.0';
 	const RESOURCES_VERSION = '1';
-//	const API_URL = 'http://local.admin.pushnews.eu/api.php/v1';
-	const API_URL = 'https://admin.pushnews.eu/api.php/v1';
+	const API_URL = 'https://app.pushnews.eu/api.php/v1';
 	const CDN_DOMAIN = 'cdn.pushnews.eu';
 
 	const TAG = <<<MYHTML
@@ -229,10 +228,10 @@ MYHTML;
 					$callback_function,
 					'pushnews',
 					$section_name,
-					[
+					array(
 						'label_for' => $k,
 						'class'     => 'pushnews_row',
-					]
+                    )
 				);
 
 			}

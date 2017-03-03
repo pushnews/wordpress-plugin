@@ -3,8 +3,8 @@ Contributors: impactingdigital
 Donate link: https://www.pushnews.eu/
 Tags: push, push notifications, web push, desktop notification, notifications, pushnews, onesignal, goroost, roost, pushcrew, pushengage, pushwoosh
 Requires at least: 3.8
-Tested up to: 4.6
-Stable tag: 4.6
+Tested up to: 4.7.2
+Stable tag: 4.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -54,6 +54,10 @@ First plugin release
 4. No HTTPS website is required
 
 == Changelog ==
+
+= 1.1.0 =
+* Removed short array syntax to allow compatibility with PHP 5.3
+* Updated API domain
 
 = 1.0.0 =
 * First plugin release

@@ -1,6 +1,11 @@
 CHANGELOG
 ===
 
+# 1.1.0
+
+- Removed short array syntax to allow compatibility with PHP 5.3
+- Updated API domain
+
 # 1.0.0
 
 - Plugin approved by WordPress.org

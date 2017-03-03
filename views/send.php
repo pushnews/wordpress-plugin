@@ -10,6 +10,6 @@ License:            GPLv2 or later
 		<?php echo __( 'You can send notifications to your subscribers on the Pushnews web app. ', 'pushnews' ); ?>
 	</p>
 	<p>
-		<a href="https://admin.pushnews.eu/?utm_source=WpPlugin" target="_blank" class="button"><?php echo __( 'Click here to open Pushnews in a new window', 'pushnews' ); ?></a>
+		<a href="https://app.pushnews.eu/?utm_source=WpPlugin" target="_blank" class="button"><?php echo __( 'Click here to open Pushnews in a new window', 'pushnews' ); ?></a>
 	</p>
 </div>
