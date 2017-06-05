@@ -1,5 +1,9 @@
 CHANGELOG
-===
+=========
+
+# 1.2.0
+
+- Making sure all tag configuration elements are trimmed before printed
 
 # 1.1.0
 

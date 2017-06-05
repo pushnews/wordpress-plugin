@@ -3,8 +3,8 @@ Contributors: impactingdigital
 Donate link: https://www.pushnews.eu/
 Tags: push, push notifications, web push, desktop notification, notifications, pushnews, onesignal, goroost, roost, pushcrew, pushengage, pushwoosh
 Requires at least: 3.8
-Tested up to: 4.7.2
-Stable tag: 1.1.0
+Tested up to: 4.8
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,7 +35,7 @@ Features:
 
 = Where do I create a Pushnews account? =
 
-You can create a Pushnews account at [https://admin.pushnews.eu/register](https://admin.pushnews.eu/register)
+You can create a Pushnews account at [https://admin.pushnews.eu/register](https://admin.pushnews.eu/register?utm_source=WpPluginSite)
 
 = How do I send a push notification? =
 
@@ -54,6 +54,9 @@ First plugin release
 4. No HTTPS website is required
 
 == Changelog ==
+
+= 1.2.0 =
+* Making sure all tag configuration elements are trimmed before printed
 
 = 1.1.0 =
 * Removed short array syntax to allow compatibility with PHP 5.3

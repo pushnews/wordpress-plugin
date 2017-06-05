@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 class Pushnews {
-	const VERSION = '1.1.0';
+	const VERSION = '1.2.0';
 	const RESOURCES_VERSION = '1';
 	const API_URL = 'https://app.pushnews.eu/api.php/v1';
 	const CDN_DOMAIN = 'cdn.pushnews.eu';
@@ -280,22 +280,20 @@ MYHTML;
 			'{%%cloudfront_domain%%}'                          => self::CDN_DOMAIN,
 			'{%%subscription_request.activation_type%%}'       => 'auto',
 			'{%%subscription_request.activation_type.extra%%}' => '',
-
-			'{%%optin.desktopImage%%}'           => $options['website_square_logo_url'],
-			'{%%optin.mobileImage%%}'            => $options['website_square_logo_url'],
-			'{%%subscription_request.title%%}'   => $options['subscription_request.title'],
-			'{%%subscription_request.body%%}'    => $options['subscription_request.body'],
-			'{%%subscription_request.btn_no%%}'  => $options['subscription_request.btn_no'],
-			'{%%subscription_request.btn_yes%%}' => $options['subscription_request.btn_yes'],
-
-			'{%%popup.name%%}'                 => $options['website_name'],
-			'{%%popup.domain%%}'               => $options['pushnews_subdomain'],
-			'{%%popup.appId%%}'                => $options['app_id'],
-			'{%%confirmation_popup.message%%}' => $options['confirmation_popup.message'],
-			'{%%popup.notificationIcon%%}'     => $options['website_square_logo_url'],
-			'{%%confirmation_popup.title%%}'   => $options['confirmation_popup.sample_notification_title'],
-			'{%%confirmation_popup.body%%}'    => $options['confirmation_popup.sample_notification_body'],
-			'{%%confirmation_popup.caption%%}' => $options['confirmation_popup.caption'],
+			'{%%optin.desktopImage%%}'                         => trim( $options['website_square_logo_url'] ),
+			'{%%optin.mobileImage%%}'                          => trim( $options['website_square_logo_url'] ),
+			'{%%subscription_request.title%%}'                 => trim( $options['subscription_request.title'] ),
+			'{%%subscription_request.body%%}'                  => trim( $options['subscription_request.body'] ),
+			'{%%subscription_request.btn_no%%}'                => trim( $options['subscription_request.btn_no'] ),
+			'{%%subscription_request.btn_yes%%}'               => trim( $options['subscription_request.btn_yes'] ),
+			'{%%popup.name%%}'                                 => trim( $options['website_name'] ),
+			'{%%popup.domain%%}'                               => trim( $options['pushnews_subdomain'] ),
+			'{%%popup.appId%%}'                                => trim( $options['app_id'] ),
+			'{%%confirmation_popup.message%%}'                 => trim( $options['confirmation_popup.message'] ),
+			'{%%popup.notificationIcon%%}'                     => trim( $options['website_square_logo_url'] ),
+			'{%%confirmation_popup.title%%}'                   => trim( $options['confirmation_popup.sample_notification_title'] ),
+			'{%%confirmation_popup.body%%}'                    => trim( $options['confirmation_popup.sample_notification_body'] ),
+			'{%%confirmation_popup.caption%%}'                 => trim( $options['confirmation_popup.caption'] ),
 		);
 
 		echo str_replace( array_keys( $replaces ), $replaces, $html );
