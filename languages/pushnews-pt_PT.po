@@ -4,150 +4,56 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Pushnews 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pushnews\n"
-"POT-Creation-Date: 2016-11-04 10:39+0000\n"
-"PO-Revision-Date: 2016-11-04 10:39+0000\n"
-"Last-Translator: Tiago Carvalho <tiago.carvalho@impacting.digital>\n"
-"Language-Team: \n"
-"Language: pt\n"
+"POT-Creation-Date: 2018-01-04 12:39+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.11\n"
+"PO-Revision-Date: 2018-01-04 12:41+0000\n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.0.5\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-Basepath: ..\n"
+"Last-Translator: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: pt\n"
+"X-Poedit-SearchPath-0: .\n"
 
-#: class.pushnews.php:122
-msgid "Get our latest news!"
-msgstr "Receba todas as novidades!"
-
-#: class.pushnews.php:123
-msgid "Subscribe to our latest news via push notifications."
-msgstr "Receba conteúdos exclusivos só para você!"
-
-#: class.pushnews.php:124
-msgid "Subscribe!"
-msgstr "Eba, quero!"
-
-#: class.pushnews.php:125
-msgid "Not interested"
-msgstr "Não, obrigado"
-
-#: class.pushnews.php:126
-msgid "wants to send notifications:"
-msgstr "quer te enviar notificações:"
-
-#: class.pushnews.php:127
-msgid "Sample notification"
-msgstr "Exemplo"
-
-#: class.pushnews.php:128
-msgid "Will appear on your phone/desktop"
-msgstr "Esta é uma notificação exemplo"
-
-#: class.pushnews.php:129
-msgid "(You can disable them at any time)"
-msgstr "(pode cancelar quando quiser)"
-
-#. Plugin Name of the plugin/theme
-#: class.pushnews.php:147 views/config.php:8 views/send.php:8
+#: class.pushnews.php:93
 msgid "Pushnews"
 msgstr "Pushnews"
 
-#: class.pushnews.php:155 class.pushnews.php:156
+#: class.pushnews.php:101 class.pushnews.php:102
 msgid "Send Push Notification"
 msgstr "Enviar Push"
 
-#: class.pushnews.php:179
+#: class.pushnews.php:125
 msgid "Active"
 msgstr "Ativo"
 
-#: class.pushnews.php:180
-msgid "Website name"
-msgstr "Nome do Website"
-
-#: class.pushnews.php:181
-msgid "Square logo (url)"
-msgstr "Logo quadrado do website (url)"
-
-#: class.pushnews.php:182
+#: class.pushnews.php:126
 msgid "App ID"
 msgstr "App ID"
 
-#: class.pushnews.php:183
-msgid "Pushnews subdomain"
-msgstr "Subdomínio Pushnews"
+#: class.pushnews.php:134
+msgid "Configuration"
+msgstr "Configuração"
 
-#: class.pushnews.php:187
-msgid "Title"
-msgstr "Título"
+#: class.pushnews.php:163
+msgid "To find your app id click"
+msgstr "Para encontrar o seu App ID clique"
 
-#: class.pushnews.php:188
-msgid "Body"
-msgstr "Conteúdo"
-
-#: class.pushnews.php:189
-msgid "Button Yes"
-msgstr "Botão Sim"
-
-#: class.pushnews.php:190
-msgid "Button No"
-msgstr "Botão Não"
-
-#: class.pushnews.php:193
-msgid "Message"
-msgstr "Mensagem"
-
-#: class.pushnews.php:194
-msgid "Sample notification title"
-msgstr "Título da notificação exemplo"
-
-#: class.pushnews.php:195
-msgid "Sample notification body"
-msgstr "Corpo da notificação exemplo"
-
-#: class.pushnews.php:196
-msgid "Caption"
-msgstr "Legenda"
-
-#: class.pushnews.php:203
-msgid "Basic"
-msgstr "Geral"
-
-#: class.pushnews.php:205
-msgid "Subscription Request"
-msgstr "Widget de Convite"
-
-#: class.pushnews.php:207
-msgid "Confirmation Popup"
-msgstr "Popup de confirmação"
+#: class.pushnews.php:164
+msgid "here"
+msgstr "aqui"
 
 #: views/config.php:13
 msgid "Save"
 msgstr "Guardar"
 
 #: views/send.php:10
-msgid ""
-"You can send notifications to your subscribers on the Pushnews web app. "
-msgstr "Pode enviar notificações push para seus inscritos no website Pushnews."
+msgid "You can send notifications to your subscribers on the Pushnews web app. "
+msgstr "Pode enviar notificações push para seus inscritos no website Pushnews. "
 
 #: views/send.php:13
 msgid "Click here to open Pushnews in a new window"
-msgstr "Clique aqui para abrir o Pushnews numa nova janela"
-
-#. Plugin URI of the plugin/theme
-#. Author URI of the plugin/theme
-msgid "https://www.pushnews.eu/"
-msgstr "https://www.pushnews.eu/"
-
-#. Description of the plugin/theme
-msgid ""
-"Send Web Push Notifications to your visitors. Increase your website traffic "
-"- Simple and fast UI - Automate push notifications via Facebook Page "
-"integration."
-msgstr ""
-"Envie Push Notifications aos seus visitantes. Aumente seu tráfego - "
-"Interface simples e rápida - Automatize o envio de push notifications "
-"integrando sua Página de Facebook."
-
-#. Author of the plugin/theme
-msgid "Tiago Carvalho <tiago.carvalho@impacting.digital>"
-msgstr "Tiago Carvalho <tiago.carvalho@impacting.digital>"
+msgstr "Clique aqui para acessar Pushnews numa nova janela"
