@@ -1,6 +1,6 @@
 <?php
 /*
-Author:             Tiago Carvalho <tiago.carvalho@impacting.digital>
+Author:             Pushnews <developers@pushnews.eu>
 License:            GPLv2 or later
 */
 ?>
