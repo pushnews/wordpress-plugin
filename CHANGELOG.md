@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+# 1.3.0
+
+- Simplified tag installation so it only requires the App ID
+
 # 1.2.0
 
 - Making sure all tag configuration elements are trimmed before printed

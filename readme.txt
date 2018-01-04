@@ -1,10 +1,11 @@
 === Pushnews ===
-Contributors: impactingdigital
+Contributors: impactingdigital, tixastronauta, mariobalca
 Donate link: https://www.pushnews.eu/
 Tags: push, push notifications, web push, desktop notification, notifications, pushnews, onesignal, goroost, roost, pushcrew, pushengage, pushwoosh
 Requires at least: 3.8
-Tested up to: 4.8
-Stable tag: 1.2.0
+Tested up to: 4.9.1
+Requires PHP: 5.3
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -24,6 +25,10 @@ Features:
 - Facebook-to-push - Automatically send you facebook posts as push notifications
 - OnSitePush - Push notifications directly on your website without the need for user opt-in
 - Statistics
+- Regional segmentation for Brazil
+- Advanced segmentation
+- Device Target
+- Custom Templates
 
 == Installation ==
 
@@ -35,7 +40,7 @@ Features:
 
 = Where do I create a Pushnews account? =
 
-You can create a Pushnews account at [https://admin.pushnews.eu/register](https://admin.pushnews.eu/register?utm_source=WpPluginSite)
+You can create a Pushnews account at [https://app.pushnews.eu/register](https://app.pushnews.eu/register?utm_source=WpPluginSite)
 
 = How do I send a push notification? =
 
@@ -54,6 +59,8 @@ First plugin release
 4. No HTTPS website is required
 
 == Changelog ==
+= 1.3.0 =
+* Simplified tag installation so it only requires the App ID
 
 = 1.2.0 =
 * Making sure all tag configuration elements are trimmed before printed
