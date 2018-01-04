@@ -1,16 +1,16 @@
 <?php
 
-/*
-Plugin Name:        Pushnews
-Author:             Tiago Carvalho <tiago.carvalho@impacting.digital>
-Plugin URI:         https://www.pushnews.eu/
-Description:        Send Web Push Notifications to your visitors. Increase your website traffic - Simple and fast UI - Automate push notifications via Facebook Page integration.
-Version:            1.2.0
-Author URI:         https://www.pushnews.eu/
-License:            GPLv2 or later
-Text Domain:        pushnews
-Domain Path:        /languages
-*/
+/**
+* Plugin Name:        Pushnews
+* Author:             Tiago Carvalho <tiago.carvalho@impacting.digital>
+* Plugin URI:         https://www.pushnews.eu/
+* Description:        Send Web Push Notifications to your visitors. Increase your website traffic - Simple and fast UI - Automate push notifications via Facebook Page integration.
+* Version:            1.2.0
+* Author URI:         https://www.pushnews.eu/
+* License:            GPLv2 or later
+* Text Domain:        pushnews
+* Domain Path:        /languages
+**/
 
 /*
 This program is free software; you can redistribute it and/or

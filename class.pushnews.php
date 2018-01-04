@@ -25,42 +25,11 @@ class Pushnews {
 	const VERSION = '1.2.0';
 	const RESOURCES_VERSION = '1';
 	const API_URL = 'https://app.pushnews.eu/api.php/v1';
-	const CDN_DOMAIN = 'cdn.pushnews.eu';
+	const CDN_DOMAIN = 'cdn.pn.vg';
 
 	const TAG = <<<MYHTML
 <!-- Pushnews -->
-<script src="//{%%cloudfront_domain%%}/push/ilabspush.min.js" async></script>
-<script type="text/javascript">
-    var _ilabsPushConfig = {
-        optin: {
-            activation: {
-                type: "{%%subscription_request.activation_type%%}"{%%subscription_request.activation_type.extra%%}
-            },
-            "%desktopImage%": "{%%optin.desktopImage%%}",
-            "%desktopTxtTitle%": "{%%subscription_request.title%%}",
-            "%desktopTxtBody%": "{%%subscription_request.body%%}",
-            "%desktopTxtButtonNo%": "{%%subscription_request.btn_no%%}",
-            "%desktopTxtButtonYes%": "{%%subscription_request.btn_yes%%}",
-            "%mobileImage%": "{%%optin.mobileImage%%}",
-            "%mobileTxtTitle%": "{%%subscription_request.title%%}",
-            "%mobileTxtBody%": "{%%subscription_request.body%%}",
-            "%mobileTxtButtonNo%": "{%%subscription_request.btn_no%%}",
-            "%mobileTxtButtonYes%": "{%%subscription_request.btn_yes%%}"
-        },
-        popup: {
-            name: "{%%popup.name%%}",
-            domain: "{%%popup.domain%%}",
-            appId: "{%%popup.appId%%}",
-            actionMessage: "{%%confirmation_popup.message%%}",
-            notificationIcon: "{%%popup.notificationIcon%%}",
-            notificationTitle: "{%%confirmation_popup.title%%}",
-            notificationMessage: "{%%confirmation_popup.body%%}",
-            caption: "{%%confirmation_popup.caption%%}"
-        }
-    };
-    var IlabsPush = IlabsPush || [];
-    IlabsPush.push(["_initHttps", _ilabsPushConfig]);
-</script>
+<script src="//{%%cloudflare_domain%%}/sites/{%%app_id%%}.js" async></script>
 <!-- / Pushnews -->
 MYHTML;
 
@@ -98,34 +67,12 @@ MYHTML;
 
 				$options = array(
 					'active'                                       => 'true',
-					'website_name'                                 => $pushnewsSite['name'],
-					'website_square_logo_url'                      => 'https://ilabs-static.s3.amazonaws.com/push/icon128_pushnews.jpg',
 					'app_id'                                       => $pushnewsSite['app_id'],
-					'pushnews_subdomain'                           => $url,
-					'subscription_request.title'                   => $pushnewsSite['configuration']['subscription_request']['title'],
-					'subscription_request.body'                    => $pushnewsSite['configuration']['subscription_request']['body'],
-					'subscription_request.btn_yes'                 => $pushnewsSite['configuration']['subscription_request']['btn_yes'],
-					'subscription_request.btn_no'                  => $pushnewsSite['configuration']['subscription_request']['btn_no'],
-					'confirmation_popup.message'                   => $pushnewsSite['configuration']['confirmation_popup']['message'],
-					'confirmation_popup.sample_notification_title' => $pushnewsSite['configuration']['confirmation_popup']['title'],
-					'confirmation_popup.sample_notification_body'  => $pushnewsSite['configuration']['confirmation_popup']['body'],
-					'confirmation_popup.caption'                   => $pushnewsSite['configuration']['confirmation_popup']['caption'],
 				);
 			} else {
 				$options = array(
 					'active'                                       => 'false',
-					'website_name'                                 => get_option( 'blogname' ),
-					'website_square_logo_url'                      => 'https://ilabs-static.s3.amazonaws.com/push/icon128_pushnews.jpg',
 					'app_id'                                       => '0000-0000-0000-0000',
-					'pushnews_subdomain'                           => 'example.pushnews.eu',
-					'subscription_request.title'                   => __( "Get our latest news!", "pushnews" ),
-					'subscription_request.body'                    => __( "Subscribe to our latest news via push notifications.", "pushnews" ),
-					'subscription_request.btn_yes'                 => __( "Subscribe!", "pushnews" ),
-					'subscription_request.btn_no'                  => __( "Not interested", "pushnews" ),
-					'confirmation_popup.message'                   => __( "wants to send notifications:", "pushnews" ),
-					'confirmation_popup.sample_notification_title' => __( "Sample notification", "pushnews" ),
-					'confirmation_popup.sample_notification_body'  => __( "Will appear on your phone/desktop", "pushnews" ),
-					'confirmation_popup.caption'                   => __( "(You can disable them at any time)", "pushnews" ),
 				);
 			}
 
@@ -176,34 +123,15 @@ MYHTML;
 		$arr = array(
 			'basic'                             => array(
 				'active'                  => __( "Active", "pushnews" ),
-				'website_name'            => __( "Website name", "pushnews" ),
-				'website_square_logo_url' => __( "Square logo (url)", "pushnews" ),
 				'app_id'                  => __( "App ID", "pushnews" ),
-				'pushnews_subdomain'      => __( "Pushnews subdomain", "pushnews" ),
 
-			),
-			'translations_subscription_request' => array(
-				'subscription_request.title'   => __( "Title", "pushnews" ),
-				'subscription_request.body'    => __( "Body", "pushnews" ),
-				'subscription_request.btn_yes' => __( "Button Yes", "pushnews" ),
-				'subscription_request.btn_no'  => __( "Button No", "pushnews" ),
-			),
-			'translations_confirmation_popup'   => array(
-				'confirmation_popup.message'                   => __( "Message", "pushnews" ),
-				'confirmation_popup.sample_notification_title' => __( "Sample notification title", "pushnews" ),
-				'confirmation_popup.sample_notification_body'  => __( "Sample notification body", "pushnews" ),
-				'confirmation_popup.caption'                   => __( "Caption", "pushnews" ),
 			),
 		);
 
 		foreach ( $arr as $section_name => $section_items ) {
 
 			if ( 'basic' == $section_name ) {
-				$translation = __( "Basic", "pushnews" );
-			} elseif ( 'translations_subscription_request' == $section_name ) {
-				$translation = __( "Subscription Request", "pushnews" );
-			} elseif ( 'translations_confirmation_popup' == $section_name ) {
-				$translation = __( "Confirmation Popup", "pushnews" );
+				$translation = __( "Configuration", "pushnews" );
 			}
 
 			add_settings_section(
@@ -231,6 +159,10 @@ MYHTML;
 					array(
 						'label_for' => $k,
 						'class'     => 'pushnews_row',
+						'supplemental' => array(
+							__( "To find your app id click", "pushnews" ),
+							__( "here", "pushnews" )
+						)
                     )
 				);
 
@@ -248,6 +180,10 @@ MYHTML;
 			value="<?= isset( $options[ $args['label_for'] ] ) ? $options[ $args['label_for'] ] : '' ?>"
 		>
 		<?php
+
+		if( $supplimental = $args['supplemental'] ){
+	        printf( '<p class="description">%s <a href="https://www.pushnews.com.br/como-saber-qual-o-seu-app-id" target="_blank">%s</a></p>', $supplimental[0], $supplimental[1]); // Show it
+	    }
 	}
 
 	public static function checkbox_cb( $args ) {
@@ -277,23 +213,8 @@ MYHTML;
 		$html = self::TAG;
 
 		$replaces = array(
-			'{%%cloudfront_domain%%}'                          => self::CDN_DOMAIN,
-			'{%%subscription_request.activation_type%%}'       => 'auto',
-			'{%%subscription_request.activation_type.extra%%}' => '',
-			'{%%optin.desktopImage%%}'                         => trim( $options['website_square_logo_url'] ),
-			'{%%optin.mobileImage%%}'                          => trim( $options['website_square_logo_url'] ),
-			'{%%subscription_request.title%%}'                 => trim( $options['subscription_request.title'] ),
-			'{%%subscription_request.body%%}'                  => trim( $options['subscription_request.body'] ),
-			'{%%subscription_request.btn_no%%}'                => trim( $options['subscription_request.btn_no'] ),
-			'{%%subscription_request.btn_yes%%}'               => trim( $options['subscription_request.btn_yes'] ),
-			'{%%popup.name%%}'                                 => trim( $options['website_name'] ),
-			'{%%popup.domain%%}'                               => trim( $options['pushnews_subdomain'] ),
-			'{%%popup.appId%%}'                                => trim( $options['app_id'] ),
-			'{%%confirmation_popup.message%%}'                 => trim( $options['confirmation_popup.message'] ),
-			'{%%popup.notificationIcon%%}'                     => trim( $options['website_square_logo_url'] ),
-			'{%%confirmation_popup.title%%}'                   => trim( $options['confirmation_popup.sample_notification_title'] ),
-			'{%%confirmation_popup.body%%}'                    => trim( $options['confirmation_popup.sample_notification_body'] ),
-			'{%%confirmation_popup.caption%%}'                 => trim( $options['confirmation_popup.caption'] ),
+			'{%%cloudflare_domain%%}'                          	=> self::CDN_DOMAIN,
+			'{%%app_id%%}'                                		=> trim( $options['app_id'] ),
 		);
 
 		echo str_replace( array_keys( $replaces ), $replaces, $html );
