@@ -3,9 +3,9 @@ Contributors: impactingdigital, tixastronauta, mariobalca
 Donate link: https://www.pushnews.eu/
 Tags: push, push notifications, web push, desktop notification, notifications, pushnews, onesignal, goroost, roost, pushcrew, pushengage, pushwoosh
 Requires at least: 3.8
-Tested up to: 4.9.1
+Tested up to: 4.9.4
 Requires PHP: 5.3
-Stable tag: 1.3.0
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,6 +59,9 @@ First plugin release
 4. No HTTPS website is required
 
 == Changelog ==
+= 1.4.0 =
+* Added send automatic push notification feature on new post publish
+
 = 1.3.0 =
 * Simplified tag installation so it only requires the App ID
 

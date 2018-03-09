@@ -5,54 +5,54 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Pushnews 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pushnews\n"
-"POT-Creation-Date: 2018-01-04 12:39+0000\n"
+"POT-Creation-Date: 2018-03-09 19:41+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "PO-Revision-Date: 2016-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"X-Generator: Poedit 2.0.5\n"
+"X-Generator: Poedit 2.0.6\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: class.pushnews.php:93
+#: class.pushnews.php:139
 msgid "Pushnews"
 msgstr ""
 
-#: class.pushnews.php:101 class.pushnews.php:102
-msgid "Send Push Notification"
-msgstr ""
-
-#: class.pushnews.php:125
+#: class.pushnews.php:160
 msgid "Active"
 msgstr ""
 
-#: class.pushnews.php:126
+#: class.pushnews.php:161
 msgid "App ID"
 msgstr ""
 
-#: class.pushnews.php:134
+#: class.pushnews.php:162
+msgid "Auth token"
+msgstr ""
+
+#: class.pushnews.php:169
 msgid "Configuration"
 msgstr ""
 
-#: class.pushnews.php:163
+#: class.pushnews.php:199
 msgid "To find your app id click"
 msgstr ""
 
-#: class.pushnews.php:164
+#: class.pushnews.php:200 class.pushnews.php:204
 msgid "here"
+msgstr ""
+
+#: class.pushnews.php:203
+msgid "To find your auth token click"
 msgstr ""
 
 #: views/config.php:13
 msgid "Save"
 msgstr ""
 
-#: views/send.php:10
-msgid "You can send notifications to your subscribers on the Pushnews web app. "
-msgstr ""
-
-#: views/send.php:13
-msgid "Click here to open Pushnews in a new window"
+#: views/metabox.php:10
+msgid "Send notification on post publish"
 msgstr ""
