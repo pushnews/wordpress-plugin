@@ -107,8 +107,7 @@ MYHTML;
 			}
 
 			if(isset($options['auth_token'])) {
-				//wp_remote_post("https://api.pushnews.eu/v2/push/" . $options['app_id'], array(
-                wp_remote_post("http://local.app.pushnews.eu/api.php/v2/push/" . $options['app_id'], array(
+				wp_remote_post("https://api.pushnews.eu/v2/push/" . $options['app_id'], array(
 					"body" => json_encode($notification),
 					"headers" => array(
 						'X-Auth-Token' => $options['auth_token'],
