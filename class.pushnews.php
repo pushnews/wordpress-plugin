@@ -68,6 +68,7 @@ MYHTML;
 				$options = array(
 					'active'                                       => 'true',
 					'app_id'                                       => $pushnewsSite['app_id'],
+					'auth_token'                                   => $pushnewsSite['auth_token'],
 				);
 			} else {
 				$options = array(
@@ -83,6 +84,51 @@ MYHTML;
 	public static function plugin_deactivation() {
 	}
 
+	public static function custom_meta_box_markup() {
+		require_once( plugin_dir_path( __FILE__ ) . '/views/metabox.php' );
+	}
+
+	function save_post_custom_hook($post_id, $post, $update)
+	{
+		$sendPush 	= $_POST['pushnews_send_notification'];
+		$options 	= get_option( 'pushnews_options' );
+
+		if(!$update && $sendPush) {
+			$notification = array(
+				"message" => array(
+					"title" => get_the_title($post),
+					"body" => get_post_field('post_content', $post_id),
+					"url" => get_permalink($post),
+				)
+			);
+
+			if(get_the_post_thumbnail_url($post)) {
+				$notification['message']['icon'] = get_the_post_thumbnail_url($post);
+			}
+
+			wp_remote_post("https://api.pushnews.eu/v2/push/" . $options['app_id'], array(
+				"body" => json_encode($notification),
+				"headers" => array(
+					'X-Auth-Token' => $options['auth_token'],
+					"Content-Type" => "application/json"
+                )
+			));
+		}
+	}
+
+	public static function add_custom_meta_box()
+	{
+	    add_meta_box(
+	    	"pushnews-meta-box", 
+	    	"Pushnews", 
+	    	array( __CLASS__, "custom_meta_box_markup" ), 
+	    	"post", 
+	    	"side", 
+	    	"high", 
+	    	null
+	    );
+	}
+
 	public static function plugin_uninstall() {
 		delete_option( 'pushnews_options' );
 	}
@@ -94,17 +140,6 @@ MYHTML;
 			'manage_options',
 			'pushnews',
 			array( __CLASS__, 'admin_menu' )
-		);
-
-		add_submenu_page(
-			'pushnews',
-			__( 'Send Push Notification', 'pushnews' ),
-			__( 'Send Push Notification', 'pushnews' ),
-			'manage_options',
-			'pushnews_send',
-			function () {
-				require_once( plugin_dir_path( __FILE__ ) . '/views/send.php' );
-			}
 		);
 	}
 
@@ -124,7 +159,7 @@ MYHTML;
 			'basic'                             => array(
 				'active'                  => __( "Active", "pushnews" ),
 				'app_id'                  => __( "App ID", "pushnews" ),
-
+				'auth_token'			  => __( "Auth token", "pushnews" ),
 			),
 		);
 
@@ -160,9 +195,15 @@ MYHTML;
 						'label_for' => $k,
 						'class'     => 'pushnews_row',
 						'supplemental' => array(
-							__( "To find your app id click", "pushnews" ),
-							__( "here", "pushnews" )
-						)
+							'app_id' => array(
+								__( "To find your app id click", "pushnews" ),
+								__( "here", "pushnews" )
+                            ),
+							'auth_token' => array(
+								__( "To find your auth token click", "pushnews" ),
+								__( "here", "pushnews" )
+                            ),
+                        )
                     )
 				);
 
@@ -181,8 +222,10 @@ MYHTML;
 		>
 		<?php
 
-		if( $supplimental = $args['supplemental'] ){
-	        printf( '<p class="description">%s <a href="https://www.pushnews.com.br/como-saber-qual-o-seu-app-id" target="_blank">%s</a></p>', $supplimental[0], $supplimental[1]); // Show it
+		if($args['label_for'] == "app_id" && $supplimental = $args['supplemental']['app_id']){
+	        printf( '<p class="description">%s <a href="https://ajuda.pushnews.com.br/integracao-e-configuracao/como-saber-qual-o-seu-app-id" target="_blank">%s</a></p>', $supplimental[0], $supplimental[1]);
+	    } elseif($args['label_for'] == "auth_token" && $supplimental = $args['supplemental']['auth_token']) {
+	    	printf( '<p class="description">%s <a href=" http://ajuda.pushnews.com.br/integracao-e-configuracao/como-saber-qual-o-seu-token-de-autorizacao" target="_blank">%s</a></p>', $supplimental[0], $supplimental[1]);
 	    }
 	}
 
