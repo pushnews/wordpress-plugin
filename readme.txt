@@ -5,7 +5,7 @@ Tags: push, push notifications, web push, desktop notification, notifications, p
 Requires at least: 3.8
 Tested up to: 4.9.4
 Requires PHP: 5.3
-Stable tag: 1.4.0
+Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -59,6 +59,9 @@ First plugin release
 4. No HTTPS website is required
 
 == Changelog ==
+= 1.5.0 =
+* Added send automatic push mail feature on new post publish
+
 = 1.4.0 =
 * Added send automatic push notification feature on new post publish
 
