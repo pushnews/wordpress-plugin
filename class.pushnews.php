@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 class Pushnews {
-	const VERSION = '1.2.0';
+	const VERSION = '1.5.0';
 	const RESOURCES_VERSION = '1';
 	const API_URL = 'https://app.pushnews.eu/api.php/v1';
 	const CDN_DOMAIN = 'cdn.pn.vg';
@@ -85,30 +85,44 @@ MYHTML;
 	}
 
 	public static function custom_meta_box_markup() {
-		require_once( plugin_dir_path( __FILE__ ) . '/views/metabox.php' );
+        require_once( plugin_dir_path( __FILE__ ) . '/views/metabox.php' );
 	}
 
 	function save_post_custom_hook($post_id, $post, $update)
 	{
-		$sendPush 	= $_POST['pushnews_send_notification'];
-		$options 	= get_option( 'pushnews_options' );
+		$sendNotification 	= $_POST['pushnews_send_notification'];
+		$sendEmail       	= $_POST['pushnews_send_email'];
+		$options 	        = get_option( 'pushnews_options' );
 
-		if(!$update && $sendPush) {
+		if(!$update && isset($options['auth_token']) && $options['auth_token'] != "") {
 			$notification = array(
 				"message" => array(
 					"title" => get_the_title($post),
-					"body" => get_post_field('post_content', $post_id),
+					"body" => substr(get_post_field('post_content', $post_id), 0, 400) . ' ...' ,
 					"url" => get_permalink($post),
 				)
 			);
 
-			if(get_the_post_thumbnail_url($post)) {
-				$notification['message']['icon'] = get_the_post_thumbnail_url($post);
-			}
+			if($sendNotification) {
+				if(get_the_post_thumbnail_url($post)) {
+					$notification['message']['icon'] = get_the_post_thumbnail_url($post);
+				}
 
-			if(isset($options['auth_token'])) {
 				wp_remote_post("https://api.pushnews.eu/v2/push/" . $options['app_id'], array(
-					"body" => json_encode($notification),
+		            "body" => json_encode($notification),
+		            "headers" => array(
+			            'X-Auth-Token' => $options['auth_token'],
+			            "Content-Type" => "application/json"
+		            )
+	            ));
+            }
+			if($sendEmail) {
+				if(get_the_post_thumbnail_url($post)) {
+					$notification['message']['image'] = get_the_post_thumbnail_url($post);
+				}
+
+				wp_remote_post("https://api.pushnews.eu/v2/mail/" . $options['app_id'], array(
+					"body" => json_encode($notification['message']),
 					"headers" => array(
 						'X-Auth-Token' => $options['auth_token'],
 						"Content-Type" => "application/json"

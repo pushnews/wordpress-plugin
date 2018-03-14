@@ -4,11 +4,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Pushnews 1.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/pushnews\n"
-"POT-Creation-Date: 2018-03-09 19:41+0000\n"
+"POT-Creation-Date: 2018-03-12 16:01+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-03-09 19:49+0000\n"
+"PO-Revision-Date: 2018-03-12 16:02+0000\n"
 "Language-Team: \n"
 "X-Generator: Poedit 2.0.6\n"
 "X-Poedit-KeywordsList: __\n"
@@ -18,35 +18,35 @@ msgstr ""
 "Language: pt_BR\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: class.pushnews.php:139
+#: class.pushnews.php:153
 msgid "Pushnews"
 msgstr "Pushnews"
 
-#: class.pushnews.php:160
+#: class.pushnews.php:174
 msgid "Active"
 msgstr "Ativo"
 
-#: class.pushnews.php:161
+#: class.pushnews.php:175
 msgid "App ID"
 msgstr "App ID"
 
-#: class.pushnews.php:162
+#: class.pushnews.php:176
 msgid "Auth token"
 msgstr "Token de Autenticação"
 
-#: class.pushnews.php:169
+#: class.pushnews.php:183
 msgid "Configuration"
 msgstr "Configuração"
 
-#: class.pushnews.php:199
+#: class.pushnews.php:213
 msgid "To find your app id click"
 msgstr "Para encontrar o seu app id clique"
 
-#: class.pushnews.php:200 class.pushnews.php:204
+#: class.pushnews.php:214 class.pushnews.php:218 views/metabox.php:40
 msgid "here"
 msgstr "aqui"
 
-#: class.pushnews.php:203
+#: class.pushnews.php:217
 msgid "To find your auth token click"
 msgstr "Para encontrar o seu token de autorização clique"
 
@@ -54,6 +54,14 @@ msgstr "Para encontrar o seu token de autorização clique"
 msgid "Save"
 msgstr "Salvar"
 
-#: views/metabox.php:10
+#: views/metabox.php:19 views/metabox.php:31
 msgid "Send notification on post publish"
 msgstr "Enviar notificação na publicação do post"
+
+#: views/metabox.php:23 views/metabox.php:35
+msgid "Send email on post publish"
+msgstr "Enviar email na publicação do post"
+
+#: views/metabox.php:39
+msgid "Auth token is not defined, please update your plugin configuration"
+msgstr "O seu token de autorização não está definido, por favor atualize as configurações do seu plugin"

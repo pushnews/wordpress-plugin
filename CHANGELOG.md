@@ -1,5 +1,8 @@
 CHANGELOG
 =========
+# 1.5.0
+- Added send automatic push mail feature on new post publish
+
 # 1.4.0
 
 - Added send automatic push notification feature on new post publish
