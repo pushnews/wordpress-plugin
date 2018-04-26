@@ -59,6 +59,9 @@ First plugin release
 4. No HTTPS website is required
 
 == Changelog ==
+= 1.5.2 =
+* Fixed some issues regarding scheduled posts
+
 = 1.5.1 =
 * Fixed some issues regarding the automatic push notifications
 

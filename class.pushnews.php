@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 class Pushnews {
-	const VERSION = '1.5.1';
+	const VERSION = '1.5.2';
 	const RESOURCES_VERSION = '1';
 	const API_URL = 'https://app.pushnews.eu/api.php/v1';
 	const CDN_DOMAIN = 'cdn.pn.vg';
@@ -88,17 +88,37 @@ MYHTML;
         require_once( plugin_dir_path( __FILE__ ) . '/views/metabox.php' );
 	}
 
-	function publish_post_custom_hook($post_id, $post)
-	{
-		$sendNotification 	= $_POST['pushnews_send_notification'];
-		$sendEmail       	= $_POST['pushnews_send_email'];
+    public function future_post_custom_hook($post_id) {
+	    $sendNotification 	= $_POST['pushnews_send_notification'];
+	    $sendEmail       	= $_POST['pushnews_send_email'];
+
+	    if($sendNotification) {
+		    update_post_meta(
+			    $post_id,
+			    'sendNotification',
+			    $sendNotification
+		    );
+	    }
+
+	    if($sendEmail) {
+		    update_post_meta(
+			    $post_id,
+			    'sendEmail',
+			    $sendEmail
+		    );
+	    }
+    }
+
+	function publish_post_custom_hook($post_id, $post) {
+		$sendNotification 	= $_POST['pushnews_send_notification'] || get_post_meta($post_id, 'sendNotification');
+		$sendEmail       	= $_POST['pushnews_send_email'] || get_post_meta($post_id, 'sendEmail');
 		$options 	        = get_option( 'pushnews_options' );
 
-		if($post->post_date == $post->post_modified && isset($options['auth_token']) && $options['auth_token'] != "") {
+		if(isset($options['auth_token']) && $options['auth_token'] != "") {
 			$notification = array(
 				"message" => array(
 					"title" => get_the_title($post),
-					"body" => substr(get_post_field('post_content', $post_id), 0, 400) . ' ...' ,
+					"body" => substr(strip_tags(get_post_field('post_content', $post_id)), 0, 300) . ' ...' ,
 					"url" => get_permalink($post),
 				)
 			);
@@ -108,7 +128,7 @@ MYHTML;
 					$notification['message']['icon'] = get_the_post_thumbnail_url($post);
 				}
 
-				wp_remote_post("https://api.pushnews.eu/v2/push/" . $options['app_id'], array(
+                wp_remote_post("https://api.pushnews.eu/v2/push/" . $options['app_id'], array(
 		            "body" => json_encode($notification),
 		            "headers" => array(
 			            'X-Auth-Token' => $options['auth_token'],
