@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 class Pushnews {
-	const VERSION = '1.5.2';
+	const VERSION = '1.5.3';
 	const RESOURCES_VERSION = '1';
 	const API_URL = 'https://app.pushnews.eu/api.php/v1';
 	const CDN_DOMAIN = 'cdn.pn.vg';
@@ -114,7 +114,7 @@ MYHTML;
 		$sendEmail       	= $_POST['pushnews_send_email'] || get_post_meta($post_id, 'sendEmail');
 		$options 	        = get_option( 'pushnews_options' );
 
-		if(isset($options['auth_token']) && $options['auth_token'] != "") {
+		if($post->post_date == $post->post_modified && isset($options['auth_token']) && $options['auth_token'] != "") {
 			$notification = array(
 				"message" => array(
 					"title" => get_the_title($post),
@@ -127,7 +127,6 @@ MYHTML;
 				if(get_the_post_thumbnail_url($post)) {
 					$notification['message']['icon'] = get_the_post_thumbnail_url($post);
 				}
-
                 wp_remote_post("https://api.pushnews.eu/v2/push/" . $options['app_id'], array(
 		            "body" => json_encode($notification),
 		            "headers" => array(

@@ -5,7 +5,7 @@
 * Author:             Pushnews <developers@pushnews.eu>
 * Plugin URI:         https://www.pushnews.eu/
 * Description:        Send Web Push Notifications to your visitors. Increase your website traffic - Simple and fast UI - Automate push notifications via Facebook Page integration.
-* Version:            1.5.2
+* Version:            1.5.3
 * Author URI:         https://www.pushnews.eu/
 * License:            GPLv2 or later
 * Text Domain:        pushnews
@@ -28,7 +28,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-define( 'PUSHNEWS_VERSION', '1.5.2' );
+define( 'PUSHNEWS_VERSION', '1.5.3' );
 define( 'PUSHNEWS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 require_once( PUSHNEWS__PLUGIN_DIR . 'class.pushnews.php' );

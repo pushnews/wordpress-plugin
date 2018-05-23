@@ -1,5 +1,9 @@
 CHANGELOG
 =========
+
+# 1.5.3
+- Fixed some issues regarding updated posts
+
 # 1.5.2
 - Fixed some issues regarding scheduled posts
 
