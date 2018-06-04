@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 1.5.4
+- Updated Push Notifications plugin behaviour, now sending featured image as SuperPush
+
 # 1.5.3
 - Fixed some issues regarding updated posts
 

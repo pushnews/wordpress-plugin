@@ -22,7 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 class Pushnews {
-	const VERSION = '1.5.3';
+	const VERSION = '1.5.4';
 	const RESOURCES_VERSION = '1';
 	const API_URL = 'https://app.pushnews.eu/api.php/v1';
 	const CDN_DOMAIN = 'cdn.pn.vg';
@@ -125,7 +125,7 @@ MYHTML;
 
 			if($sendNotification) {
 				if(get_the_post_thumbnail_url($post)) {
-					$notification['message']['icon'] = get_the_post_thumbnail_url($post);
+					$notification['message']['bigImage'] = get_the_post_thumbnail_url($post);
 				}
                 wp_remote_post("https://api.pushnews.eu/v2/push/" . $options['app_id'], array(
 		            "body" => json_encode($notification),
