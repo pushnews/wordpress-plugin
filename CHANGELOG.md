@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 1.6.0
+- No longer pre-checking "Send Push" and "Send Pushmail" checkboxes
+
 # 1.5.4
 - Updated Push Notifications plugin behaviour, now sending featured image as SuperPush
 

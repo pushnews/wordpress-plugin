@@ -15,11 +15,11 @@ License:            GPLv2 or later
     if(isset($options['auth_token']) && $options['auth_token'] != ""):
 ?>
     <div>
-        <input type="checkbox" value="true" id="input_send_notification" name="pushnews_send_notification" checked />
+        <input type="checkbox" value="true" id="input_send_notification" name="pushnews_send_notification" />
         <label for="input_send_notification"><?php echo __( 'Send notification on post publish', 'pushnews') ?></label>
     </div>
     <div>
-        <input type="checkbox" value="true" id="input_send_email" name="pushnews_send_email" checked />
+        <input type="checkbox" value="true" id="input_send_email" name="pushnews_send_email" />
         <label for="input_send_email"><?php echo __( 'Send email on post publish', 'pushnews') ?></label>
     </div>
 <?php

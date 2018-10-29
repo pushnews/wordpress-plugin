@@ -5,7 +5,7 @@
 * Author:             Pushnews <developers@pushnews.eu>
 * Plugin URI:         https://www.pushnews.eu/
 * Description:        Send Web Push Notifications to your visitors. Increase your website traffic - Simple and fast UI - Automate push notifications via Facebook Page integration.
-* Version:            1.5.4
+* Version:            1.6.0
 * Author URI:         https://www.pushnews.eu/
 * License:            GPLv2 or later
 * Text Domain:        pushnews

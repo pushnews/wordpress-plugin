@@ -3,9 +3,9 @@ Contributors: impactingdigital, tixastronauta, mariobalca
 Donate link: https://www.pushnews.eu/
 Tags: push, push notifications, web push, desktop notification, notifications, pushnews, onesignal, goroost, roost, pushcrew, pushengage, pushwoosh
 Requires at least: 3.8
-Tested up to: 4.9.4
+Tested up to: 4.9.8
 Requires PHP: 5.3
-Stable tag: 1.5.4
+Stable tag: 1.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -25,7 +25,7 @@ Features:
 - Facebook-to-push - Automatically send you facebook posts as push notifications
 - OnSitePush - Push notifications directly on your website without the need for user opt-in
 - Statistics
-- Regional segmentation for Brazil
+- Regional segmentation
 - Advanced segmentation
 - Device Target
 - Custom Templates
@@ -59,6 +59,9 @@ First plugin release
 4. No HTTPS website is required
 
 == Changelog ==
+= 1.6.0 =
+* No longer pre-checking "Send Push" and "Send Pushmail" checkboxes
+
 = 1.5.4 =
 * Updated Push Notifications plugin behaviour, now sending featured image as SuperPush
 
