@@ -1,6 +1,14 @@
 CHANGELOG
 =========
 
+# 1.7.0
+- Added support for Wordpress 5
+- Updated API url
+- Allowing Push/Email sending after editing a Post
+- Enhanced Push/Email sending for scheduled Posts
+- Editing a scheduled Post will now show if it has scheduled Push/Email
+- Added Service Worker under "/wp-content/plugins/pushnews/sdk/pushnews-sw.js.php" (preparing for future native Widget Support)
+
 # 1.6.0
 - No longer pre-checking "Send Push" and "Send Pushmail" checkboxes
 

@@ -21,187 +21,210 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-class Pushnews {
-	const VERSION = '1.5.4';
+class Pushnews
+{
+	const VERSION           = '1.7.0';
 	const RESOURCES_VERSION = '1';
-	const API_URL = 'https://app.pushnews.eu/api.php/v1';
-	const CDN_DOMAIN = 'cdn.pn.vg';
+	const API_URL           = 'https://api.pushnews.eu/v1'; // http://local.api.app.pushnews.eu
+	const CDN_DOMAIN        = 'cdn.pn.vg';
 
 	const TAG = <<<MYHTML
-<!-- Pushnews -->
-<script src="//{%%cloudflare_domain%%}/sites/{%%app_id%%}.js" async></script>
+<!-- Pushnews v{%%version%%} -->
+<script src="//{%%cdn_domain%%}/sites/{%%app_id%%}.js" data-pn-plugin-url="{%%plugin_url%%}" data-pn-wp-plugin-version="{%%version%%}" async></script>
 <!-- / Pushnews -->
 MYHTML;
 
-
-	/**
-	 *
-	 */
-	public static function init() {
-		add_action( 'admin_menu', array( __CLASS__, 'add_admin_page' ) );
-		add_action( 'admin_init', array( __CLASS__, 'settings_init' ) );
+	public static function init()
+	{
+		add_action('admin_menu', array(__CLASS__, 'add_admin_page'));
+		add_action('admin_init', array(__CLASS__, 'settings_init'));
 	}
 
-
-	public static function translations_init() {
-		load_plugin_textdomain( 'pushnews', false, basename( dirname( __FILE__ ) ) . '/languages/' );
+	public static function translations_init()
+	{
+		load_plugin_textdomain('pushnews', false, basename(dirname(__FILE__)).'/languages/');
 	}
 
-	public static function plugin_activation() {
+	public static function plugin_activation()
+	{
 
 		self::translations_init();
 
-		$siteUrl          = get_option( 'siteurl' );
-		$siteUrl64Encoded = PushnewsBase64Url::encode( $siteUrl );
+		$siteUrl          = get_option('siteurl');
+		$siteUrl64Encoded = PushnewsBase64Url::encode($siteUrl);
 
-		$endpoint     = self::API_URL . "/sites/{$siteUrl64Encoded}?filterBy=base64_url";
-		$response     = wp_remote_get( $endpoint, array( 'headers' => array( 'X-Pushnews-Wp-Version' => self::VERSION ) ) );
-		$pushnewsSite = wp_remote_retrieve_body( $response );
-		$pushnewsSite = json_decode( $pushnewsSite, true );
-		if ( JSON_ERROR_NONE == json_last_error() ) {
-			if ( true == $pushnewsSite['success'] ) {
+		$endpoint     = self::API_URL."/v1/sites/{$siteUrl64Encoded}?filterBy=base64_url";
+		$response     = wp_remote_get($endpoint, array('headers' => array('X-Pushnews-Wp-Version' => self::VERSION)));
+		$pushnewsSite = wp_remote_retrieve_body($response);
+		$pushnewsSite = json_decode($pushnewsSite, true);
+		if (JSON_ERROR_NONE == json_last_error()) {
+			if (true == $pushnewsSite['success']) {
 
 				$pushnewsSite = $pushnewsSite['data'];
-				$tmp          = parse_url( $pushnewsSite['optin_url'] );
+				$tmp          = parse_url($pushnewsSite['optin_url']);
 				$url          = $tmp['host'];
 
 				$options = array(
-					'active'                                       => 'true',
-					'app_id'                                       => $pushnewsSite['app_id'],
-					'auth_token'                                   => $pushnewsSite['auth_token'],
+					'active'     => 'true',
+					'app_id'     => $pushnewsSite['app_id'],
+					'auth_token' => $pushnewsSite['auth_token'],
 				);
 			} else {
 				$options = array(
-					'active'                                       => 'false',
-					'app_id'                                       => '0000-0000-0000-0000',
+					'active' => 'false',
+					'app_id' => '0000-0000-0000-0000',
 				);
 			}
 
-			add_option( 'pushnews_options', $options );
+			add_option('pushnews_options', $options);
 		}
 	}
 
-	public static function plugin_deactivation() {
+	public static function plugin_deactivation()
+	{
 	}
 
-	public static function custom_meta_box_markup() {
-        require_once( plugin_dir_path( __FILE__ ) . '/views/metabox.php' );
+	public static function custom_meta_box_markup()
+	{
+		require_once(plugin_dir_path(__FILE__).'/views/metabox.php');
 	}
 
-    public function future_post_custom_hook($post_id) {
-	    $sendNotification 	= $_POST['pushnews_send_notification'];
-	    $sendEmail       	= $_POST['pushnews_send_email'];
+	public function future_post_custom_hook($post_id)
+	{
+		$sendNotification = $_POST['pushnews_send_notification'];
+		$sendEmail        = $_POST['pushnews_send_email'];
 
-	    if($sendNotification) {
-		    update_post_meta(
-			    $post_id,
-			    'sendNotification',
-			    $sendNotification
-		    );
-	    }
-
-	    if($sendEmail) {
-		    update_post_meta(
-			    $post_id,
-			    'sendEmail',
-			    $sendEmail
-		    );
-	    }
-    }
-
-	function publish_post_custom_hook($post_id, $post) {
-		$sendNotification 	= $_POST['pushnews_send_notification'] || get_post_meta($post_id, 'sendNotification');
-		$sendEmail       	= $_POST['pushnews_send_email'] || get_post_meta($post_id, 'sendEmail');
-		$options 	        = get_option( 'pushnews_options' );
-
-		if($post->post_date == $post->post_modified && isset($options['auth_token']) && $options['auth_token'] != "") {
-			$notification = array(
-				"message" => array(
-					"title" => get_the_title($post),
-					"body" => substr(strip_tags(get_post_field('post_content', $post_id)), 0, 300) . ' ...' ,
-					"url" => get_permalink($post),
-				)
+		if ($sendNotification) {
+			update_post_meta(
+				$post_id,
+				'sendNotification',
+				$sendNotification
 			);
+		} else {
+			delete_post_meta($post_id, 'sendNotification');
+		}
 
-			if($sendNotification) {
-				if(get_the_post_thumbnail_url($post)) {
-					$notification['message']['bigImage'] = get_the_post_thumbnail_url($post);
-				}
-                wp_remote_post("https://api.pushnews.eu/v2/push/" . $options['app_id'], array(
-		            "body" => json_encode($notification),
-		            "headers" => array(
-			            'X-Auth-Token' => $options['auth_token'],
-			            "Content-Type" => "application/json"
-		            )
-	            ));
-            }
-			if($sendEmail) {
-				if(get_the_post_thumbnail_url($post)) {
-					$notification['message']['image'] = get_the_post_thumbnail_url($post);
+		if ($sendEmail) {
+			update_post_meta(
+				$post_id,
+				'sendEmail',
+				$sendEmail
+			);
+		} else {
+			delete_post_meta($post_id, 'sendEmail');
+		}
+	}
+
+	function publish_post_custom_hook($post_id, $post)
+	{
+		$sendNotification = filter_var($_POST['pushnews_send_notification'] || get_post_meta($post_id, 'sendNotification'), FILTER_VALIDATE_BOOLEAN);
+		$sendEmail        = filter_var($_POST['pushnews_send_email'] || get_post_meta($post_id, 'sendEmail'), FILTER_VALIDATE_BOOLEAN);
+		$options          = get_option('pushnews_options');
+		$now              = current_time("mysql", 1);
+		$postDate         = $post->post_date;
+
+		if ($postDate <= $now && isset($options['auth_token']) && $options['auth_token'] != "") {
+
+			if (true === $sendNotification) {
+				$message = array(
+					"title" => get_the_title($post),
+					"body"  => substr(strip_tags(get_post_field('post_content', $post_id)), 0, 300).' ...',
+					"url"   => get_permalink($post),
+				);
+
+				if (get_the_post_thumbnail_url($post)) {
+					$message['bigImage'] = get_the_post_thumbnail_url($post);
 				}
 
-				wp_remote_post("https://api.pushnews.eu/v2/mail/" . $options['app_id'], array(
-					"body" => json_encode($notification['message']),
+				$body = array(
+					"message" => $message,
+				);
+
+				wp_remote_post(self::API_URL."/v2/push/".$options['app_id'], array(
+					"body"    => json_encode($body),
 					"headers" => array(
 						'X-Auth-Token' => $options['auth_token'],
-						"Content-Type" => "application/json"
-					)
+						"Content-Type" => "application/json",
+					),
 				));
+
+				delete_post_meta($post_id, "sendNotification");
+
+			}
+			if (true === $sendEmail) {
+				if (get_the_post_thumbnail_url($post)) {
+					$body['message']['image'] = get_the_post_thumbnail_url($post);
+				}
+
+				wp_remote_post(self::API_URL."/v2/mail/".$options['app_id'], array(
+					"body"    => json_encode($body['message']),
+					"headers" => array(
+						'X-Auth-Token' => $options['auth_token'],
+						"Content-Type" => "application/json",
+					),
+				));
+
+				delete_post_meta($post_id, "sendEmail");
 			}
 		}
 	}
 
 	public static function add_custom_meta_box()
 	{
-	    add_meta_box(
-	    	"pushnews-meta-box", 
-	    	"Pushnews", 
-	    	array( __CLASS__, "custom_meta_box_markup" ), 
-	    	"post", 
-	    	"side", 
-	    	"high", 
-	    	null
-	    );
-	}
-
-	public static function plugin_uninstall() {
-		delete_option( 'pushnews_options' );
-	}
-
-	public static function add_admin_page() {
-		add_menu_page(
-			'pushnews',
-			__( 'Pushnews', 'pushnews' ),
-			'manage_options',
-			'pushnews',
-			array( __CLASS__, 'admin_menu' )
+		add_meta_box(
+			"pushnews-meta-box",
+			"Pushnews",
+			array(__CLASS__, "custom_meta_box_markup"),
+			"post",
+			"side",
+			"high",
+			null
 		);
 	}
 
-	public static function admin_menu() {
-		require_once( plugin_dir_path( __FILE__ ) . '/views/config.php' );
+	public static function plugin_uninstall()
+	{
+		delete_option('pushnews_options');
 	}
 
-	public static function admin_styles() {
-		wp_enqueue_style( 'pushnews-admin-styles', plugin_dir_url( __FILE__ ) . 'views/css/pushnews-admin-styles.css', false, self::RESOURCES_VERSION );
+	public static function add_admin_page()
+	{
+		add_menu_page(
+			'pushnews',
+			__('Pushnews', 'pushnews'),
+			'manage_options',
+			'pushnews',
+			array(__CLASS__, 'admin_menu')
+		);
+	}
+
+	public static function admin_menu()
+	{
+		require_once(plugin_dir_path(__FILE__).'/views/config.php');
+	}
+
+	public static function admin_styles()
+	{
+		wp_enqueue_style('pushnews-admin-styles', plugin_dir_url(__FILE__).'views/css/pushnews-admin-styles.css', false, self::RESOURCES_VERSION);
 	}
 
 
-	public static function settings_init() {
-		register_setting( "pushnews", "pushnews_options" );
+	public static function settings_init()
+	{
+		register_setting("pushnews", "pushnews_options");
 
 		$arr = array(
-			'basic'                             => array(
-				'active'                  => __( "Active", "pushnews" ),
-				'app_id'                  => __( "App ID", "pushnews" ),
-				'auth_token'			  => __( "Auth token", "pushnews" ),
+			'basic' => array(
+				'active'     => __("Active", "pushnews"),
+				'app_id'     => __("App ID", "pushnews"),
+				'auth_token' => __("Auth token", "pushnews"),
 			),
 		);
 
-		foreach ( $arr as $section_name => $section_items ) {
+		foreach ($arr as $section_name => $section_items) {
 
-			if ( 'basic' == $section_name ) {
-				$translation = __( "Configuration", "pushnews" );
+			if ('basic' == $section_name) {
+				$translation = __("Configuration", "pushnews");
 			}
 
 			add_settings_section(
@@ -212,12 +235,12 @@ MYHTML;
 				'pushnews'
 			);
 
-			foreach ( $section_items as $k => $translation ) {
+			foreach ($section_items as $k => $translation) {
 				$id = "pushnews_field_{$k}";
 
-				$callback_function = array( __CLASS__, 'input_cb' );
-				if ( 'basic' == $section_name && 'active' == $k ) {
-					$callback_function = array( __CLASS__, 'checkbox_cb' );
+				$callback_function = array(__CLASS__, 'input_cb');
+				if ('basic' == $section_name && 'active' == $k) {
+					$callback_function = array(__CLASS__, 'checkbox_cb');
 				}
 
 				add_settings_field(
@@ -227,75 +250,80 @@ MYHTML;
 					'pushnews',
 					$section_name,
 					array(
-						'label_for' => $k,
-						'class'     => 'pushnews_row',
+						'label_for'    => $k,
+						'class'        => 'pushnews_row',
 						'supplemental' => array(
-							'app_id' => array(
-								__( "To find your app id click", "pushnews" ),
-								__( "here", "pushnews" )
-                            ),
+							'app_id'     => array(
+								__("To find your app id click", "pushnews"),
+								__("here", "pushnews"),
+							),
 							'auth_token' => array(
-								__( "To find your auth token click", "pushnews" ),
-								__( "here", "pushnews" )
-                            ),
-                        )
-                    )
+								__("To find your auth token click", "pushnews"),
+								__("here", "pushnews"),
+							),
+						),
+					)
 				);
 
 			}
 		}
 	}
 
-	public static function input_cb( $args ) {
-		$options = get_option( 'pushnews_options' );
+	public static function input_cb($args)
+	{
+		$options = get_option('pushnews_options');
 		?>
-		<input
-			type="text"
-			id="<?= esc_attr( $args['label_for'] ); ?>"
-			name="pushnews_options[<?= esc_attr( $args['label_for'] ); ?>]"
-			value="<?= isset( $options[ $args['label_for'] ] ) ? $options[ $args['label_for'] ] : '' ?>"
-		>
+        <input
+                type="text"
+                id="<?= esc_attr($args['label_for']); ?>"
+                name="pushnews_options[<?= esc_attr($args['label_for']); ?>]"
+                value="<?= isset($options[$args['label_for']]) ? $options[$args['label_for']] : '' ?>"
+        >
 		<?php
 
-		if($args['label_for'] == "app_id" && $supplimental = $args['supplemental']['app_id']){
-	        printf( '<p class="description">%s <a href="https://ajuda.pushnews.com.br/integracao-e-configuracao/como-saber-qual-o-seu-app-id" target="_blank">%s</a></p>', $supplimental[0], $supplimental[1]);
-	    } elseif($args['label_for'] == "auth_token" && $supplimental = $args['supplemental']['auth_token']) {
-	    	printf( '<p class="description">%s <a href=" http://ajuda.pushnews.com.br/integracao-e-configuracao/como-saber-qual-o-seu-token-de-autorizacao" target="_blank">%s</a></p>', $supplimental[0], $supplimental[1]);
-	    }
+		if ($args['label_for'] == "app_id" && $supplimental = $args['supplemental']['app_id']) {
+			printf('<p class="description">%s <a href="https://ajuda.pushnews.com.br/integracao-e-configuracao/como-saber-qual-o-seu-app-id" target="_blank">%s</a></p>', $supplimental[0], $supplimental[1]);
+		} elseif ($args['label_for'] == "auth_token" && $supplimental = $args['supplemental']['auth_token']) {
+			printf('<p class="description">%s <a href=" http://ajuda.pushnews.com.br/integracao-e-configuracao/como-saber-qual-o-seu-token-de-autorizacao" target="_blank">%s</a></p>', $supplimental[0], $supplimental[1]);
+		}
 	}
 
-	public static function checkbox_cb( $args ) {
-		$options = get_option( 'pushnews_options' );
-		$checked = isset( $options[ $args['label_for'] ] ) && true == filter_var( $options[ $args['label_for'] ],
-			FILTER_VALIDATE_BOOLEAN ) ? true : false;
+	public static function checkbox_cb($args)
+	{
+		$options = get_option('pushnews_options');
+		$checked = isset($options[$args['label_for']]) && true == filter_var($options[$args['label_for']],
+			FILTER_VALIDATE_BOOLEAN) ? true : false;
 		?>
-		<input
-			type="checkbox"
-			id="<?= esc_attr( $args['label_for'] ); ?>"
-			name="pushnews_options[<?= esc_attr( $args['label_for'] ); ?>]"
-			value="true"
+        <input
+                type="checkbox"
+                id="<?= esc_attr($args['label_for']); ?>"
+                name="pushnews_options[<?= esc_attr($args['label_for']); ?>]"
+                value="true"
 			<?= $checked == true ? 'checked' : '' ?>
-		>
+        >
 		<?php
 	}
 
 
-	public static function inject_tag() {
+	public static function inject_tag()
+	{
 
-		$options = get_option( 'pushnews_options' );
+		$options = get_option('pushnews_options');
 
-		if ( ! isset( $options['active'] ) || true != filter_var( $options['active'], FILTER_VALIDATE_BOOLEAN ) ) {
+		if ( ! isset($options['active']) || true != filter_var($options['active'], FILTER_VALIDATE_BOOLEAN)) {
 			return;
 		}
 
 		$html = self::TAG;
 
 		$replaces = array(
-			'{%%cloudflare_domain%%}'                          	=> self::CDN_DOMAIN,
-			'{%%app_id%%}'                                		=> trim( $options['app_id'] ),
+			'{%%cdn_domain%%}' => self::CDN_DOMAIN,
+			'{%%app_id%%}'     => trim($options['app_id']),
+			'{%%version%%}'    => self::VERSION,
+			'{%%plugin_url%%}'    => plugin_dir_url( __FILE__ ),
 		);
 
-		echo str_replace( array_keys( $replaces ), $replaces, $html );
+		echo str_replace(array_keys($replaces), $replaces, $html);
 	}
 
 }

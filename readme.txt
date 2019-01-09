@@ -3,9 +3,9 @@ Contributors: impactingdigital, tixastronauta, mariobalca
 Donate link: https://www.pushnews.eu/
 Tags: push, push notifications, web push, desktop notification, notifications, pushnews, onesignal, goroost, roost, pushcrew, pushengage, pushwoosh
 Requires at least: 3.8
-Tested up to: 4.9.8
+Tested up to: 5.0.2
 Requires PHP: 5.3
-Stable tag: 1.6.0
+Stable tag: 1.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -23,7 +23,8 @@ Features:
 - Schedule push notifications
 - Weekly recurring notifications planner
 - Facebook-to-push - Automatically send you facebook posts as push notifications
-- OnSitePush - Push notifications directly on your website without the need for user opt-in
+- Push OnSite - Push notifications directly on your website without the need for user opt-in
+- Push Mail - Capture your visitors email addresses and send them beautiful emails
 - Statistics
 - Regional segmentation
 - Advanced segmentation
@@ -59,6 +60,16 @@ First plugin release
 4. No HTTPS website is required
 
 == Changelog ==
+
+= 1.7.0 =
+* Added support for Wordpress 5
+* Updated API url
+* Allowing Push/Email sending after editing a Post
+* Enhanced Push/Email sending for scheduled Posts
+* Editing a scheduled Post will now show if it has scheduled Push/Email
+* Added Service Worker under "/wp-content/plugins/pushnews/sdk/pushnews-sw.js.php" (preparing for future native Widget Support)
+* Added plugin version to tag
+
 = 1.6.0 =
 * No longer pre-checking "Send Push" and "Send Pushmail" checkboxes
 
