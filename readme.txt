@@ -5,7 +5,7 @@ Tags: push, push notifications, web push, desktop notification, notifications, p
 Requires at least: 3.8
 Tested up to: 5.0.3
 Requires PHP: 5.3
-Stable tag: 1.7.1
+Stable tag: 1.7.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,9 @@ First plugin release
 4. No HTTPS website is required
 
 == Changelog ==
+
+= 1.7.2 =
+* Fixed bad production API endpoint
 
 = 1.7.1 =
 * Fixed sending Push after editing a Post

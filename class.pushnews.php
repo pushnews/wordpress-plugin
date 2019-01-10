@@ -23,9 +23,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class Pushnews
 {
-	const VERSION = '1.7.1';
+	const VERSION = '1.7.2';
 	const RESOURCES_VERSION = '1';
-	const API_URL = 'https://api.pushnews.eu/v1';
+	const API_URL = 'https://api.pushnews.eu';
 //	const API_URL = 'http://local.api.app.pushnews.eu';
 	const CDN_DOMAIN = 'cdn.pn.vg';
 

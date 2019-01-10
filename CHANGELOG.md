@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 1.7.2
+- Fixed bad production API endpoint
+
 # 1.7.1
 - Fixed sending Push after editing a Post
 
