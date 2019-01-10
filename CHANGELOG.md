@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 1.7.1
+- Fixed sending Push after editing a Post
+
 # 1.7.0
 - Added support for Wordpress 5
 - Updated API url

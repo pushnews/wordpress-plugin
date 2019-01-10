@@ -23,10 +23,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class Pushnews
 {
-	const VERSION           = '1.7.0';
+	const VERSION = '1.7.1';
 	const RESOURCES_VERSION = '1';
-	const API_URL           = 'https://api.pushnews.eu/v1'; // http://local.api.app.pushnews.eu
-	const CDN_DOMAIN        = 'cdn.pn.vg';
+	const API_URL = 'https://api.pushnews.eu/v1';
+//	const API_URL = 'http://local.api.app.pushnews.eu';
+	const CDN_DOMAIN = 'cdn.pn.vg';
 
 	const TAG = <<<MYHTML
 <!-- Pushnews v{%%version%%} -->
@@ -115,7 +116,13 @@ MYHTML;
 		}
 	}
 
-	function publish_post_custom_hook($post_id, $post)
+	/**
+	 *
+	 * @param int           $post_id The post ID.
+	 * @param WP_Post|array $post The post object.
+	 * @param bool          $update Whether this is an existing post being updated or not.
+	 */
+	function save_post_custom_hook($post_id, $post, $update)
 	{
 		$sendNotification = filter_var($_POST['pushnews_send_notification'] || get_post_meta($post_id, 'sendNotification'), FILTER_VALIDATE_BOOLEAN);
 		$sendEmail        = filter_var($_POST['pushnews_send_email'] || get_post_meta($post_id, 'sendEmail'), FILTER_VALIDATE_BOOLEAN);
@@ -125,48 +132,82 @@ MYHTML;
 
 		if ($postDate <= $now && isset($options['auth_token']) && $options['auth_token'] != "") {
 
+			$body = self::buildNotificationBodyFromPost($post);
+
 			if (true === $sendNotification) {
-				$message = array(
-					"title" => get_the_title($post),
-					"body"  => substr(strip_tags(get_post_field('post_content', $post_id)), 0, 300).' ...',
-					"url"   => get_permalink($post),
-				);
-
-				if (get_the_post_thumbnail_url($post)) {
-					$message['bigImage'] = get_the_post_thumbnail_url($post);
-				}
-
-				$body = array(
-					"message" => $message,
-				);
-
-				wp_remote_post(self::API_URL."/v2/push/".$options['app_id'], array(
-					"body"    => json_encode($body),
-					"headers" => array(
-						'X-Auth-Token' => $options['auth_token'],
-						"Content-Type" => "application/json",
-					),
-				));
-
+				self::sendNotification($options['app_id'], $options['auth_token'], $body);
 				delete_post_meta($post_id, "sendNotification");
-
 			}
 			if (true === $sendEmail) {
 				if (get_the_post_thumbnail_url($post)) {
 					$body['message']['image'] = get_the_post_thumbnail_url($post);
 				}
-
-				wp_remote_post(self::API_URL."/v2/mail/".$options['app_id'], array(
-					"body"    => json_encode($body['message']),
-					"headers" => array(
-						'X-Auth-Token' => $options['auth_token'],
-						"Content-Type" => "application/json",
-					),
-				));
-
+				self::sendEmail($options['app_id'], $options['auth_token'], $body['message']);
 				delete_post_meta($post_id, "sendEmail");
 			}
 		}
+	}
+
+	/**
+	 * Build notification object to be sent to Pushnews API
+	 *
+	 * @param array $post
+	 *
+	 * @return array
+	 */
+	private static function buildNotificationBodyFromPost($post)
+	{
+		$message = array(
+			"title" => get_the_title($post),
+			"body"  => substr(strip_tags(get_post_field('post_content', $post->ID)), 0, 300).' ...',
+			"url"   => get_permalink($post),
+		);
+
+		if (get_the_post_thumbnail_url($post)) {
+			$message['bigImage'] = get_the_post_thumbnail_url($post);
+		}
+
+		$body = array(
+			"message" => $message,
+		);
+
+		return $body;
+	}
+
+	/**
+	 * Call Pushnews API: send push notification
+	 *
+	 * @param $appId
+	 * @param $authToken
+	 * @param $body
+	 */
+	private static function sendNotification($appId, $authToken, $body)
+	{
+		wp_remote_post(self::API_URL."/v2/push/".$appId, array(
+			"body"    => json_encode($body),
+			"headers" => array(
+				'X-Auth-Token' => $authToken,
+				"Content-Type" => "application/json",
+			),
+		));
+	}
+
+	/**
+	 * Call Pushnews API: send email
+	 *
+	 * @param $appId
+	 * @param $authToken
+	 * @param $message
+	 */
+	private static function sendEmail($appId, $authToken, $message)
+	{
+		wp_remote_post(self::API_URL."/v2/mail/".$appId, array(
+			"body"    => json_encode($message),
+			"headers" => array(
+				'X-Auth-Token' => $authToken,
+				"Content-Type" => "application/json",
+			),
+		));
 	}
 
 	public static function add_custom_meta_box()
@@ -320,7 +361,7 @@ MYHTML;
 			'{%%cdn_domain%%}' => self::CDN_DOMAIN,
 			'{%%app_id%%}'     => trim($options['app_id']),
 			'{%%version%%}'    => self::VERSION,
-			'{%%plugin_url%%}'    => plugin_dir_url( __FILE__ ),
+			'{%%plugin_url%%}' => plugin_dir_url(__FILE__),
 		);
 
 		echo str_replace(array_keys($replaces), $replaces, $html);
