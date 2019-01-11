@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class Pushnews
 {
-	const VERSION = '1.7.2';
+	const VERSION = '1.7.3';
 	const RESOURCES_VERSION = '1';
 	const API_URL = 'https://api.pushnews.eu';
 //	const API_URL = 'http://local.api.app.pushnews.eu';
@@ -128,7 +128,7 @@ MYHTML;
 		$sendEmail        = filter_var($_POST['pushnews_send_email'] || get_post_meta($post_id, 'sendEmail'), FILTER_VALIDATE_BOOLEAN);
 		$options          = get_option('pushnews_options');
 		$now              = current_time("mysql", 1);
-		$postDate         = $post->post_date;
+		$postDate         = $post->post_date_gmt;
 
 		if ($postDate <= $now && isset($options['auth_token']) && $options['auth_token'] != "") {
 

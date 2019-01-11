@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 1.7.3
+- Fixed date comparison (now using GMT)
+
 # 1.7.2
 - Fixed bad production API endpoint
 
