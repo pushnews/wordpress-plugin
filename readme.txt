@@ -61,6 +61,9 @@ First plugin release
 
 == Changelog ==
 
+= 1.8.1 =
+* Saving "send push"/"send email" checks on custom post drafts
+
 = 1.8.0 =
 * Preventing Push/Email send while saving a draft post
 * Added support for custom post types

@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class Pushnews
 {
-	const VERSION = '1.8.0';
+	const VERSION = '1.8.1';
 	const RESOURCES_VERSION = '1';
 	const API_URL = 'https://api.pushnews.eu';
 //	const API_URL = 'http://local.api.app.pushnews.eu';
@@ -135,28 +135,31 @@ MYHTML;
 			return;
 		}
 
-		if (
-			$postDate <= $now /* it's not a future post */
-			&&
-			'publish' === $post->post_status /* it is published */
-		) {
-			$body = self::buildNotificationBodyFromPost($post);
+		switch ($post->post_status) {
+			case "publish":
+				if ($postDate <= $now /* it's not a future post */) {
+					$body = self::buildNotificationBodyFromPost($post);
 
-			if (true === $sendNotification) {
-				self::sendNotification($options['app_id'], $options['auth_token'], $body);
-				delete_post_meta($post_id, "sendNotification");
-			}
-			if (true === $sendEmail) {
-				if (get_the_post_thumbnail_url($post)) {
-					$body['message']['image'] = get_the_post_thumbnail_url($post);
+					if (true === $sendNotification) {
+						self::sendNotification($options['app_id'], $options['auth_token'], $body);
+						delete_post_meta($post_id, "sendNotification");
+					}
+					if (true === $sendEmail) {
+						if (get_the_post_thumbnail_url($post)) {
+							$body['message']['image'] = get_the_post_thumbnail_url($post);
+						}
+						self::sendEmail($options['app_id'], $options['auth_token'], $body['message']);
+						delete_post_meta($post_id, "sendEmail");
+					}
 				}
-				self::sendEmail($options['app_id'], $options['auth_token'], $body['message']);
-				delete_post_meta($post_id, "sendEmail");
-			}
-		} else if ('draft' === $post->post_status) {
-			// since post is still a draft, let's check if user has selected "send push" or "send email" checkboxes
-			self::future_post_custom_hook($post->ID);
+				break;
+			case "draft":
+			case "future":
+				// since post is still a draft, let's check if user has selected "send push" or "send email" checkboxes
+				self::future_post_custom_hook($post->ID);
+				break;
 		}
+
 	}
 
 	/**
@@ -281,7 +284,6 @@ MYHTML;
 		wp_enqueue_style('pushnews-admin-styles', plugin_dir_url(__FILE__).'views/css/pushnews-admin-styles.css', false, self::RESOURCES_VERSION);
 	}
 
-
 	public static function settings_init()
 	{
 		register_setting("pushnews", "pushnews_options");
@@ -376,7 +378,6 @@ MYHTML;
         >
 		<?php
 	}
-
 
 	public static function inject_tag()
 	{
