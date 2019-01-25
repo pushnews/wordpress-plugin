@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class Pushnews
 {
-	const VERSION = '1.7.3';
+	const VERSION = '1.8.0';
 	const RESOURCES_VERSION = '1';
 	const API_URL = 'https://api.pushnews.eu';
 //	const API_URL = 'http://local.api.app.pushnews.eu';
@@ -130,8 +130,16 @@ MYHTML;
 		$now              = current_time("mysql", 1);
 		$postDate         = $post->post_date_gmt;
 
-		if ($postDate <= $now && isset($options['auth_token']) && $options['auth_token'] != "") {
+		if (!isset($options['auth_token']) || "" == $options['auth_token']) {
+			// token not set, abort
+			return;
+		}
 
+		if (
+			$postDate <= $now /* it's not a future post */
+			&&
+			'publish' === $post->post_status /* it is published */
+		) {
 			$body = self::buildNotificationBodyFromPost($post);
 
 			if (true === $sendNotification) {
@@ -145,13 +153,16 @@ MYHTML;
 				self::sendEmail($options['app_id'], $options['auth_token'], $body['message']);
 				delete_post_meta($post_id, "sendEmail");
 			}
+		} else if ('draft' === $post->post_status) {
+			// since post is still a draft, let's check if user has selected "send push" or "send email" checkboxes
+			self::future_post_custom_hook($post->ID);
 		}
 	}
 
 	/**
 	 * Build notification object to be sent to Pushnews API
 	 *
-	 * @param array $post
+	 * @param WP_Post| $post
 	 *
 	 * @return array
 	 */
@@ -212,6 +223,7 @@ MYHTML;
 
 	public static function add_custom_meta_box()
 	{
+		// add pushnews meta box to "post"
 		add_meta_box(
 			"pushnews-meta-box",
 			"Pushnews",
@@ -221,6 +233,26 @@ MYHTML;
 			"high",
 			null
 		);
+
+		// also add pushnews meta box on all other post types that are public but not built in to WordPress
+		$args = array(
+			'public' => true,
+			'_builtin' => false
+		);
+		$output = 'names';
+		$operator = 'and';
+		$post_types = get_post_types($args, $output, $operator);
+		foreach ($post_types as $post_type) {
+			add_meta_box(
+				"pushnews-meta-box",
+				"Pushnews",
+				array(__CLASS__, "custom_meta_box_markup"),
+				$post_type,
+				"side",
+				"high",
+				null
+			);
+		}
 	}
 
 	public static function plugin_uninstall()

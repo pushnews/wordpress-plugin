@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+# 1.8.0
+- Preventing Push/Email send while saving a draft post
+- Added support for custom post types
+
 # 1.7.3
 - Fixed date comparison (now using GMT)
 
