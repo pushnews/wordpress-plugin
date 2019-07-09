@@ -23,10 +23,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class Pushnews
 {
-	const VERSION = '1.8.1';
+	const VERSION = '1.9.0';
 	const RESOURCES_VERSION = '1';
 	const API_URL = 'https://api.pushnews.eu';
-//	const API_URL = 'http://local.api.app.pushnews.eu';
 	const CDN_DOMAIN = 'cdn.pn.vg';
 
 	const TAG = <<<MYHTML
@@ -171,16 +170,27 @@ MYHTML;
 	 */
 	private static function buildNotificationBodyFromPost($post)
 	{
-		$message = array(
-			"title" => get_the_title($post),
-			"body"  => substr(strip_tags(get_post_field('post_content', $post->ID)), 0, 300).' ...',
-			"url"   => get_permalink($post),
-		);
+		// prepare fields
+		$title = strip_tags(get_the_title($post));
+		$body = strip_tags(get_post_field('post_content', $post->ID));
+		$url = get_permalink($post);
+		$bigImage = get_the_post_thumbnail_url($post);
 
-		if (get_the_post_thumbnail_url($post)) {
-			$message['bigImage'] = get_the_post_thumbnail_url($post);
+		// trim long title or body
+		$title = mb_strimwidth($title, 0, 50, '...');
+		$body = mb_strimwidth($body, 0, 145, '...');
+
+		// build the message
+		$message = array(
+			"title" => $title,
+			"body" => $body,
+			"url" => $url,
+		);
+		if ($bigImage) {
+			$message['bigImage'] = $bigImage;
 		}
 
+		// return the Notification Body
 		$body = array(
 			"message" => $message,
 		);

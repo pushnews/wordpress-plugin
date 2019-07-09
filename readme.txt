@@ -3,9 +3,9 @@ Contributors: impactingdigital, tixastronauta, mariobalca
 Donate link: https://www.pushnews.eu/
 Tags: push, push notifications, web push, desktop notification, notifications, pushnews, onesignal, goroost, roost, pushcrew, pushengage, pushwoosh
 Requires at least: 3.8
-Tested up to: 5.0.3
+Tested up to: 5.2.2
 Requires PHP: 5.3
-Stable tag: 1.8.1
+Stable tag: 1.9.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -41,7 +41,7 @@ Features:
 
 = Where do I create a Pushnews account? =
 
-You can create a Pushnews account at [https://app.pushnews.eu/register](https://app.pushnews.eu/register?utm_source=WpPluginSite)
+You can create a Pushnews account at [https://app.pushnews.eu/register](https://app.pushnews.eu/register?utm_source=WpPluginSite&utm_medium=wordpress)
 
 = How do I send a push notification? =
 
@@ -60,6 +60,9 @@ First plugin release
 4. No HTTPS website is required
 
 == Changelog ==
+
+= 1.9.0 =
+* Now we are trimming Push title (max 50 chars), and body (max 145 chars)
 
 = 1.8.1 =
 * Saving "send push"/"send email" checks on custom post drafts

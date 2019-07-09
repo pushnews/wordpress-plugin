@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 1.9.0
+- Now we are trimming Push title (max 50 chars), and body (max 145 chars)
+
 # 1.8.1
 - Saving "send push"/"send email" checks on custom post drafts
 
