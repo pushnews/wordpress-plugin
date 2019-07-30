@@ -5,7 +5,7 @@ Tags: push, push notifications, web push, desktop notification, notifications, p
 Requires at least: 3.8
 Tested up to: 5.2.2
 Requires PHP: 5.3
-Stable tag: 1.9.0
+Stable tag: 1.10.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,9 @@ First plugin release
 4. No HTTPS website is required
 
 == Changelog ==
+
+= 1.10.0 =
+* Added "max push title characters" and "max push body characters" to advanced configuration
 
 = 1.9.0 =
 * Now we are trimming Push title (max 50 chars), and body (max 145 chars)

@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class Pushnews
 {
-	const VERSION = '1.9.0';
+	const VERSION = '1.10.0';
 	const RESOURCES_VERSION = '1';
 	const API_URL = 'https://api.pushnews.eu';
 	const CDN_DOMAIN = 'cdn.pn.vg';
@@ -33,6 +33,12 @@ class Pushnews
 <script src="//{%%cdn_domain%%}/sites/{%%app_id%%}.js" data-pn-plugin-url="{%%plugin_url%%}" data-pn-wp-plugin-version="{%%version%%}" async></script>
 <!-- / Pushnews -->
 MYHTML;
+
+	const OPTION_NAME_MAX_CHARS_PUSH_TITLE = 'maxchars_push_title';
+	const OPTION_DEFAULT_VALUE_MAX_CHARS_PUSH_TITLE = 50;
+
+	const OPTION_NAME_MAX_CHARS_PUSH_BODY = 'maxchars_push_body';
+	const OPTION_DEFAULT_VALUE_MAX_CHARS_PUSH_BODY = 145;
 
 	public static function init()
 	{
@@ -47,37 +53,29 @@ MYHTML;
 
 	public static function plugin_activation()
 	{
-
 		self::translations_init();
 
-		$siteUrl          = get_option('siteurl');
+		$siteUrl = get_option('siteurl');
 		$siteUrl64Encoded = PushnewsBase64Url::encode($siteUrl);
 
-		$endpoint     = self::API_URL."/v1/sites/{$siteUrl64Encoded}?filterBy=base64_url";
-		$response     = wp_remote_get($endpoint, array('headers' => array('X-Pushnews-Wp-Version' => self::VERSION)));
+		$endpoint = self::API_URL . "/v1/sites/{$siteUrl64Encoded}?filterBy=base64_url";
+		$response = wp_remote_get($endpoint, array('headers' => array('X-Pushnews-Wp-Version' => self::VERSION)));
 		$pushnewsSite = wp_remote_retrieve_body($response);
 		$pushnewsSite = json_decode($pushnewsSite, true);
-		if (JSON_ERROR_NONE == json_last_error()) {
-			if (true == $pushnewsSite['success']) {
-
-				$pushnewsSite = $pushnewsSite['data'];
-				$tmp          = parse_url($pushnewsSite['optin_url']);
-				$url          = $tmp['host'];
-
-				$options = array(
-					'active'     => 'true',
-					'app_id'     => $pushnewsSite['app_id'],
-					'auth_token' => $pushnewsSite['auth_token'],
-				);
-			} else {
-				$options = array(
-					'active' => 'false',
-					'app_id' => '0000-0000-0000-0000',
-				);
-			}
-
-			add_option('pushnews_options', $options);
+		$options = array(
+			self::OPTION_NAME_MAX_CHARS_PUSH_TITLE => self::OPTION_DEFAULT_VALUE_MAX_CHARS_PUSH_TITLE,
+			self::OPTION_NAME_MAX_CHARS_PUSH_BODY => self::OPTION_DEFAULT_VALUE_MAX_CHARS_PUSH_BODY,
+		);
+		if (JSON_ERROR_NONE == json_last_error() && isset($pushnewsSite['success']) && true == $pushnewsSite['success']) {
+			$pushnewsSite = $pushnewsSite['data'];
+			$options['active'] = 'true';
+			$options['app_id'] = $pushnewsSite['app_id'];
+			$options['auth_token'] = $pushnewsSite['auth_token'];
+		} else {
+			$options['active'] = 'false';
 		}
+
+		add_option('pushnews_options', $options);
 	}
 
 	public static function plugin_deactivation()
@@ -170,6 +168,17 @@ MYHTML;
 	 */
 	private static function buildNotificationBodyFromPost($post)
 	{
+	    // get options
+		$options = get_option('pushnews_options');
+		$option_max_chars_push_title = isset($options[self::OPTION_NAME_MAX_CHARS_PUSH_TITLE]) ? (int)$options[self::OPTION_NAME_MAX_CHARS_PUSH_TITLE] : self::OPTION_DEFAULT_VALUE_MAX_CHARS_PUSH_TITLE;
+		$option_max_chars_push_body = isset($options[self::OPTION_NAME_MAX_CHARS_PUSH_BODY]) ? (int)$options[self::OPTION_NAME_MAX_CHARS_PUSH_BODY] : self::OPTION_DEFAULT_VALUE_MAX_CHARS_PUSH_BODY;
+		if (0 === $option_max_chars_push_title) {
+			$option_max_chars_push_title = self::OPTION_DEFAULT_VALUE_MAX_CHARS_PUSH_TITLE;
+		}
+		if (0 === $option_max_chars_push_body) {
+			$option_max_chars_push_body = self::OPTION_DEFAULT_VALUE_MAX_CHARS_PUSH_BODY;
+		}
+
 		// prepare fields
 		$title = strip_tags(get_the_title($post));
 		$body = strip_tags(get_post_field('post_content', $post->ID));
@@ -177,8 +186,8 @@ MYHTML;
 		$bigImage = get_the_post_thumbnail_url($post);
 
 		// trim long title or body
-		$title = mb_strimwidth($title, 0, 50, '...');
-		$body = mb_strimwidth($body, 0, 145, '...');
+		$title = mb_strimwidth($title, 0, $option_max_chars_push_title, '...');
+		$body = mb_strimwidth($body, 0, $option_max_chars_push_body, '...');
 
 		// build the message
 		$message = array(
@@ -300,13 +309,19 @@ MYHTML;
 
 		$arr = array(
 			'basic' => array(
-				'active'     => __("Active", "pushnews"),
-				'app_id'     => __("App ID", "pushnews"),
+				'active' => __("Active", "pushnews"),
+				'app_id' => __("App ID", "pushnews"),
 				'auth_token' => __("Auth token", "pushnews"),
+			),
+			'advanced' => array(
+				self::OPTION_NAME_MAX_CHARS_PUSH_TITLE => __("Max Push Title Characters", "pushnews"),
+				self::OPTION_NAME_MAX_CHARS_PUSH_BODY => __("Max Push Body Characters", "pushnews"),
 			),
 		);
 
 		foreach ($arr as $section_name => $section_items) {
+
+		    $translation = __(ucfirst($section_name));
 
 			if ('basic' == $section_name) {
 				$translation = __("Configuration", "pushnews");

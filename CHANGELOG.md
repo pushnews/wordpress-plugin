@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 1.10.0
+- Added "max push title characters" and "max push body characters" to advanced configuration
+
 # 1.9.0
 - Now we are trimming Push title (max 50 chars), and body (max 145 chars)
 
