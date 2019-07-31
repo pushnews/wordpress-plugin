@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class Pushnews
 {
-	const VERSION = '1.10.0';
+	const VERSION = '1.10.1';
 	const RESOURCES_VERSION = '1';
 	const API_URL = 'https://api.pushnews.eu';
 	const CDN_DOMAIN = 'cdn.pn.vg';
@@ -48,7 +48,7 @@ MYHTML;
 
 	public static function translations_init()
 	{
-		load_plugin_textdomain('pushnews', false, basename(dirname(__FILE__)).'/languages/');
+		load_plugin_textdomain('pushnews', FALSE, dirname(plugin_basename(__FILE__)) . '/languages/');
 	}
 
 	public static function plugin_activation()

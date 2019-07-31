@@ -1,51 +1,57 @@
-# Copyright (C) 2019 
-# This file is distributed under the same license as the  package.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/wordpress-plugin\n"
-"POT-Creation-Date: 2019-01-09 12:49:34+00:00\n"
+"POT-Creation-Date: 2019-07-31 11:58+0100\n"
+"PO-Revision-Date: 2019-07-31 12:19+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2019-01-09 12:56+0000\n"
-"Language-Team: \n"
-"X-Generator: Poedit 2.2\n"
-"Last-Translator: \n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"Language: pt\n"
+"X-Generator: Poedit 2.2.3\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: class.pushnews.php:194 views/config.php:8
+#: class.pushnews.php:289
 msgid "Pushnews"
-msgstr ""
+msgstr "Pushnews"
 
-#: class.pushnews.php:218
+#: class.pushnews.php:312
 msgid "Active"
 msgstr "Ativo"
 
-#: class.pushnews.php:219
+#: class.pushnews.php:313
 msgid "App ID"
-msgstr ""
+msgstr "App ID"
 
-#: class.pushnews.php:220
+#: class.pushnews.php:314
 msgid "Auth token"
 msgstr "Token privado"
 
-#: class.pushnews.php:227
+#: class.pushnews.php:317
+msgid "Max Push Title Characters"
+msgstr "Número máximo de catacteres para o título"
+
+#: class.pushnews.php:318
+msgid "Max Push Body Characters"
+msgstr "Nºumero máximo de caracteres para o conteúdo"
+
+#: class.pushnews.php:327
 msgid "Configuration"
 msgstr "Configuração"
 
-#: class.pushnews.php:257
+#: class.pushnews.php:357
 msgid "To find your app id click"
-msgstr "Para localizar o seu App ID, clique"
+msgstr "Para saber o seu App ID clique"
 
-#: class.pushnews.php:258 class.pushnews.php:262 views/metabox.php:40
+#: class.pushnews.php:358 class.pushnews.php:362 views/metabox.php:40
 msgid "here"
 msgstr "aqui"
 
-#: class.pushnews.php:261
+#: class.pushnews.php:361
 msgid "To find your auth token click"
-msgstr "Para localizar o seu Token privado, clique"
+msgstr "Para saber o seu Token privado"
 
 #: views/config.php:13
 msgid "Save"
@@ -53,11 +59,11 @@ msgstr "Guardar"
 
 #: views/metabox.php:21 views/metabox.php:31
 msgid "Send push on publish/update"
-msgstr "Enviar push ao publicar/atualizar"
+msgstr "Enviar Push ao publicar/atualizar"
 
 #: views/metabox.php:25 views/metabox.php:35
 msgid "Send email on post publish"
-msgstr "Enviar email ao publicar/salvar"
+msgstr "Enviar Email ao publicar/atualizar"
 
 #: views/metabox.php:39
 msgid "Auth token is not defined, please update your plugin configuration"

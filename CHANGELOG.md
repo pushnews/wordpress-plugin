@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 1.10.1
+- Translations were not working
+
 # 1.10.0
 - Added "max push title characters" and "max push body characters" to advanced configuration
 
