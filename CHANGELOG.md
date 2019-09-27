@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 1.10.2
+- Removing &htmlentities; before calling push send api
+
 # 1.10.1
 - Translations were not working
 
