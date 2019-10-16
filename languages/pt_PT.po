@@ -1,0 +1,139 @@
+# Copyright (C) 2019 Pushnews <developers@pushnews.eu>
+# This file is distributed under the same license as the Pushnews plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Pushnews 2.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wordpress-plugin\n"
+"POT-Creation-Date: 2019-10-17T14:42:17+00:00\n"
+"PO-Revision-Date: 2019-10-17 15:43+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: pt_PT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.4\n"
+"X-Domain: pushnews\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. Plugin Name of the plugin
+#: class.pushnews.php:294 views/config.php:8
+msgid "Pushnews"
+msgstr "Pushnews"
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+msgid "https://www.pushnews.eu/"
+msgstr ""
+
+#. Description of the plugin
+msgid ""
+"Send Web Push Notifications to your visitors. Increase your website traffic "
+"- Simple and fast UI - Automate push notifications via Facebook Page "
+"integration."
+msgstr ""
+"Envie Push Notifications para os seus visitantes. Aumente o tráfego do seu "
+"site. Interface simples e rápida. Push Notifications automáticas com a "
+"integração com Facebook."
+
+#. Author of the plugin
+msgid "Pushnews <developers@pushnews.eu>"
+msgstr ""
+
+#: class.pushnews.php:313
+msgid "WooCommerce - Abandoned cart recovery Push Notification"
+msgstr ""
+"WooCommerce - Push Notification para recuperação de carrinhos abandonados"
+
+#: class.pushnews.php:315
+msgid ""
+"<p>Here you can setup up a Push Notification to be sent to users who have "
+"added items to the shopping cart but did not finish the purchase within a "
+"certain time.</p><p class=\"description\">You can use the following product "
+"variables on Notification title and Notification content: <b>%name%</b> for "
+"product name, <b>%price%</b> for product price.</p>"
+msgstr ""
+"<p>Aqui pode configurar uma Push Notification para ser automaticamente "
+"enviada para os inscritos que adicionaram algo ao carrinho de compras mas "
+"não finalizaram a compra dentro de um determinado tempo.</p><p class="
+"\"description\">Pode utilizar as seguintes variáveis nos campos Título e "
+"Conteúdo: <b>%name%</b> para o nome do produto, <b>%price%</b> para o preço "
+"do produto.</p>"
+
+#: class.pushnews.php:317 class.pushnews.php:331
+msgid "Active"
+msgstr "Ativo"
+
+#: class.pushnews.php:318
+msgid "Hours to wait before sending Notification"
+msgstr "Horas para aguardar até enviar Notificação"
+
+#: class.pushnews.php:319
+msgid "Notification title"
+msgstr "Título da Notificação"
+
+#: class.pushnews.php:320
+msgid "Notification content"
+msgstr "Conteúdo da Notificação"
+
+#: class.pushnews.php:328
+msgid "Configuration"
+msgstr "Configuração"
+
+#: class.pushnews.php:332
+msgid "App ID"
+msgstr ""
+
+#: class.pushnews.php:333
+msgid "Private token"
+msgstr "Token PRIVADO"
+
+#: class.pushnews.php:336
+msgid "Notification properties"
+msgstr "Propriedades da Notificação"
+
+#: class.pushnews.php:339
+msgid "Maximum title characters"
+msgstr "Máximo de caracteres para o Título"
+
+#: class.pushnews.php:340
+msgid "Maximum content characters"
+msgstr "Máximo de caracteres para o Conteúdo"
+
+#: class.pushnews.php:386
+msgid "To find your app id click"
+msgstr "Para saber o seu App ID clique"
+
+#: class.pushnews.php:387 class.pushnews.php:391
+msgid "here"
+msgstr "aqui"
+
+#: class.pushnews.php:390
+msgid "To find your private token click"
+msgstr "Para saber o seu Token PRIVADO clique"
+
+#: class.pushnews.php:394
+msgid ""
+"If user finishes the purchase before this time has passed, Push Notification "
+"will be canceled."
+msgstr ""
+"Se um inscrito terminar a compra antes de estas horas passarem, a Push "
+"Notification será cancelada."
+
+#: views/config.php:13
+msgid "Save"
+msgstr "Guardar"
+
+#: views/metabox.php:21 views/metabox.php:31
+msgid "Send push on publish/update"
+msgstr "Enviar Push ao publicar/atualizar"
+
+#: views/metabox.php:25 views/metabox.php:35
+msgid "Send email on post publish"
+msgstr "Enviar Email ao publicar/atualizar"
+
+#~ msgid ""
+#~ "This feature is only available on Wordpress installations with WooCommerce"
+#~ msgstr ""
+#~ "Funcionalidade somente disponível para instalações Wordpress com o plugin "
+#~ "WooCommerce"
