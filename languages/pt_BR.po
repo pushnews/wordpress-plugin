@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the Pushnews plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Pushnews 2.0.0\n"
+"Project-Id-Version: Pushnews 2.0.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wordpress-plugin\n"
 "POT-Creation-Date: 2019-10-17T14:42:17+00:00\n"
 "PO-Revision-Date: 2019-10-17 15:43+0100\n"

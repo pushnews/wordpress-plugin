@@ -523,7 +523,7 @@ HTML;
 
 				$data = array(
 					"notification" => $notification,
-					"delayMinutes" => 1,
+					"delayMinutes" => $options[ self::OPTION_NAME_WOO_COMMERCE_HOURS ] * 60,
 					"context"      => $context
 				);
 

@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 2.0.1
+- Bugfix: Was sending recovery push always after a minute
+
 # 2.0.0
 - Added WooCommerce integration allowing for abandoned cart recovery Push Notification
 - Redesigned admin interface
