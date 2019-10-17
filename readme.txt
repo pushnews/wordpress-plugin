@@ -5,7 +5,7 @@ Tags: push, push notifications, web push, desktop notification, notifications, p
 Requires at least: 3.8
 Tested up to: 5.2.3
 Requires PHP: 5.3
-Stable tag: 1.10.2
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,10 @@ First plugin release
 4. No HTTPS website is required
 
 == Changelog ==
+
+= 2.0.0 =
+* Added WooCommerce integration allowing for abandoned cart recovery Push Notification
+* Redesigned admin interface
 
 = 1.10.2 =
 * Removing &htmlentities; before calling push send api

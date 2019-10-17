@@ -1,53 +1,110 @@
+@charset "UTF-8";
 /*
 Author:             Pushnews <developers@pushnews.eu>
 License:            GPLv2 or later
 */
-@charset "UTF-8";
 
 @font-face {
-    font-family: "pushnews-font";
-    src: url("fonts/pushnews-font.eot");
-    src: url("fonts/pushnews-font.eot?#iefix") format("embedded-opentype"),
-    url("fonts/pushnews-font.woff") format("woff"),
-    url("fonts/pushnews-font.ttf") format("truetype"),
-    url("fonts/pushnews-font.svg#pushnews-font") format("svg");
-    font-weight: normal;
-    font-style: normal;
+	font-family: "pushnews-font";
+	src: url("fonts/pushnews-font.eot");
+	src: url("fonts/pushnews-font.eot?#iefix") format("embedded-opentype"),
+	url("fonts/pushnews-font.woff") format("woff"),
+	url("fonts/pushnews-font.ttf") format("truetype"),
+	url("fonts/pushnews-font.svg#pushnews-font") format("svg");
+	font-weight: normal;
+	font-style: normal;
 
 }
 
 [data-icon]:before {
-    font-family: "pushnews-font" !important;
-    content: attr(data-icon);
-    font-style: normal !important;
-    font-weight: normal !important;
-    font-variant: normal !important;
-    text-transform: none !important;
-    speak: none;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+	font-family: "pushnews-font" !important;
+	content: attr(data-icon);
+	font-style: normal !important;
+	font-weight: normal !important;
+	font-variant: normal !important;
+	text-transform: none !important;
+	speak: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 [class^="icon-pn-"]:before,
 [class*=" icon-pn-"]:before {
-    font-family: "pushnews-font" !important;
-    font-style: normal !important;
-    font-weight: normal !important;
-    font-variant: normal !important;
-    text-transform: none !important;
-    speak: none;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+	font-family: "pushnews-font" !important;
+	font-style: normal !important;
+	font-weight: normal !important;
+	font-variant: normal !important;
+	text-transform: none !important;
+	speak: none;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 .icon-pn-ic-pushnews:before {
-    content: "\61";
+	content: "\61";
 }
 
 #adminmenu .toplevel_page_pushnews.menu-icon-generic div.wp-menu-image:before {
-    font-family: 'pushnews-font' !important;
-    content: '\61';
-    font-size: 1.3em !important;
+	font-family: 'pushnews-font' !important;
+	content: '\61';
+	font-size: 1.3em !important;
+}
+
+body.toplevel_page_pushnews table.form-table {
+	padding: 20px !important;
+	background-color: #fff;
+	border-radius: 0 6px 6px 6px;
+	margin-top: 0;
+	margin-bottom: 50px;
+	box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .1);
+}
+
+/* fix por "WooCommerce" */
+body.toplevel_page_pushnews table.form-table:last-of-type {
+	border-radius: 0 0 6px 6px;
+}
+
+body.toplevel_page_pushnews table.form-table th {
+	padding: 20px 10px 20px 20px;
+}
+
+body.toplevel_page_pushnews input[type=text] {
+	width: 350px;
+}
+
+tr.pushnews_row:not(:last-child) {
+	border-bottom: 1px solid #ececec;
+}
+
+body.toplevel_page_pushnews form h2 {
+	background-color: #fff;
+	margin: 0;
+	padding: 15px 20px;
+	border-radius: 6px 6px 0 0;
+	width: max-content;
+	font-size: 1.4em;
+	border-top: 2px solid #00a0d2;
+}
+
+body.toplevel_page_pushnews form p {
+	background-color: #fff;
+	padding: 1em 0 0 1em;
+	margin: 0;;
+}
+
+body.toplevel_page_pushnews form td p {
+	background-color: inherit;
+	padding: 2px 0 0 0;
+	margin: inherit;
+}
+
+body.toplevel_page_pushnews form p.submit {
+	background-color: inherit;
+	padding: 0;
+}
+
+body.toplevel_page_pushnews .postbox .inside h2, .wrap [class$=icon32] + h2, .wrap h1, .wrap > h2:first-child {
+	margin-bottom: 20px;
 }

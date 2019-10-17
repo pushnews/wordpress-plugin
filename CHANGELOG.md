@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+# 2.0.0
+- Added WooCommerce integration allowing for abandoned cart recovery Push Notification
+- Redesigned admin interface
+
 # 1.10.2
 - Removing &htmlentities; before calling push send api
 

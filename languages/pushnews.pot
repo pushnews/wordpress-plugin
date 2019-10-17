@@ -1,0 +1,114 @@
+# Copyright (C) 2019 Pushnews <developers@pushnews.eu>
+# This file is distributed under the same license as the Pushnews plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: Pushnews 2.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wordpress-plugin\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2019-10-17T14:44:17+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.3.0\n"
+"X-Domain: pushnews\n"
+
+#. Plugin Name of the plugin
+#: class.pushnews.php:294
+#: views/config.php:8
+msgid "Pushnews"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+msgid "https://www.pushnews.eu/"
+msgstr ""
+
+#. Description of the plugin
+msgid "Send Web Push Notifications to your visitors. Increase your website traffic - Simple and fast UI - Automate push notifications via Facebook Page integration."
+msgstr ""
+
+#. Author of the plugin
+msgid "Pushnews <developers@pushnews.eu>"
+msgstr ""
+
+#: class.pushnews.php:313
+msgid "WooCommerce - Abandoned cart recovery Push Notification"
+msgstr ""
+
+#: class.pushnews.php:315
+msgid "<p>Here you can setup up a Push Notification to be sent to users who have added items to the shopping cart but did not finish the purchase within a certain time.</p><p class=\"description\">You can use the following product variables on Notification title and Notification content: <b>%name%</b> for product name, <b>%price%</b> for product price.</p>"
+msgstr ""
+
+#: class.pushnews.php:317
+#: class.pushnews.php:331
+msgid "Active"
+msgstr ""
+
+#: class.pushnews.php:318
+msgid "Hours to wait before sending Notification"
+msgstr ""
+
+#: class.pushnews.php:319
+msgid "Notification title"
+msgstr ""
+
+#: class.pushnews.php:320
+msgid "Notification content"
+msgstr ""
+
+#: class.pushnews.php:328
+msgid "Configuration"
+msgstr ""
+
+#: class.pushnews.php:332
+msgid "App ID"
+msgstr ""
+
+#: class.pushnews.php:333
+msgid "Private token"
+msgstr ""
+
+#: class.pushnews.php:336
+msgid "Notification properties"
+msgstr ""
+
+#: class.pushnews.php:339
+msgid "Maximum title characters"
+msgstr ""
+
+#: class.pushnews.php:340
+msgid "Maximum content characters"
+msgstr ""
+
+#: class.pushnews.php:386
+msgid "To find your app id click"
+msgstr ""
+
+#: class.pushnews.php:387
+#: class.pushnews.php:391
+msgid "here"
+msgstr ""
+
+#: class.pushnews.php:390
+msgid "To find your private token click"
+msgstr ""
+
+#: class.pushnews.php:394
+msgid "If user finishes the purchase before this time has passed, Push Notification will be canceled."
+msgstr ""
+
+#: views/config.php:13
+msgid "Save"
+msgstr ""
+
+#: views/metabox.php:21
+#: views/metabox.php:31
+msgid "Send push on publish/update"
+msgstr ""
+
+#: views/metabox.php:25
+#: views/metabox.php:35
+msgid "Send email on post publish"
+msgstr ""
