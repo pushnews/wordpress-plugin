@@ -11,7 +11,7 @@ You should clone our Github repo as this is our main CVS.
 
 All changes should be performed taking into consideration:
 
-- Minimium PHP Version: 5.3
+- Minimum PHP Version: 5.3
 - Wordpress Plugin Handbook: [https://developer.wordpress.org/plugins/wordpress-org/detailed-plugin-guidelines/](https://developer.wordpress.org/plugins/wordpress-org/detailed-plugin-guidelines/)
 - Wordpress Best Practices: [https://developer.wordpress.org/plugins/the-basics/best-practices/](https://developer.wordpress.org/plugins/the-basics/best-practices/)
 

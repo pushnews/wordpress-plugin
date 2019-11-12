@@ -6,7 +6,7 @@ License:            GPLv2 or later
 ?>
 <div>
     <div style="text-align: center">
-        <img src="https://icons.pushnews.eu/pushnews-icon-positive-512.png" alt="pushnews_logo" style="display: block; width: 40px; margin: 10px auto;">
+        <img src="https://icons.pn.vg/pushnews-icon-positive-512.png" alt="pushnews_logo" style="display: block; width: 40px; margin: 10px auto;">
     </div>
     <?php
     $sendNotification = filter_var(get_post_meta(get_the_ID(), 'sendNotification', true), FILTER_VALIDATE_BOOLEAN);

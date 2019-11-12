@@ -5,7 +5,7 @@ Tags: push, push notifications, web push, desktop notification, notifications, p
 Requires at least: 3.8
 Tested up to: 5.2.3
 Requires PHP: 5.3
-Stable tag: 2.0.1
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,6 +60,9 @@ First plugin release
 4. No HTTPS website is required
 
 == Changelog ==
+
+= 2.1.0 =
+* Updated technical domain from "pushnews.eu" to "pn.vg"
 
 = 2.0.1 =
 * Bugfix: Was sending recovery push always after a minute

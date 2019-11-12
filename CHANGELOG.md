@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 2.1.0
+- Updated technical domain from "pushnews.eu" to "pn.vg"
+
 # 2.0.1
 - Bugfix: Was sending recovery push always after a minute
 
