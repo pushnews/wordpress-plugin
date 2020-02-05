@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 3.0.0
+- Changed Service Worker importScripts URL
+
 # 2.1.0
 - Updated technical domain from "pushnews.eu" to "pn.vg"
 

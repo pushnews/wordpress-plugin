@@ -3,9 +3,9 @@ Contributors: impactingdigital, tixastronauta, mariobalca
 Donate link: https://www.pushnews.eu/
 Tags: push, push notifications, web push, desktop notification, notifications, pushnews, onesignal, goroost, roost, pushcrew, pushengage, pushwoosh
 Requires at least: 3.8
-Tested up to: 5.2.3
+Tested up to: 5.3.2
 Requires PHP: 5.3
-Stable tag: 2.1.0
+Stable tag: 3.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,16 +13,14 @@ Increase your website traffic with Pushnews Web Push Notifications.
 
 == Description ==
 
-Pushnews is a web push notifications provider. With push notifications you can increase your website traffic by bringing your users back. Pushnews has a simple and intuitive interface - no development experience is required! You can even setup a Facebook Page integration in order to fully automate you push notification messages.
+Pushnews is a web push notifications provider. With push notifications you can increase your website traffic by bringing your users back. Pushnews has a simple and intuitive interface - no development experience is required!
 
 Features:
 
 - Sending web push notifications
 - Customizable opt-in widget
-- Customizable opt-in popup window
 - Schedule push notifications
 - Weekly recurring notifications planner
-- Facebook-to-push - Automatically send you facebook posts as push notifications
 - Push OnSite - Push notifications directly on your website without the need for user opt-in
 - Push Mail - Capture your visitors email addresses and send them beautiful emails
 - Statistics
@@ -60,6 +58,9 @@ First plugin release
 4. No HTTPS website is required
 
 == Changelog ==
+
+= 3.0.0 =
+* Changed Service Worker importScripts URL
 
 = 2.1.0 =
 * Updated technical domain from "pushnews.eu" to "pn.vg"
