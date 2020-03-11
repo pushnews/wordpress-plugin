@@ -1,9 +1,9 @@
 === Pushnews ===
 Contributors: impactingdigital, tixastronauta, mariobalca
 Donate link: https://www.pushnews.eu/
-Tags: push, push notifications, web push, desktop notification, notifications, pushnews, onesignal, goroost, roost, pushcrew, pushengage, pushwoosh
+Tags: push, push notifications, web push, desktop notification, notifications, pushnews, onesignal, sendpulse, pushcrew, vwo, pushengage, pushwoosh, aimtell
 Requires at least: 3.8
-Tested up to: 5.3.2
+Tested up to: 5.4
 Requires PHP: 5.3
 Stable tag: 3.0.0
 License: GPLv2 or later
@@ -31,7 +31,7 @@ Features:
 
 == Installation ==
 
-1. Create an account at Pushnews.eu
+1. Create an account at Pushnews
 2. Install the Pushnews plugin from the WordPress.org plugin directory or by uploading the Pushnews plugin folder to your wp-content/plugins directory.
 3. Activate the plugin and set the desired configurations.
 
