@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 3.1.0
+- Ensured 100% compatibility with Wordpress 5.4
+
 # 3.0.0
 - Changed Service Worker importScripts URL
 

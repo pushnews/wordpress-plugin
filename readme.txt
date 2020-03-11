@@ -5,7 +5,7 @@ Tags: push, push notifications, web push, desktop notification, notifications, p
 Requires at least: 3.8
 Tested up to: 5.4
 Requires PHP: 5.3
-Stable tag: 3.0.0
+Stable tag: 3.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,6 +58,9 @@ First plugin release
 4. No HTTPS website is required
 
 == Changelog ==
+
+= 3.1.0 =
+* Ensured 100% compatibility with Wordpress 5.4
 
 = 3.0.0 =
 * Changed Service Worker importScripts URL
