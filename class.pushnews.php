@@ -22,12 +22,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
 class Pushnews {
-	const RESOURCES_VERSION = '2019101701';
+	const RESOURCES_VERSION = '2020072001';
 	const API_URL = 'https://api.pushnews.eu';
 	const CDN_DOMAIN = 'cdn.pn.vg';
 
 	const TAG = <<<MYHTML
-<script src="//{%%cdn_domain%%}/sites/{%%app_id%%}.js" data-pn-plugin-url="{%%plugin_url%%}" data-pn-wp-plugin-version="{%%version%%}" async></script>
+<script src="//{%%cdn_domain%%}/sites/{%%app_id%%}.js" data-pn-plugin-url="{%%plugin_url%%}" data-pn-wp-plugin-version="{%%version%%}" type="text/javascript" async></script>
 MYHTML;
 
 	const OPTION_NAME_MAX_CHARS_PUSH_TITLE = 'maxchars_push_title';
@@ -100,7 +100,7 @@ MYHTML;
 		require_once( plugin_dir_path( __FILE__ ) . '/views/metabox.php' );
 	}
 
-	public function future_post_custom_hook( $post_id ) {
+	public static function future_post_custom_hook( $post_id ) {
 		$sendNotification = $_POST['pushnews_send_notification'];
 		$sendEmail        = $_POST['pushnews_send_email'];
 
@@ -131,7 +131,7 @@ MYHTML;
 	 * @param WP_Post|array $post The post object.
 	 * @param bool $update Whether this is an existing post being updated or not.
 	 */
-	function save_post_custom_hook( $post_id, $post, $update ) {
+	public static function save_post_custom_hook( $post_id, $post, $update ) {
 		$sendNotification = filter_var( $_POST['pushnews_send_notification'] || get_post_meta( $post_id, 'sendNotification' ), FILTER_VALIDATE_BOOLEAN );
 		$sendEmail        = filter_var( $_POST['pushnews_send_email'] || get_post_meta( $post_id, 'sendEmail' ), FILTER_VALIDATE_BOOLEAN );
 		$options          = get_option( 'pushnews_options' );
@@ -603,10 +603,11 @@ HTML;
 	 * @param string|null $msg
 	 */
 	private static function _debug( $msg = null ) {
-//		$msg = '[' . date( 'Y-m-d H:i:s' ) . "] {$msg}\n";
-//		$h   = fopen( "/var/www/log", "a+" );
-//		fwrite( $h, $msg );
-//		fclose( $h );
+	    return;
+		$msg = '[' . date( 'Y-m-d H:i:s' ) . "] {$msg}\n";
+		$h   = fopen( "/var/www/log", "a+" );
+		fwrite( $h, $msg );
+		fclose( $h );
 	}
 
 }

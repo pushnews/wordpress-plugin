@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 3.1.1
+- Fixed a deprecation warning
+
 # 3.1.0
 - Ensured 100% compatibility with Wordpress 5.4
 
