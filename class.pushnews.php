@@ -57,7 +57,11 @@ MYHTML;
 	}
 
 	public static function translations_init() {
-		$locale = apply_filters( 'plugin_locale', determine_locale(), 'pushnews' );
+		if ( function_exists( 'determine_locale' ) ) {
+			$locale = apply_filters( 'plugin_locale', determine_locale(), 'pushnews' );
+		} else {
+			$locale = apply_filters( 'plugin_locale', get_user_locale(), 'pushnews' );
+		}
 		$mofile = WP_PLUGIN_DIR . '/pushnews/languages/' . $locale . '.mo';
 
 		load_textdomain( 'pushnews', $mofile );

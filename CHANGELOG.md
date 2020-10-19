@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 3.1.2
+- Added a fallback function for determine_locale since it is only available on wordpress 5.0.0
+
 # 3.1.1
 - Fixed a deprecation warning
 
