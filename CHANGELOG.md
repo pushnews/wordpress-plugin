@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 3.1.3
+- Stripping shortcodes from post body while converting it to Push
+
 # 3.1.2
 - Added a fallback function for determine_locale since it is only available on wordpress 5.0.0
 

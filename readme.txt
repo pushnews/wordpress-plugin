@@ -5,7 +5,7 @@ Tags: push, push notifications, web push, desktop notification, notifications, p
 Requires at least: 3.8
 Tested up to: 5.4.2
 Requires PHP: 5.3
-Stable tag: 3.1.2
+Stable tag: 3.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,6 +58,9 @@ First plugin release
 4. No HTTPS website is required
 
 == Changelog ==
+
+= 3.1.3 =
+* Stripping shortcodes from post body while converting it to Push
 
 = 3.1.2 =
 * Added a fallback function for determine_locale since it is only available on wordpress 5.0.0
