@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 3.1.4
+- Tested OK up to Wordpress 5.7.1
+
 # 3.1.3
 - Stripping shortcodes from post body while converting it to Push
 

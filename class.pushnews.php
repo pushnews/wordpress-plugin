@@ -466,7 +466,7 @@ MYHTML;
 			unset( $_SESSION[ self::SESSION_KEY_ECOMMERCE_PRODUCT_ADDED ] );
 			echo <<<HTML
 <script>
-var IlabsPush = IlabsPush || []; 
+var IlabsPush = IlabsPush || [];
 IlabsPush.push(["ecommerce.itemAddedToCart", $data]);
 </script>
 HTML;
@@ -476,7 +476,7 @@ HTML;
 			unset( $_SESSION[ self::SESSION_KEY_ECOMMERCE_CHECKOUT ] );
 			echo <<<HTML
 <script>
-var IlabsPush = IlabsPush || []; 
+var IlabsPush = IlabsPush || [];
 IlabsPush.push(["ecommerce.checkoutCompleted"]);
 </script>
 HTML;
@@ -580,7 +580,7 @@ HTML;
 	}
 
 	/**
-	 * Replaces {{variables}} in the $template
+	 * Replaces {{variables}} in the $template
 	 *
 	 * @param $template
 	 * @param $variables
