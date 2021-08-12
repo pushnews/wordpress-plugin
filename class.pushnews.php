@@ -194,14 +194,19 @@ MYHTML;
 		}
 
 		// prepare fields
-		$title    = html_entity_decode( strip_shortcodes( strip_tags( get_the_title( $post ) ) ) );
-		$body     = html_entity_decode( strip_shortcodes( strip_tags( get_post_field( 'post_content', $post->ID ) ) ) );
+		$title    = strip_shortcodes( html_entity_decode( strip_shortcodes( strip_tags( get_the_title( $post ) ) ) ) );
+		$body     = strip_shortcodes( html_entity_decode( strip_shortcodes( strip_tags( get_post_field( 'post_content', $post->ID ) ) ) ) );
 		$url      = get_permalink( $post );
 		$bigImage = get_the_post_thumbnail_url( $post );
 
 		// trim long title or body
-		$title = mb_strimwidth( $title, 0, $option_max_chars_push_title, '...' );
-		$body  = mb_strimwidth( $body, 0, $option_max_chars_push_body, '...' );
+		if ( function_exists( 'mb_strimwidth' ) ) {
+			$title = mb_strimwidth( $title, 0, $option_max_chars_push_title, '...' );
+			$body  = mb_strimwidth( $body, 0, $option_max_chars_push_body, '...' );
+		} else {
+			$title = substr( $title, 0, $option_max_chars_push_title );
+			$body  = substr( $title, 0, $option_max_chars_push_body );
+		}
 
 		// build the message
 		$message = array(
@@ -214,11 +219,9 @@ MYHTML;
 		}
 
 		// return the Notification Body
-		$body = array(
+		return array(
 			"message" => $message,
 		);
-
-		return $body;
 	}
 
 	/**

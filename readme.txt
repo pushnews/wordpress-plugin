@@ -3,9 +3,9 @@ Contributors: impactingdigital, tixastronauta, mariobalca
 Donate link: https://www.pushnews.eu/
 Tags: push, push notifications, web push, desktop notification, notifications, pushnews, onesignal, sendpulse, pushcrew, vwo, pushengage, pushwoosh, aimtell
 Requires at least: 3.8
-Tested up to: 5.7.1
+Tested up to: 5.8
 Requires PHP: 5.3
-Stable tag: 3.1.4
+Stable tag: 3.1.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,6 +58,10 @@ First plugin release
 4. No HTTPS website is required
 
 == Changelog ==
+
+= 3.1.5 =
+* Tested OK up to Wordpress 5.8
+* Added alternative string trimming with "substr" instead of "mb_strimwidth" for installations without "mbstring" PHP module
 
 = 3.1.4 =
 * Tested OK up to Wordpress 5.7.1
