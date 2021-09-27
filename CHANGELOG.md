@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+# 3.2.0
+- Updated ServiceWorker URL
+- Tested OK up to Wordpress 5.8.1
+
 # 3.1.5
 - Tested OK up to Wordpress 5.8
 - Added alternative string trimming with "substr" instead of "mb_strimwidth" for installations without "mbstring" PHP module
