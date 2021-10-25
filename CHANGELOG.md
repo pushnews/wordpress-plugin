@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 3.2.1
+- Fixed support links
+
 # 3.2.0
 - Updated ServiceWorker URL
 - Tested OK up to Wordpress 5.8.1

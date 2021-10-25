@@ -422,9 +422,9 @@ MYHTML;
 		<?php
 
 		if ( $args['label_for'] == "app_id" ) {
-			printf( '<p class="description">%s <a href="https://ajuda.pushnews.com.br/integracao-e-configuracao/como-saber-qual-o-seu-app-id" target="_blank">%s</a></p>', $supplemental[0], $supplemental[1] );
+			printf( '<p class="description">%s <a href="https://pushnews.freshdesk.com/support/solutions/articles/80000297546-como-saber-qual-o-seu-app-id-" target="_blank">%s</a></p>', $supplemental[0], $supplemental[1] );
 		} elseif ( $args['label_for'] == "auth_token" ) {
-			printf( '<p class="description">%s <a href=" http://ajuda.pushnews.com.br/integracao-e-configuracao/como-saber-qual-o-seu-token-de-autorizacao" target="_blank">%s</a></p>', $supplemental[0], $supplemental[1] );
+			printf( '<p class="description">%s <a href="https://pushnews.freshdesk.com/support/solutions/articles/80000297613-como-saber-qual-o-seu-token-de-autorizac%C3%A3o" target="_blank">%s</a></p>', $supplemental[0], $supplemental[1] );
 		} elseif ( ! is_null( $supplemental ) ) {
 			printf( '<p class="description">%s</p>', $supplemental[0] );
 		}
