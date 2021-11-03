@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 3.3.0
+- Updated Wordpress plugin directory image assets
+
 # 3.2.1
 - Fixed support links
 
