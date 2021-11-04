@@ -136,8 +136,8 @@ MYHTML;
 	 * @param bool $update Whether this is an existing post being updated or not.
 	 */
 	public static function save_post_custom_hook( $post_id, $post, $update ) {
-		$sendNotification = filter_var( $_POST['pushnews_send_notification'] || get_post_meta( $post_id, 'sendNotification' ), FILTER_VALIDATE_BOOLEAN );
-		$sendEmail        = filter_var( $_POST['pushnews_send_email'] || get_post_meta( $post_id, 'sendEmail' ), FILTER_VALIDATE_BOOLEAN );
+		$sendNotification = isset($_POST['pushnews_send_notification']) && filter_var( $_POST['pushnews_send_notification'] || get_post_meta( $post_id, 'sendNotification' ), FILTER_VALIDATE_BOOLEAN );
+		$sendEmail        = isset($_POST['pushnews_send_email']) && filter_var( $_POST['pushnews_send_email'] || get_post_meta( $post_id, 'sendEmail' ), FILTER_VALIDATE_BOOLEAN );
 		$options          = get_option( 'pushnews_options' );
 		$now              = current_time( "mysql", 1 );
 		$postDate         = $post->post_date_gmt;

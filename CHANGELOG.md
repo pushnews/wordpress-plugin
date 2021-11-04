@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 3.3.1
+- Fixed PHP Notice on undefined index
+
 # 3.3.0
 - Updated Wordpress plugin directory image assets
 
