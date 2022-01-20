@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+# 3.4.0
+- Added two activation toggles: tag inject (frontend) and metabox inject (backend)
+- Improved translations
+- Minor code improvements
+
 # 3.3.1
 - Fixed PHP Notice on undefined index
 

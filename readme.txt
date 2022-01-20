@@ -3,9 +3,9 @@ Contributors: impactingdigital, tixastronauta, mariobalca
 Donate link: https://www.pushnews.eu/
 Tags: push, push notifications, web push, desktop notification, notifications, pushnews, onesignal, sendpulse, pushcrew, vwo, pushengage, pushwoosh, aimtell
 Requires at least: 3.8
-Tested up to: 5.8.1
+Tested up to: 5.8.3
 Requires PHP: 5.3
-Stable tag: 3.3.1
+Stable tag: 3.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,6 +58,11 @@ First plugin release
 4. No HTTPS website is required
 
 == Changelog ==
+
+= 3.4.0 =
+* Added two activation toggles: tag inject (frontend) and metabox inject (backend)
+* Improved translations
+* Minor code improvements
 
 = 3.3.1 =
 * Fixed PHP Notice on undefined index

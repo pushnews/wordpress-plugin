@@ -1,51 +1,46 @@
-# Copyright (C) 2019 Pushnews <developers@pushnews.eu>
-# This file is distributed under the same license as the Pushnews plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: Pushnews 2.1.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wordpress-plugin\n"
-"POT-Creation-Date: 2019-10-17T14:42:17+00:00\n"
-"PO-Revision-Date: 2019-10-17 15:43+0100\n"
-"Last-Translator: \n"
+"Project-Id-Version: Pushnews\n"
+"POT-Creation-Date: 2022-01-20 17:15+0000\n"
+"PO-Revision-Date: 2022-01-20 17:24+0000\n"
 "Language-Team: \n"
-"Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.4\n"
-"X-Domain: pushnews\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.3\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: pushnews.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Last-Translator: \n"
+"Language: pt\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-#. Plugin Name of the plugin
-#: class.pushnews.php:294 views/config.php:8
+#: class.pushnews.php:342
+msgid "Pushnews installed. Now you need to configure it"
+msgstr "Pushnews instalado. Agora precisa configurá-lo"
+
+#: class.pushnews.php:343 class.pushnews.php:459 class.pushnews.php:463
+#: views/metabox.php:32
+msgid "here"
+msgstr "aqui"
+
+#. Plugin Name of the plugin/theme
+#: class.pushnews.php:354 views/config.php:8
 msgid "Pushnews"
 msgstr "Pushnews"
 
-#. Plugin URI of the plugin
-#. Author URI of the plugin
-msgid "https://www.pushnews.eu/"
-msgstr ""
-
-#. Description of the plugin
-msgid ""
-"Send Web Push Notifications to your visitors. Increase your website traffic "
-"- Simple and fast UI - Automate push notifications via Facebook Page "
-"integration."
-msgstr ""
-"Envie Push Notifications para os seus visitantes. Aumente o tráfego do seu "
-"site. Interface simples e rápida. Push Notifications automáticas com a "
-"integração com Facebook."
-
-#. Author of the plugin
-msgid "Pushnews <developers@pushnews.eu>"
-msgstr ""
-
-#: class.pushnews.php:313
+#: class.pushnews.php:373
 msgid "WooCommerce - Abandoned cart recovery Push Notification"
 msgstr ""
 "WooCommerce - Push Notification para recuperação de carrinhos abandonados"
 
-#: class.pushnews.php:315
+#: class.pushnews.php:375
 msgid ""
 "<p>Here you can setup up a Push Notification to be sent to users who have "
 "added items to the shopping cart but did not finish the purchase within a "
@@ -60,59 +55,78 @@ msgstr ""
 "Conteúdo: <b>%name%</b> para o nome do produto, <b>%price%</b> para o preço "
 "do produto.</p>"
 
-#: class.pushnews.php:317 class.pushnews.php:331
+#: class.pushnews.php:377 class.pushnews.php:398
 msgid "Active"
 msgstr "Ativo"
 
-#: class.pushnews.php:318
+#: class.pushnews.php:378
 msgid "Hours to wait before sending Notification"
 msgstr "Horas para aguardar até enviar Notificação"
 
-#: class.pushnews.php:319
+#: class.pushnews.php:379
 msgid "Notification title"
 msgstr "Título da Notificação"
 
-#: class.pushnews.php:320
+#: class.pushnews.php:380
 msgid "Notification content"
 msgstr "Conteúdo da Notificação"
 
-#: class.pushnews.php:328
+#: class.pushnews.php:388
 msgid "Configuration"
 msgstr "Configuração"
 
-#: class.pushnews.php:332
+#: class.pushnews.php:391
 msgid "App ID"
-msgstr ""
+msgstr "App ID"
 
-#: class.pushnews.php:333
-msgid "Private token"
-msgstr "Token PRIVADO"
+#: class.pushnews.php:392
+msgid "API token"
+msgstr "API token"
 
-#: class.pushnews.php:336
+#: class.pushnews.php:395
+msgid "Activation"
+msgstr "Ativação"
+
+#: class.pushnews.php:399
+msgid "Add Sidebar on Posts"
+msgstr "Adicionar barra lateral nos Posts"
+
+#: class.pushnews.php:402
 msgid "Notification properties"
 msgstr "Propriedades da Notificação"
 
-#: class.pushnews.php:339
+#: class.pushnews.php:405
 msgid "Maximum title characters"
 msgstr "Máximo de caracteres para o Título"
 
-#: class.pushnews.php:340
+#: class.pushnews.php:406
 msgid "Maximum content characters"
 msgstr "Máximo de caracteres para o Conteúdo"
 
-#: class.pushnews.php:386
-msgid "To find your app id click"
-msgstr "Para saber o seu App ID clique"
+#: class.pushnews.php:452
+msgid ""
+"If disabled, the Pushnews Javascript tag will not be injected on your "
+"website."
+msgstr ""
+"Quando desligado, a tag Javascript do Pushnews não será injetada no seu site."
 
-#: class.pushnews.php:387 class.pushnews.php:391
-msgid "here"
-msgstr "aqui"
+#: class.pushnews.php:455
+msgid ""
+"This adds a Pushnews sidebar on your Posts to allow you to send Push "
+"Notifications without leaving wordpress."
+msgstr ""
+"Adiciona o Pushnews à barra lateral dos Posts para que possa fazer disparos "
+"de Push Notifications sem sair do Wordpress."
 
-#: class.pushnews.php:390
-msgid "To find your private token click"
-msgstr "Para saber o seu Token PRIVADO clique"
+#: class.pushnews.php:458
+msgid "Get your App ID"
+msgstr "Obtenha o seu App ID"
 
-#: class.pushnews.php:394
+#: class.pushnews.php:462
+msgid "Get your API token"
+msgstr "Obtenha o seu API token"
+
+#: class.pushnews.php:466
 msgid ""
 "If user finishes the purchase before this time has passed, Push Notification "
 "will be canceled."
@@ -124,16 +138,36 @@ msgstr ""
 msgid "Save"
 msgstr "Guardar"
 
-#: views/metabox.php:21 views/metabox.php:31
+#: views/metabox.php:21 views/metabox.php:37
 msgid "Send push on publish/update"
 msgstr "Enviar Push ao publicar/atualizar"
 
-#: views/metabox.php:25 views/metabox.php:35
+#: views/metabox.php:25 views/metabox.php:41
 msgid "Send email on post publish"
 msgstr "Enviar Email ao publicar/atualizar"
 
-#~ msgid ""
-#~ "This feature is only available on Wordpress installations with WooCommerce"
-#~ msgstr ""
-#~ "Funcionalidade somente disponível para instalações Wordpress com o plugin "
-#~ "WooCommerce"
+#: views/metabox.php:30
+msgid "Error"
+msgstr "Erro"
+
+#: views/metabox.php:31
+msgid "API token is not defined, please update your plugin configuration"
+msgstr ""
+"O API token não está definido, por favor atualize a configuração do plugin"
+
+#: views/metabox.php:52
+msgid "Open Pushnews"
+msgstr "Abrir Pushnews"
+
+#. Plugin URI of the plugin/theme
+#. Author URI of the plugin/theme
+msgid "https://www.pushnews.eu/"
+msgstr "https://www.pushnews.pt/"
+
+#. Description of the plugin/theme
+msgid "Increase your website traffic with Pushnews Web Push Notifications."
+msgstr "Aumente o tráfego do seu site com Pushnews Web Push Notifications."
+
+#. Author of the plugin/theme
+msgid "Pushnews <developers@pushnews.eu>"
+msgstr "Pushnews <developers@pushnews.eu>"

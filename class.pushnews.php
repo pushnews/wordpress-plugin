@@ -30,12 +30,28 @@ class Pushnews {
 <script src="//{%%cdn_domain%%}/sites/{%%app_id%%}.js" data-pn-plugin-url="{%%plugin_url%%}" data-pn-wp-plugin-version="{%%version%%}" type="text/javascript" async></script>
 MYHTML;
 
+	/* Options: Basic */
+	const OPTION_NAME_BASIC_APP_ID = 'app_id';
+	const OPTION_NAME_BASIC_API_TOKEN = 'auth_token';
+	/* Options: / Basic */
+
+	/* Options: Toggles */
+	const OPTION_NAME_TOGGLES_ACTIVE = 'active';
+	CONST OPTION_DEFAULT_VALUE_TOGGLES_ACTIVE = 'true';
+
+	const OPTION_NAME_TOGGLES_ACTIVE_METABOX = 'active_metabox';
+	CONST OPTION_DEFAULT_VALUE_TOGGLES_ACTIVE_METABOX = 'true';
+	/* Options: / Toggles */
+
+	/* Options: Advanced */
 	const OPTION_NAME_MAX_CHARS_PUSH_TITLE = 'maxchars_push_title';
 	const OPTION_DEFAULT_VALUE_MAX_CHARS_PUSH_TITLE = 50;
 
 	const OPTION_NAME_MAX_CHARS_PUSH_BODY = 'maxchars_push_body';
 	const OPTION_DEFAULT_VALUE_MAX_CHARS_PUSH_BODY = 145;
+	/* / Options: Advanced */
 
+	/* Options: Woo-Commerce */
 	const OPTION_NAME_WOO_COMMERCE_HOURS = 'hours_woo_commerce';
 	const OPTION_DEFAULT_VALUE_WOO_COMMERCE_HOURS = 24;
 
@@ -47,6 +63,11 @@ MYHTML;
 
 	const OPTION_NAME_WOO_COMMERCE_BODY = 'body_woo_commerce';
 	const OPTION_DEFAULT_VALUE_WOO_COMMERCE_BODY = '';
+	/* Options: Woo-Commerce */
+
+	/* Options: Extra */
+	const OPTION_NAME_WELCOME_NOTICE_DISPLAYED = 'welcome_notice_displayed';
+	/* Options: /Extra */
 
 	const SESSION_KEY_ECOMMERCE_CHECKOUT = 'pushnews:ecommerce.checkoutCompleted';
 	const SESSION_KEY_ECOMMERCE_PRODUCT_ADDED = 'pushnews:ecommerce.itemAddedToCart';
@@ -77,21 +98,27 @@ MYHTML;
 		$response     = wp_remote_get( $endpoint, array( 'headers' => array( 'X-Pushnews-Wp-Version' => PUSHNEWS_VERSION ) ) );
 		$pushnewsSite = wp_remote_retrieve_body( $response );
 		$pushnewsSite = json_decode( $pushnewsSite, true );
-		$options      = array(
-			self::OPTION_NAME_MAX_CHARS_PUSH_TITLE => self::OPTION_DEFAULT_VALUE_MAX_CHARS_PUSH_TITLE,
-			self::OPTION_NAME_MAX_CHARS_PUSH_BODY  => self::OPTION_DEFAULT_VALUE_MAX_CHARS_PUSH_BODY,
-			self::OPTION_NAME_WOO_COMMERCE_ACTIVE  => self::OPTION_DEFAULT_VALUE_WOO_COMMERCE_ACTIVE,
-			self::OPTION_NAME_WOO_COMMERCE_HOURS   => self::OPTION_DEFAULT_VALUE_WOO_COMMERCE_HOURS,
-			self::OPTION_NAME_WOO_COMMERCE_TITLE   => self::OPTION_DEFAULT_VALUE_WOO_COMMERCE_TITLE,
-			self::OPTION_NAME_WOO_COMMERCE_BODY    => self::OPTION_DEFAULT_VALUE_WOO_COMMERCE_BODY
+
+		$options = array(
+			/* Toggles */
+				self::OPTION_NAME_TOGGLES_ACTIVE         => self::OPTION_DEFAULT_VALUE_TOGGLES_ACTIVE,
+				self::OPTION_NAME_TOGGLES_ACTIVE_METABOX => self::OPTION_DEFAULT_VALUE_TOGGLES_ACTIVE_METABOX,
+
+			/* Advanced */
+				self::OPTION_NAME_MAX_CHARS_PUSH_TITLE   => self::OPTION_DEFAULT_VALUE_MAX_CHARS_PUSH_TITLE,
+				self::OPTION_NAME_MAX_CHARS_PUSH_BODY    => self::OPTION_DEFAULT_VALUE_MAX_CHARS_PUSH_BODY,
+
+			/* Woo-Commerce */
+				self::OPTION_NAME_WOO_COMMERCE_ACTIVE    => self::OPTION_DEFAULT_VALUE_WOO_COMMERCE_ACTIVE,
+				self::OPTION_NAME_WOO_COMMERCE_HOURS     => self::OPTION_DEFAULT_VALUE_WOO_COMMERCE_HOURS,
+				self::OPTION_NAME_WOO_COMMERCE_TITLE     => self::OPTION_DEFAULT_VALUE_WOO_COMMERCE_TITLE,
+				self::OPTION_NAME_WOO_COMMERCE_BODY      => self::OPTION_DEFAULT_VALUE_WOO_COMMERCE_BODY
 		);
+
 		if ( JSON_ERROR_NONE == json_last_error() && isset( $pushnewsSite['success'] ) && true == $pushnewsSite['success'] ) {
-			$pushnewsSite          = $pushnewsSite['data'];
-			$options['active']     = 'true';
-			$options['app_id']     = $pushnewsSite['app_id'];
-			$options['auth_token'] = $pushnewsSite['auth_token'];
-		} else {
-			$options['active'] = 'false';
+			$pushnewsSite                                 = $pushnewsSite['data'];
+			$options[ self::OPTION_NAME_BASIC_APP_ID ]    = $pushnewsSite['app_id'];
+			$options[ self::OPTION_NAME_BASIC_API_TOKEN ] = $pushnewsSite['auth_token'];
 		}
 
 		add_option( 'pushnews_options', $options );
@@ -142,7 +169,7 @@ MYHTML;
 		$now              = current_time( "mysql", 1 );
 		$postDate         = $post->post_date_gmt;
 
-		if ( ! isset( $options['auth_token'] ) || "" == $options['auth_token'] ) {
+		if ( ! isset( $options[self::OPTION_NAME_BASIC_API_TOKEN] ) || "" == $options[self::OPTION_NAME_BASIC_API_TOKEN] ) {
 			// token not set, abort
 			return;
 		}
@@ -153,14 +180,14 @@ MYHTML;
 					$body = self::buildNotificationBodyFromPost( $post );
 
 					if ( true === $sendNotification ) {
-						self::sendNotification( $options['app_id'], $options['auth_token'], $body );
+						self::sendNotification( $options[self::OPTION_NAME_BASIC_APP_ID], $options[self::OPTION_NAME_BASIC_API_TOKEN], $body );
 						delete_post_meta( $post_id, "sendNotification" );
 					}
 					if ( true === $sendEmail ) {
 						if ( get_the_post_thumbnail_url( $post ) ) {
 							$body['message']['image'] = get_the_post_thumbnail_url( $post );
 						}
-						self::sendEmail( $options['app_id'], $options['auth_token'], $body['message'] );
+						self::sendEmail( $options[self::OPTION_NAME_BASIC_APP_ID], $options[self::OPTION_NAME_BASIC_API_TOKEN], $body['message'] );
 						delete_post_meta( $post_id, "sendEmail" );
 					}
 				}
@@ -259,6 +286,14 @@ MYHTML;
 	}
 
 	public static function add_custom_meta_box() {
+		$options          = get_option( 'pushnews_options' );
+		$option_active_metabox = filter_var(isset( $options[self::OPTION_NAME_TOGGLES_ACTIVE_METABOX] ) ? $options[self::OPTION_NAME_TOGGLES_ACTIVE_METABOX] : false, FILTER_VALIDATE_BOOLEAN);
+
+		if ( false === $option_active_metabox ) {
+			// metabox disabled
+			return;
+		}
+
 		// add pushnews meta box to "post"
 		add_meta_box(
 			"pushnews-meta-box",
@@ -293,6 +328,23 @@ MYHTML;
 
 	public static function plugin_uninstall() {
 		delete_option( 'pushnews_options' );
+	}
+
+	public static function display_admin_notices() {
+		$options          = get_option( 'pushnews_options' );
+		if (isset($options[self::OPTION_NAME_WELCOME_NOTICE_DISPLAYED])) {
+			return;
+		}
+		?>
+		<div class="notice notice-info is-dismissible">
+			<p>
+				<?php _e('Pushnews installed. Now you need to configure it', 'pushnews'); ?>
+				<a href="<?php echo admin_url("admin.php?page=pushnews") ?>"><?php _e('here', 'pushnews'); ?></a>
+			</p>
+		</div>
+		<?php
+		$options[self::OPTION_NAME_WELCOME_NOTICE_DISPLAYED] = 'true';
+		update_option('pushnews_options', $options);
 	}
 
 	public static function add_admin_page() {
@@ -331,21 +383,27 @@ MYHTML;
 		}
 
 		$sections = array(
-			'basic'    => array(
-				'_name'      => __( "Configuration", "pushnews" ),
-				'_callback'  => function () {
-				},
-				'active'     => __( "Active", "pushnews" ),
-				'app_id'     => __( "App ID", "pushnews" ),
-				'auth_token' => __( "Private token", "pushnews" ),
-			),
-			'advanced' => array(
-				'_name'                                => __( "Notification properties", "pushnews" ),
-				'_callback'                            => function () {
-				},
-				self::OPTION_NAME_MAX_CHARS_PUSH_TITLE => __( "Maximum title characters", "pushnews" ),
-				self::OPTION_NAME_MAX_CHARS_PUSH_BODY  => __( "Maximum content characters", "pushnews" ),
-			)
+				'basic'    => array(
+						'_name'      => __( "Configuration", "pushnews" ),
+						'_callback'  => function () {
+						},
+						'app_id'     => __( "App ID", "pushnews" ),
+						'auth_token' => __( "API token", "pushnews" ),
+				),
+				'toggles'  => array(
+						'_name'          => __( "Activation", "pushnews" ),
+						'_callback'      => function () {
+						},
+						'active'         => __( "Active", "pushnews" ),
+						'active_metabox' => __( "Add Sidebar on Posts", "pushnews" ),
+				),
+				'advanced' => array(
+						'_name'                                => __( "Notification properties", "pushnews" ),
+						'_callback'                            => function () {
+						},
+						self::OPTION_NAME_MAX_CHARS_PUSH_TITLE => __( "Maximum title characters", "pushnews" ),
+						self::OPTION_NAME_MAX_CHARS_PUSH_BODY  => __( "Maximum content characters", "pushnews" ),
+				)
 		);
 		if ( ! is_null( $woo_commerce_section ) ) {
 			$sections['woo_commerce'] = $woo_commerce_section;
@@ -389,12 +447,18 @@ MYHTML;
 							self::OPTION_NAME_WOO_COMMERCE_HOURS   => 'number'
 						),
 						'supplemental' => array(
+							'active'             => array(
+								__( "If disabled, the Pushnews Javascript tag will not be injected on your website.", "pushnews" )
+							),
+							'active_metabox'     => array(
+								__( "This adds a Pushnews sidebar on your Posts to allow you to send Push Notifications without leaving wordpress.", "pushnews" )
+							),
 							'app_id'             => array(
-								__( "To find your app id click", "pushnews" ),
+								__( "Get your App ID", "pushnews" ),
 								__( "here", "pushnews" ),
 							),
 							'auth_token'         => array(
-								__( "To find your private token click", "pushnews" ),
+								__( "Get your API token", "pushnews" ),
 								__( "here", "pushnews" ),
 							),
 							'hours_woo_commerce' => array(
@@ -422,9 +486,9 @@ MYHTML;
 		<?php
 
 		if ( $args['label_for'] == "app_id" ) {
-			printf( '<p class="description">%s <a href="https://pushnews.freshdesk.com/support/solutions/articles/80000297546-como-saber-qual-o-seu-app-id-" target="_blank">%s</a></p>', $supplemental[0], $supplemental[1] );
+			printf( '<p class="description">%s <a href="https://app.pushnews.eu/sites" target="_blank">%s</a></p>', $supplemental[0], $supplemental[1] );
 		} elseif ( $args['label_for'] == "auth_token" ) {
-			printf( '<p class="description">%s <a href="https://pushnews.freshdesk.com/support/solutions/articles/80000297613-como-saber-qual-o-seu-token-de-autorizac%C3%A3o" target="_blank">%s</a></p>', $supplemental[0], $supplemental[1] );
+			printf( '<p class="description">%s <a href="https://app.pushnews.eu/account/api" target="_blank">%s</a></p>', $supplemental[0], $supplemental[1] );
 		} elseif ( ! is_null( $supplemental ) ) {
 			printf( '<p class="description">%s</p>', $supplemental[0] );
 		}
@@ -434,6 +498,7 @@ MYHTML;
 		$options = get_option( 'pushnews_options' );
 		$checked = isset( $options[ $args['label_for'] ] ) && true == filter_var( $options[ $args['label_for'] ],
 			FILTER_VALIDATE_BOOLEAN ) ? true : false;
+		$supplemental = isset( $args['supplemental'][ $args['label_for'] ] ) ? $args['supplemental'][ $args['label_for'] ] : null;
 		?>
 		<input
 			type="checkbox"
@@ -443,13 +508,22 @@ MYHTML;
 			<?= $checked == true ? 'checked' : '' ?>
 		>
 		<?php
+		if ( ! is_null( $supplemental ) ) {
+			printf( '<p class="description">%s</p>', $supplemental[0] );
+		}
 	}
 
 	public static function inject_tag() {
 
 		$options = get_option( 'pushnews_options' );
 
-		if ( ! isset( $options['active'] ) || true != filter_var( $options['active'], FILTER_VALIDATE_BOOLEAN ) ) {
+		$app_id = trim( $options[self::OPTION_NAME_BASIC_APP_ID] );
+
+		if ('' === $app_id) {
+			return;
+		}
+
+		if ( ! isset( $options[self::OPTION_NAME_TOGGLES_ACTIVE] ) || true != filter_var( $options[self::OPTION_NAME_TOGGLES_ACTIVE], FILTER_VALIDATE_BOOLEAN ) ) {
 			return;
 		}
 
@@ -457,7 +531,7 @@ MYHTML;
 
 		$replaces = array(
 			'{%%cdn_domain%%}' => self::CDN_DOMAIN,
-			'{%%app_id%%}'     => trim( $options['app_id'] ),
+			'{%%app_id%%}'     => trim( $options[self::OPTION_NAME_BASIC_APP_ID] ),
 			'{%%version%%}'    => PUSHNEWS_VERSION,
 			'{%%plugin_url%%}' => plugin_dir_url( __FILE__ ),
 		);

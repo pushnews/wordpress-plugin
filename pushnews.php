@@ -5,7 +5,7 @@
  * Author:             Pushnews <developers@pushnews.eu>
  * Plugin URI:         https://www.pushnews.eu/
  * Description:        Increase your website traffic with Pushnews Web Push Notifications.
- * Version:            3.3.1
+ * Version:            3.4.0
  * Author URI:         https://www.pushnews.eu/
  * License:            GPLv2 or later
  * Text Domain:        pushnews
@@ -28,7 +28,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
 
-define( 'PUSHNEWS_VERSION', '3.3.1' );
+define( 'PUSHNEWS_VERSION', '3.4.0' );
 define( 'PUSHNEWS__PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
 require_once( PUSHNEWS__PLUGIN_DIR . 'class.pushnews.php' );
@@ -40,6 +40,7 @@ add_action( 'admin_enqueue_scripts', array( 'Pushnews', 'admin_styles' ) );
 // initialize plugin
 add_action( 'init', array( 'Pushnews', 'init' ) );
 add_action( 'plugins_loaded', array( 'Pushnews', 'translations_init' ) );
+add_action( 'admin_notices', array( 'Pushnews', 'display_admin_notices' ));
 
 // woo-commerce integration
 add_action( 'woocommerce_add_to_cart', array( 'Pushnews', 'woocommerce_add_to_cart' ) );
