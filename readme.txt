@@ -3,7 +3,7 @@ Contributors: impactingdigital, tixastronauta, mariobalca
 Donate link: https://www.pushnews.eu/
 Tags: push, push notifications, web push, desktop notification, notifications, pushnews, onesignal, sendpulse, pushcrew, vwo, pushengage, pushwoosh, aimtell
 Requires at least: 3.8
-Tested up to: 5.8.3
+Tested up to: 6.0
 Requires PHP: 5.3
 Stable tag: 3.4.0
 License: GPLv2 or later
