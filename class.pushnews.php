@@ -27,7 +27,7 @@ class Pushnews {
 	const CDN_DOMAIN = 'cdn.pn.vg';
 
 	const TAG = <<<MYHTML
-<script src="//{%%cdn_domain%%}/sites/{%%app_id%%}.js" data-pn-plugin-url="{%%plugin_url%%}" data-pn-wp-plugin-version="{%%version%%}" type="text/javascript" async></script>
+<script src="https://{%%cdn_domain%%}/sites/{%%app_id%%}.js" data-pn-plugin-url="{%%plugin_url%%}" data-pn-wp-plugin-version="{%%version%%}" type="text/javascript" async></script>
 MYHTML;
 
 	/* Options: Basic */

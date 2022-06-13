@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+# 3.6.0
+- Always using https protocol on the javascript tag
+
+# 3.5.0
+- Tested OK up to Wordpress 6.0
+
 # 3.4.0
 - Added two activation toggles: tag inject (frontend) and metabox inject (backend)
 - Improved translations
