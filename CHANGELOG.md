@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 3.6.1
+- Changed API domain to a temporary one
+
 # 3.6.0
 - Always using https protocol on the javascript tag
 
