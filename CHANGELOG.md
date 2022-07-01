@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 3.6.3
+- Fixed sending push on scheduled posts
+
 # 3.6.2
 - Changed API domain to a temporary one (previous one was still not working)
 

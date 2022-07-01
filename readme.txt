@@ -5,7 +5,7 @@ Tags: push, push notifications, web push, desktop notification, notifications, p
 Requires at least: 3.8
 Tested up to: 6.0
 Requires PHP: 5.3
-Stable tag: 3.6.2
+Stable tag: 3.6.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,6 +58,12 @@ First plugin release
 4. No HTTPS website is required
 
 == Changelog ==
+
+= 3.6.3 =
+* Fixed sending push on scheduled posts
+
+= 3.6.2 =
+* Changed API domain to a temporary one (previous one was still not working)
 
 = 3.6.1 =
 * Changed API domain to a temporary one

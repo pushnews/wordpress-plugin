@@ -132,16 +132,19 @@ MYHTML;
 	}
 
 	public static function future_post_custom_hook( $post_id ) {
+		self::_debug( "future_post_custom_hook: $post_id" );
 		$sendNotification = $_POST['pushnews_send_notification'];
 		$sendEmail        = $_POST['pushnews_send_email'];
 
 		if ( $sendNotification ) {
+            self::_debug("> updating sendNotification: $sendNotification");
 			update_post_meta(
 				$post_id,
 				'sendNotification',
 				$sendNotification
 			);
 		} else {
+			self::_debug("> deleting sendNotification");
 			delete_post_meta( $post_id, 'sendNotification' );
 		}
 
@@ -163,11 +166,16 @@ MYHTML;
 	 * @param bool $update Whether this is an existing post being updated or not.
 	 */
 	public static function save_post_custom_hook( $post_id, $post, $update ) {
-		$sendNotification = isset($_POST['pushnews_send_notification']) && filter_var( $_POST['pushnews_send_notification'] || get_post_meta( $post_id, 'sendNotification' ), FILTER_VALIDATE_BOOLEAN );
-		$sendEmail        = isset($_POST['pushnews_send_email']) && filter_var( $_POST['pushnews_send_email'] || get_post_meta( $post_id, 'sendEmail' ), FILTER_VALIDATE_BOOLEAN );
+
+		$sendNotification = isset($_POST['pushnews_send_notification']) || filter_var( $_POST['pushnews_send_notification'] || get_post_meta( $post_id, 'sendNotification', true ), FILTER_VALIDATE_BOOLEAN );
+		$sendEmail        = isset($_POST['pushnews_send_email']) || filter_var( $_POST['pushnews_send_email'] || get_post_meta( $post_id, 'sendEmail', true ), FILTER_VALIDATE_BOOLEAN );
 		$options          = get_option( 'pushnews_options' );
 		$now              = current_time( "mysql", 1 );
 		$postDate         = $post->post_date_gmt;
+		self::_debug("save_post_custom_hook: $post_id" );
+        self::_debug("- sendNotification: " . json_encode( $sendNotification ) );
+        self::_debug("- sendEmail: " . json_encode( $sendEmail ) );
+        self::_debug("- postStatus: " . $post->post_status);
 
 		if ( ! isset( $options[self::OPTION_NAME_BASIC_API_TOKEN] ) || "" == $options[self::OPTION_NAME_BASIC_API_TOKEN] ) {
 			// token not set, abort
@@ -181,14 +189,15 @@ MYHTML;
 
 					if ( true === $sendNotification ) {
 						self::sendNotification( $options[self::OPTION_NAME_BASIC_APP_ID], $options[self::OPTION_NAME_BASIC_API_TOKEN], $body );
-						delete_post_meta( $post_id, "sendNotification" );
+						self::_debug("> deleting sendNotification");
+						delete_post_meta( $post_id, 'sendNotification' );
 					}
 					if ( true === $sendEmail ) {
 						if ( get_the_post_thumbnail_url( $post ) ) {
 							$body['message']['image'] = get_the_post_thumbnail_url( $post );
 						}
 						self::sendEmail( $options[self::OPTION_NAME_BASIC_APP_ID], $options[self::OPTION_NAME_BASIC_API_TOKEN], $body['message'] );
-						delete_post_meta( $post_id, "sendEmail" );
+						delete_post_meta( $post_id, 'sendEmail' );
 					}
 				}
 				break;
@@ -496,8 +505,7 @@ MYHTML;
 
 	public static function checkbox_cb( $args ) {
 		$options = get_option( 'pushnews_options' );
-		$checked = isset( $options[ $args['label_for'] ] ) && true == filter_var( $options[ $args['label_for'] ],
-			FILTER_VALIDATE_BOOLEAN ) ? true : false;
+		$checked = isset( $options[ $args['label_for'] ] ) && true == filter_var( $options[ $args['label_for'] ], FILTER_VALIDATE_BOOLEAN );
 		$supplemental = isset( $args['supplemental'][ $args['label_for'] ] ) ? $args['supplemental'][ $args['label_for'] ] : null;
 		?>
 		<input
@@ -543,7 +551,7 @@ MYHTML;
 			unset( $_SESSION[ self::SESSION_KEY_ECOMMERCE_PRODUCT_ADDED ] );
 			echo <<<HTML
 <script>
-var IlabsPush = IlabsPush || [];
+window.IlabsPush = window.IlabsPush || [];
 IlabsPush.push(["ecommerce.itemAddedToCart", $data]);
 </script>
 HTML;
@@ -553,7 +561,7 @@ HTML;
 			unset( $_SESSION[ self::SESSION_KEY_ECOMMERCE_CHECKOUT ] );
 			echo <<<HTML
 <script>
-var IlabsPush = IlabsPush || [];
+window.IlabsPush = window.IlabsPush || [];
 IlabsPush.push(["ecommerce.checkoutCompleted"]);
 </script>
 HTML;
@@ -567,7 +575,7 @@ HTML;
 	public static function woocommerce_add_to_cart( $my_cart_item_key ) {
 		global $woocommerce;
 
-		if ( false === self::_isWooCommercePluginInstalled() || false == self::_isWooCommerceOptionActive() ) {
+		if ( false === self::_isWooCommercePluginInstalled() || false === self::_isWooCommerceOptionActive() ) {
 			return;
 		}
 
@@ -684,7 +692,7 @@ HTML;
 	 * @param string|null $msg
 	 */
 	private static function _debug( $msg = null ) {
-	    return;
+		return;
 		$msg = '[' . date( 'Y-m-d H:i:s' ) . "] {$msg}\n";
 		$h   = fopen( "/var/www/log", "a+" );
 		fwrite( $h, $msg );
