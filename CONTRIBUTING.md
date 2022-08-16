@@ -18,6 +18,18 @@ All changes should be performed taking into consideration:
 
 After your branch is accepted into master, you need to make a copy into SVN - check the next section.
 
+# Translations
+
+Extract all translations with:
+
+`$ wp i18n make-pot . languages/pushnews.pot`
+
+This will generate a `languages/pushnews.pot` file.
+
+Now open the `.po` files (`pt_PT.po` and `pt_BR.po`), in [Poedit](https://poedit.net/), go to "Translation > Update from POT file..." and fill in the missing translations.
+
+When you hit save, an updated `pt_PT.mo` and `pt_BR.mo` files will be generated.
+
 
 # Working with SVN
 

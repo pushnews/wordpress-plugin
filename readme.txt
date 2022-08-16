@@ -3,9 +3,9 @@ Contributors: impactingdigital, tixastronauta, mariobalca
 Donate link: https://www.pushnews.eu/
 Tags: push, push notifications, web push, desktop notification, notifications, pushnews, onesignal, sendpulse, pushcrew, vwo, pushengage, pushwoosh, aimtell
 Requires at least: 3.8
-Tested up to: 6.0
+Tested up to: 6.0.1
 Requires PHP: 5.3
-Stable tag: 3.6.3
+Stable tag: 3.7.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,6 +58,9 @@ First plugin release
 4. No HTTPS website is required
 
 == Changelog ==
+
+= 3.7.0 =
+* Added a log file to help with debug
 
 = 3.6.3 =
 * Fixed sending push on scheduled posts

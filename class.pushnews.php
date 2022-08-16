@@ -115,7 +115,7 @@ MYHTML;
 				self::OPTION_NAME_WOO_COMMERCE_BODY      => self::OPTION_DEFAULT_VALUE_WOO_COMMERCE_BODY
 		);
 
-		if ( JSON_ERROR_NONE == json_last_error() && isset( $pushnewsSite['success'] ) && true == $pushnewsSite['success'] ) {
+		if ( JSON_ERROR_NONE == json_last_error() && isset( $pushnewsSite['success'] ) && $pushnewsSite['success'] ) {
 			$pushnewsSite                                 = $pushnewsSite['data'];
 			$options[ self::OPTION_NAME_BASIC_APP_ID ]    = $pushnewsSite['app_id'];
 			$options[ self::OPTION_NAME_BASIC_API_TOKEN ] = $pushnewsSite['auth_token'];
@@ -178,6 +178,7 @@ MYHTML;
         self::_debug("- postStatus: " . $post->post_status);
 
 		if ( ! isset( $options[self::OPTION_NAME_BASIC_API_TOKEN] ) || "" == $options[self::OPTION_NAME_BASIC_API_TOKEN] ) {
+            self::_debug(">> no api token, aborting");
 			// token not set, abort
 			return;
 		}
@@ -189,7 +190,7 @@ MYHTML;
 
 					if ( true === $sendNotification ) {
 						self::sendNotification( $options[self::OPTION_NAME_BASIC_APP_ID], $options[self::OPTION_NAME_BASIC_API_TOKEN], $body );
-						self::_debug("> deleting sendNotification");
+						self::_debug("> deleting post meta.sendNotification");
 						delete_post_meta( $post_id, 'sendNotification' );
 					}
 					if ( true === $sendEmail ) {
@@ -197,6 +198,7 @@ MYHTML;
 							$body['message']['image'] = get_the_post_thumbnail_url( $post );
 						}
 						self::sendEmail( $options[self::OPTION_NAME_BASIC_APP_ID], $options[self::OPTION_NAME_BASIC_API_TOKEN], $body['message'] );
+						self::_debug("> deleting post meta.sendEmail");
 						delete_post_meta( $post_id, 'sendEmail' );
 					}
 				}
@@ -268,13 +270,15 @@ MYHTML;
 	 * @param $body
 	 */
 	private static function sendNotification( $appId, $authToken, $body ) {
-		wp_remote_post( self::API_URL . "/v2/push/" . $appId, array(
+		self::_debug( ">> API.sendNotification body: " . json_encode( $body ) );
+		$response = wp_remote_post( self::API_URL . "/v2/push/" . $appId, array(
 			"body"    => json_encode( $body ),
 			"headers" => array(
 				'X-Auth-Token' => $authToken,
 				"Content-Type" => "application/json",
 			),
 		) );
+		self::_debug( ">> API.sendNotification response: " . json_encode( $response ) );
 	}
 
 	/**
@@ -285,13 +289,15 @@ MYHTML;
 	 * @param $message
 	 */
 	private static function sendEmail( $appId, $authToken, $message ) {
-		wp_remote_post( self::API_URL . "/v2/mail/" . $appId, array(
+		self::_debug( ">> API.sendEmail message: " . json_encode( $message ) );
+		$response = wp_remote_post( self::API_URL . "/v2/mail/" . $appId, array(
 			"body"    => json_encode( $message ),
 			"headers" => array(
 				'X-Auth-Token' => $authToken,
 				"Content-Type" => "application/json",
 			),
 		) );
+		self::_debug( ">> API.sendEmail response: " . json_encode( $response ) );
 	}
 
 	public static function add_custom_meta_box() {
@@ -336,6 +342,7 @@ MYHTML;
 	}
 
 	public static function plugin_uninstall() {
+        self::_debug( "plugin_uninstall" );
 		delete_option( 'pushnews_options' );
 	}
 
@@ -392,27 +399,33 @@ MYHTML;
 		}
 
 		$sections = array(
-				'basic'    => array(
-						'_name'      => __( "Configuration", "pushnews" ),
-						'_callback'  => function () {
-						},
-						'app_id'     => __( "App ID", "pushnews" ),
-						'auth_token' => __( "API token", "pushnews" ),
-				),
-				'toggles'  => array(
-						'_name'          => __( "Activation", "pushnews" ),
-						'_callback'      => function () {
-						},
-						'active'         => __( "Active", "pushnews" ),
-						'active_metabox' => __( "Add Sidebar on Posts", "pushnews" ),
-				),
-				'advanced' => array(
-						'_name'                                => __( "Notification properties", "pushnews" ),
-						'_callback'                            => function () {
-						},
-						self::OPTION_NAME_MAX_CHARS_PUSH_TITLE => __( "Maximum title characters", "pushnews" ),
-						self::OPTION_NAME_MAX_CHARS_PUSH_BODY  => __( "Maximum content characters", "pushnews" ),
-				)
+			'basic'     => array(
+				'_name'      => __( "Configuration", "pushnews" ),
+				'_callback'  => function () {
+				},
+				'app_id'     => __( "App ID", "pushnews" ),
+				'auth_token' => __( "API token", "pushnews" ),
+			),
+			'toggles'   => array(
+				'_name'          => __( "Activation", "pushnews" ),
+				'_callback'      => function () {
+				},
+				'active'         => __( "Active", "pushnews" ),
+				'active_metabox' => __( "Add Sidebar on Posts", "pushnews" ),
+			),
+			'advanced'  => array(
+				'_name'                                => __( "Notification properties", "pushnews" ),
+				'_callback'                            => function () {
+				},
+				self::OPTION_NAME_MAX_CHARS_PUSH_TITLE => __( "Maximum title characters", "pushnews" ),
+				self::OPTION_NAME_MAX_CHARS_PUSH_BODY  => __( "Maximum content characters", "pushnews" ),
+			),
+			'developer' => array(
+				'_name'             => __( "Developer", "pushnews" ),
+				'_callback'         => function () {
+				},
+				'log_file_download' => __( "Download log file", "pushnews" ),
+			),
 		);
 		if ( ! is_null( $woo_commerce_section ) ) {
 			$sections['woo_commerce'] = $woo_commerce_section;
@@ -485,21 +498,31 @@ MYHTML;
 		$options      = get_option( 'pushnews_options' );
 		$type         = isset( $args['input_type'][ $args['label_for'] ] ) ? $args['input_type'][ $args['label_for'] ] : 'text';
 		$supplemental = isset( $args['supplemental'][ $args['label_for'] ] ) ? $args['supplemental'][ $args['label_for'] ] : null;
-		?>
-		<input
-			type="<?= $type ?>"
-			id="<?= esc_attr( $args['label_for'] ); ?>"
-			name="pushnews_options[<?= esc_attr( $args['label_for'] ); ?>]"
-			value="<?= isset( $options[ $args['label_for'] ] ) ? $options[ $args['label_for'] ] : '' ?>"
-		>
-		<?php
+		if ( 'log_file_download' !== $args['label_for'] ) {
+			?>
+            <input
+                    type="<?= $type ?>"
+                    id="<?= esc_attr( $args['label_for'] ); ?>"
+                    name="pushnews_options[<?= esc_attr( $args['label_for'] ); ?>]"
+                    value="<?= isset( $options[ $args['label_for'] ] ) ? $options[ $args['label_for'] ] : '' ?>"
+            >
+			<?php
 
-		if ( $args['label_for'] == "app_id" ) {
-			printf( '<p class="description">%s <a href="https://app.pushnews.eu/sites" target="_blank">%s</a></p>', $supplemental[0], $supplemental[1] );
-		} elseif ( $args['label_for'] == "auth_token" ) {
-			printf( '<p class="description">%s <a href="https://app.pushnews.eu/account/api" target="_blank">%s</a></p>', $supplemental[0], $supplemental[1] );
-		} elseif ( ! is_null( $supplemental ) ) {
-			printf( '<p class="description">%s</p>', $supplemental[0] );
+			if ( $args['label_for'] == "app_id" ) {
+				printf( '<p class="description">%s <a href="https://app.pushnews.eu/sites" target="_blank">%s</a></p>', $supplemental[0], $supplemental[1] );
+			} elseif ( $args['label_for'] == "auth_token" ) {
+				printf( '<p class="description">%s <a href="https://app.pushnews.eu/account/api" target="_blank">%s</a></p>', $supplemental[0], $supplemental[1] );
+			} elseif ( ! is_null( $supplemental ) ) {
+				printf( '<p class="description">%s</p>', $supplemental[0] );
+			}
+		} else {
+			?>
+            <a href="<?php echo plugin_dir_url( __FILE__ ) . 'pushnews.log'; ?>" download="pushnews_log.txt">
+				<?php echo plugin_dir_url( __FILE__ ) . 'pushnews.log'; ?>
+            </a>
+            <br>
+			<?php echo __( "If the Pushnews team asks you for the log, send them this file.", "pushnews" ) ?>
+			<?php
 		}
 	}
 
@@ -531,7 +554,7 @@ MYHTML;
 			return;
 		}
 
-		if ( ! isset( $options[self::OPTION_NAME_TOGGLES_ACTIVE] ) || true != filter_var( $options[self::OPTION_NAME_TOGGLES_ACTIVE], FILTER_VALIDATE_BOOLEAN ) ) {
+		if ( ! isset( $options[self::OPTION_NAME_TOGGLES_ACTIVE] ) || ! filter_var( $options[ self::OPTION_NAME_TOGGLES_ACTIVE ], FILTER_VALIDATE_BOOLEAN ) ) {
 			return;
 		}
 
@@ -692,11 +715,38 @@ HTML;
 	 * @param string|null $msg
 	 */
 	private static function _debug( $msg = null ) {
-		return;
-		$msg = '[' . date( 'Y-m-d H:i:s' ) . "] {$msg}\n";
-		$h   = fopen( "/var/www/log", "a+" );
-		fwrite( $h, $msg );
-		fclose( $h );
+		$log_file = dirname( __FILE__ ) . '/pushnews.log';
+		$max_size = 5000000; // 5MB
+
+		// create file
+		if ( ! file_exists( $log_file ) ) {
+			$log_file_exists = @touch( $log_file );
+		} else {
+			$log_file_exists = true;
+		}
+		if ( ! $log_file_exists ) {
+			return;
+		}
+
+		// if file is too big, clear its contents
+		if ( filesize( $log_file ) > $max_size ) {
+			@unlink( $log_file );
+			$log_file_exists = @touch( $log_file );
+		}
+		if ( ! $log_file_exists ) {
+			return;
+		}
+
+
+		// add timestamp
+		$msg         = '[' . date( 'Y-m-d H:i:s' ) . "] {$msg}\n";
+		$file_handle = fopen( $log_file, "a+" );
+		if ( ! $file_handle ) {
+			return;
+		}
+		// log message
+		fwrite( $file_handle, $msg );
+		fclose( $file_handle );
 	}
 
 }

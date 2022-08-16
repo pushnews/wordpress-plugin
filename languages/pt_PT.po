@@ -1,46 +1,59 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Pushnews\n"
-"POT-Creation-Date: 2022-01-20 17:15+0000\n"
-"PO-Revision-Date: 2022-01-20 17:24+0000\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wordpress-plugin\n"
+"POT-Creation-Date: 2022-08-16T18:28:50+00:00\n"
+"PO-Revision-Date: 2022-08-16 19:34+0100\n"
+"Last-Translator: \n"
 "Language-Team: \n"
+"Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3\n"
-"X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 3.1.1\n"
+"X-Poedit-Basepath: ..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: pushnews.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
 "esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
 "_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
-"Last-Translator: \n"
-"Language: pt\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-#: class.pushnews.php:342
-msgid "Pushnews installed. Now you need to configure it"
-msgstr "Pushnews instalado. Agora precisa configurá-lo"
-
-#: class.pushnews.php:343 class.pushnews.php:459 class.pushnews.php:463
-#: views/metabox.php:32
-msgid "here"
-msgstr "aqui"
-
-#. Plugin Name of the plugin/theme
-#: class.pushnews.php:354 views/config.php:8
+#. Plugin Name of the plugin
+#: class.pushnews.php:369 views/config.php:8
 msgid "Pushnews"
 msgstr "Pushnews"
 
-#: class.pushnews.php:373
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+msgid "https://www.pushnews.eu/"
+msgstr "https://www.pushnews.pt/"
+
+#. Description of the plugin
+msgid "Increase your website traffic with Pushnews Web Push Notifications."
+msgstr "Aumente o tráfego do seu site com Pushnews Web Push Notifications."
+
+#. Author of the plugin
+msgid "Pushnews <developers@pushnews.eu>"
+msgstr "Pushnews <developers@pushnews.eu>"
+
+#: class.pushnews.php:357
+msgid "Pushnews installed. Now you need to configure it"
+msgstr "Pushnews instalado. Agora precisa configurá-lo"
+
+#: class.pushnews.php:358 class.pushnews.php:480 class.pushnews.php:484
+msgid "here"
+msgstr "aqui"
+
+#: class.pushnews.php:388
 msgid "WooCommerce - Abandoned cart recovery Push Notification"
 msgstr ""
 "WooCommerce - Push Notification para recuperação de carrinhos abandonados"
 
-#: class.pushnews.php:375
+#: class.pushnews.php:390
 msgid ""
 "<p>Here you can setup up a Push Notification to be sent to users who have "
 "added items to the shopping cart but did not finish the purchase within a "
@@ -55,62 +68,70 @@ msgstr ""
 "Conteúdo: <b>%name%</b> para o nome do produto, <b>%price%</b> para o preço "
 "do produto.</p>"
 
-#: class.pushnews.php:377 class.pushnews.php:398
+#: class.pushnews.php:392 class.pushnews.php:413
 msgid "Active"
 msgstr "Ativo"
 
-#: class.pushnews.php:378
+#: class.pushnews.php:393
 msgid "Hours to wait before sending Notification"
 msgstr "Horas para aguardar até enviar Notificação"
 
-#: class.pushnews.php:379
+#: class.pushnews.php:394
 msgid "Notification title"
 msgstr "Título da Notificação"
 
-#: class.pushnews.php:380
+#: class.pushnews.php:395
 msgid "Notification content"
 msgstr "Conteúdo da Notificação"
 
-#: class.pushnews.php:388
+#: class.pushnews.php:403
 msgid "Configuration"
 msgstr "Configuração"
 
-#: class.pushnews.php:391
+#: class.pushnews.php:406
 msgid "App ID"
 msgstr "App ID"
 
-#: class.pushnews.php:392
+#: class.pushnews.php:407
 msgid "API token"
 msgstr "API token"
 
-#: class.pushnews.php:395
+#: class.pushnews.php:410
 msgid "Activation"
 msgstr "Ativação"
 
-#: class.pushnews.php:399
+#: class.pushnews.php:414
 msgid "Add Sidebar on Posts"
 msgstr "Adicionar barra lateral nos Posts"
 
-#: class.pushnews.php:402
+#: class.pushnews.php:417
 msgid "Notification properties"
 msgstr "Propriedades da Notificação"
 
-#: class.pushnews.php:405
+#: class.pushnews.php:420
 msgid "Maximum title characters"
 msgstr "Máximo de caracteres para o Título"
 
-#: class.pushnews.php:406
+#: class.pushnews.php:421
 msgid "Maximum content characters"
 msgstr "Máximo de caracteres para o Conteúdo"
 
-#: class.pushnews.php:452
+#: class.pushnews.php:424
+msgid "Developer"
+msgstr "Developer"
+
+#: class.pushnews.php:427
+msgid "Download log file"
+msgstr "Ficheiro de log"
+
+#: class.pushnews.php:473
 msgid ""
 "If disabled, the Pushnews Javascript tag will not be injected on your "
 "website."
 msgstr ""
 "Quando desligado, a tag Javascript do Pushnews não será injetada no seu site."
 
-#: class.pushnews.php:455
+#: class.pushnews.php:476
 msgid ""
 "This adds a Pushnews sidebar on your Posts to allow you to send Push "
 "Notifications without leaving wordpress."
@@ -118,21 +139,25 @@ msgstr ""
 "Adiciona o Pushnews à barra lateral dos Posts para que possa fazer disparos "
 "de Push Notifications sem sair do Wordpress."
 
-#: class.pushnews.php:458
+#: class.pushnews.php:479
 msgid "Get your App ID"
 msgstr "Obtenha o seu App ID"
 
-#: class.pushnews.php:462
+#: class.pushnews.php:483
 msgid "Get your API token"
 msgstr "Obtenha o seu API token"
 
-#: class.pushnews.php:466
+#: class.pushnews.php:487
 msgid ""
 "If user finishes the purchase before this time has passed, Push Notification "
 "will be canceled."
 msgstr ""
 "Se um inscrito terminar a compra antes de estas horas passarem, a Push "
 "Notification será cancelada."
+
+#: class.pushnews.php:524
+msgid "If the Pushnews team asks you for the log, send them this file."
+msgstr "Caso a equipa do Pushnews peça, envie-lhes este ficheiro de log."
 
 #: views/config.php:13
 msgid "Save"
@@ -155,19 +180,6 @@ msgid "API token is not defined, please update your plugin configuration"
 msgstr ""
 "O API token não está definido, por favor atualize a configuração do plugin"
 
-#: views/metabox.php:52
+#: views/metabox.php:51
 msgid "Open Pushnews"
 msgstr "Abrir Pushnews"
-
-#. Plugin URI of the plugin/theme
-#. Author URI of the plugin/theme
-msgid "https://www.pushnews.eu/"
-msgstr "https://www.pushnews.pt/"
-
-#. Description of the plugin/theme
-msgid "Increase your website traffic with Pushnews Web Push Notifications."
-msgstr "Aumente o tráfego do seu site com Pushnews Web Push Notifications."
-
-#. Author of the plugin/theme
-msgid "Pushnews <developers@pushnews.eu>"
-msgstr "Pushnews <developers@pushnews.eu>"

@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 3.7.0
+- Added a log file to help with debug
+
 # 3.6.3
 - Fixed sending push on scheduled posts
 
