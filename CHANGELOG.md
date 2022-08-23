@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 3.8.0
+- Added "ignoreWarningSameHashPush" option to the payload to allow for duplicate pushes.
+
 # 3.7.0
 - Added a log file to help with debug
 

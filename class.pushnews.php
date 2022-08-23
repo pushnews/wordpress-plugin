@@ -258,7 +258,8 @@ MYHTML;
 
 		// return the Notification Body
 		return array(
-			"message" => $message,
+			"ignoreWarningSameHashPush" => true,
+			"message"                   => $message,
 		);
 	}
 
