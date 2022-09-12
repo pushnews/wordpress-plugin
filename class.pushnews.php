@@ -169,12 +169,14 @@ MYHTML;
 
 		$sendNotification = isset($_POST['pushnews_send_notification']) || filter_var( $_POST['pushnews_send_notification'] || get_post_meta( $post_id, 'sendNotification', true ), FILTER_VALIDATE_BOOLEAN );
 		$sendEmail        = isset($_POST['pushnews_send_email']) || filter_var( $_POST['pushnews_send_email'] || get_post_meta( $post_id, 'sendEmail', true ), FILTER_VALIDATE_BOOLEAN );
+		$allowDuplicatePush = isset($_POST['pushnews_allow_duplicate_push']) || filter_var( $_POST['pushnews_allow_duplicate_push'] || get_post_meta( $post_id, 'allowDuplicatePush', true ), FILTER_VALIDATE_BOOLEAN );
 		$options          = get_option( 'pushnews_options' );
 		$now              = current_time( "mysql", 1 );
 		$postDate         = $post->post_date_gmt;
 		self::_debug("save_post_custom_hook: $post_id" );
         self::_debug("- sendNotification: " . json_encode( $sendNotification ) );
         self::_debug("- sendEmail: " . json_encode( $sendEmail ) );
+        self::_debug("- allowDuplicatePush: " . json_encode( $allowDuplicatePush ) );
         self::_debug("- postStatus: " . $post->post_status);
 
 		if ( ! isset( $options[self::OPTION_NAME_BASIC_API_TOKEN] ) || "" == $options[self::OPTION_NAME_BASIC_API_TOKEN] ) {
@@ -186,7 +188,7 @@ MYHTML;
 		switch ( $post->post_status ) {
 			case "publish":
 				if ( $postDate <= $now /* it's not a future post */ ) {
-					$body = self::buildNotificationBodyFromPost( $post );
+					$body = self::buildNotificationBodyFromPost( $post, $allowDuplicatePush );
 
 					if ( true === $sendNotification ) {
 						self::sendNotification( $options[self::OPTION_NAME_BASIC_APP_ID], $options[self::OPTION_NAME_BASIC_API_TOKEN], $body );
@@ -216,10 +218,11 @@ MYHTML;
 	 * Build notification object to be sent to Pushnews API
 	 *
 	 * @param WP_Post| $post
+	 * @param bool $allowDuplicatePush send push even if another one was already sent for this post
 	 *
 	 * @return array
 	 */
-	private static function buildNotificationBodyFromPost( $post ) {
+	private static function buildNotificationBodyFromPost( $post, $allowDuplicatePush ) {
 		// get options
 		$options                     = get_option( 'pushnews_options' );
 		$option_max_chars_push_title = isset( $options[ self::OPTION_NAME_MAX_CHARS_PUSH_TITLE ] ) ? (int) $options[ self::OPTION_NAME_MAX_CHARS_PUSH_TITLE ] : self::OPTION_DEFAULT_VALUE_MAX_CHARS_PUSH_TITLE;
@@ -258,7 +261,7 @@ MYHTML;
 
 		// return the Notification Body
 		return array(
-			"ignoreWarningSameHashPush" => true,
+			"ignoreWarningSameHashPush" => $allowDuplicatePush,
 			"message"                   => $message,
 		);
 	}

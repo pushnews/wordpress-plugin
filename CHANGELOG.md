@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 3.9.0
+- Added "allow duplicate Push" checkbox on create/update post so user can control whether to have a duplicate push or not
+
 # 3.8.0
 - Added "ignoreWarningSameHashPush" option to the payload to allow for duplicate pushes.
 
