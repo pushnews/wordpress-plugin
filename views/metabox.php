@@ -11,6 +11,7 @@ License:            GPLv2 or later
     <?php
     $sendNotification = filter_var(get_post_meta(get_the_ID(), 'sendNotification', true), FILTER_VALIDATE_BOOLEAN);
     $sendEmail        = filter_var(get_post_meta(get_the_ID(), 'sendEmail', true), FILTER_VALIDATE_BOOLEAN);
+    $allowDuplicatePush = filter_var(get_post_meta(get_the_ID(), 'allowDuplicatePush', true), FILTER_VALIDATE_BOOLEAN);
     $pluginPath       = 'admin.php?page=pushnews';
     $pluginUrl        = admin_url($pluginPath);
     $options          = get_option('pushnews_options');
@@ -23,6 +24,10 @@ License:            GPLv2 or later
         <div>
             <input type="checkbox" value="true" id="input_send_email" name="pushnews_send_email" <?php echo true === $sendEmail ? "checked" : "" ?> />
             <label for="input_send_email"><?php echo __( 'Send email on post publish', 'pushnews') ?></label>
+        </div>
+        <div>
+            <input type="checkbox" value="true" id="input_allow_duplicate_push" name="pushnews_allow_duplicate_push" <?php echo true === $allowDuplicatePush ? "checked" : "" ?> />
+            <label for="input_allow_duplicate_push"><?php echo __( 'If push was already sent for this post, allow duplicate', 'pushnews') ?></label>
         </div>
     <?php else: ?>
         <div>
@@ -39,6 +44,10 @@ License:            GPLv2 or later
             <div style="margin-top: 5px; color:#ccc;">
                 <input type="checkbox" id="input_send_email" disabled  />
                 <label for="input_send_email"><?php echo __( 'Send email on post publish', 'pushnews') ?></label>
+            </div>
+            <div style="margin-top: 5px; color:#ccc;">
+                <input type="checkbox" id="input_allow_duplicate_push" disabled  />
+                <label for="input_allow_duplicate_push"><?php echo __( 'If push was already sent for this post, allow duplicate', 'pushnews') ?></label>
             </div>
         </div>
     <?php endif; ?>

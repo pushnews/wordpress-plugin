@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Pushnews\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wordpress-plugin\n"
-"POT-Creation-Date: 2022-08-16T18:28:50+00:00\n"
-"PO-Revision-Date: 2022-08-16 19:35+0100\n"
+"POT-Creation-Date: 2022-09-12T15:48:52-03:00\n"
+"PO-Revision-Date: 2022-09-12 15:55-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -23,7 +23,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
 #. Plugin Name of the plugin
-#: class.pushnews.php:369 views/config.php:8
+#: class.pushnews.php:373 views/config.php:8
 msgid "Pushnews"
 msgstr "Pushnews"
 
@@ -40,20 +40,20 @@ msgstr "Aumente o tráfego do seu site com Pushnews Web Push Notifications."
 msgid "Pushnews <developers@pushnews.eu>"
 msgstr "Pushnews <developers@pushnews.eu>"
 
-#: class.pushnews.php:357
+#: class.pushnews.php:361
 msgid "Pushnews installed. Now you need to configure it"
 msgstr "Pushnews instalado. Agora você precisa configurá-lo"
 
-#: class.pushnews.php:358 class.pushnews.php:480 class.pushnews.php:484
+#: class.pushnews.php:362 class.pushnews.php:484 class.pushnews.php:488
 msgid "here"
 msgstr "aqui"
 
-#: class.pushnews.php:388
+#: class.pushnews.php:392
 msgid "WooCommerce - Abandoned cart recovery Push Notification"
 msgstr ""
 "WooCommerce - Push Notification para recuperação de carrinhos abandonados"
 
-#: class.pushnews.php:390
+#: class.pushnews.php:394
 msgid ""
 "<p>Here you can setup up a Push Notification to be sent to users who have "
 "added items to the shopping cart but did not finish the purchase within a "
@@ -68,70 +68,70 @@ msgstr ""
 "Conteúdo: <b>%name%</b> para o nome do produto, <b>%price%</b> para o preço "
 "do produto.</p>"
 
-#: class.pushnews.php:392 class.pushnews.php:413
+#: class.pushnews.php:396 class.pushnews.php:417
 msgid "Active"
 msgstr "Ativo"
 
-#: class.pushnews.php:393
+#: class.pushnews.php:397
 msgid "Hours to wait before sending Notification"
 msgstr "Horas para aguardar até enviar Notificação"
 
-#: class.pushnews.php:394
+#: class.pushnews.php:398
 msgid "Notification title"
 msgstr "Título da Notificação"
 
-#: class.pushnews.php:395
+#: class.pushnews.php:399
 msgid "Notification content"
 msgstr "Conteúdo da Notificação"
 
-#: class.pushnews.php:403
+#: class.pushnews.php:407
 msgid "Configuration"
 msgstr "Configuração"
 
-#: class.pushnews.php:406
+#: class.pushnews.php:410
 msgid "App ID"
 msgstr "App ID"
 
-#: class.pushnews.php:407
+#: class.pushnews.php:411
 msgid "API token"
 msgstr "API token"
 
-#: class.pushnews.php:410
+#: class.pushnews.php:414
 msgid "Activation"
 msgstr "Ativação"
 
-#: class.pushnews.php:414
+#: class.pushnews.php:418
 msgid "Add Sidebar on Posts"
 msgstr "Adicionar barra lateral nos Posts"
 
-#: class.pushnews.php:417
+#: class.pushnews.php:421
 msgid "Notification properties"
 msgstr "Propriedades da Notificação"
 
-#: class.pushnews.php:420
+#: class.pushnews.php:424
 msgid "Maximum title characters"
 msgstr "Máximo de caracteres para o Título"
 
-#: class.pushnews.php:421
+#: class.pushnews.php:425
 msgid "Maximum content characters"
 msgstr "Máximo de caracteres para o Conteúdo"
 
-#: class.pushnews.php:424
+#: class.pushnews.php:428
 msgid "Developer"
 msgstr "Desenvolvedor"
 
-#: class.pushnews.php:427
+#: class.pushnews.php:431
 msgid "Download log file"
 msgstr "Baixar arquivo de log"
 
-#: class.pushnews.php:473
+#: class.pushnews.php:477
 msgid ""
 "If disabled, the Pushnews Javascript tag will not be injected on your "
 "website."
 msgstr ""
 "Quando desligado, a tag Javascript do Pushnews não será injetada no seu site."
 
-#: class.pushnews.php:476
+#: class.pushnews.php:480
 msgid ""
 "This adds a Pushnews sidebar on your Posts to allow you to send Push "
 "Notifications without leaving wordpress."
@@ -139,15 +139,15 @@ msgstr ""
 "Adiciona o Pushnews na barra lateral dos Posts para que possa fazer disparos "
 "de Push Notifications sem sair do Wordpress."
 
-#: class.pushnews.php:479
+#: class.pushnews.php:483
 msgid "Get your App ID"
 msgstr "Obtenha o seu App ID"
 
-#: class.pushnews.php:483
+#: class.pushnews.php:487
 msgid "Get your API token"
 msgstr "Obtenha o seu API token"
 
-#: class.pushnews.php:487
+#: class.pushnews.php:491
 msgid ""
 "If user finishes the purchase before this time has passed, Push Notification "
 "will be canceled."
@@ -155,7 +155,7 @@ msgstr ""
 "Se um inscrito terminar a compra antes de estas horas passarem, a Push "
 "Notification será cancelada."
 
-#: class.pushnews.php:524
+#: class.pushnews.php:528
 msgid "If the Pushnews team asks you for the log, send them this file."
 msgstr "Caso o time do Pushnews solicite, envie este log para eles."
 
@@ -163,23 +163,27 @@ msgstr "Caso o time do Pushnews solicite, envie este log para eles."
 msgid "Save"
 msgstr "Salvar"
 
-#: views/metabox.php:21 views/metabox.php:37
+#: views/metabox.php:22 views/metabox.php:42
 msgid "Send push on publish/update"
 msgstr "Enviar Push ao publicar/atualizar"
 
-#: views/metabox.php:25 views/metabox.php:41
+#: views/metabox.php:26 views/metabox.php:46
 msgid "Send email on post publish"
 msgstr "Enviar Email ao publicar/atualizar"
 
-#: views/metabox.php:30
+#: views/metabox.php:30 views/metabox.php:50
+msgid "If push was already sent for this post, allow duplicate"
+msgstr "Se uma Push já foi enviada para esse Post, permitir envio duplicado"
+
+#: views/metabox.php:35
 msgid "Error"
 msgstr "Erro"
 
-#: views/metabox.php:31
+#: views/metabox.php:36
 msgid "API token is not defined, please update your plugin configuration"
 msgstr ""
 "O API token não está definido, por favor atualize a configuração do plugin"
 
-#: views/metabox.php:51
+#: views/metabox.php:60
 msgid "Open Pushnews"
 msgstr "Abrir Pushnews"
