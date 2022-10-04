@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 3.10.0
+- Added "Don't replace previous push" checkbox on create/update post so push won't replace previous one
+
 # 3.9.0
 - Added "allow duplicate Push" checkbox on create/update post so user can control whether to have a duplicate push or not
 
