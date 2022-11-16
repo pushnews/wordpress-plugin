@@ -1,6 +1,9 @@
 CHANGELOG
 =========
 
+# 3.10.1
+- Config checkboxes should maintain their state when saving post as a draft
+
 # 3.10.0
 - Added "Don't replace previous push" checkbox on create/update post so push won't replace previous one
 
