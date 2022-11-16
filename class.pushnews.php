@@ -133,8 +133,11 @@ MYHTML;
 
 	public static function future_post_custom_hook( $post_id ) {
 		self::_debug( "future_post_custom_hook: $post_id" );
-		$sendNotification = $_POST['pushnews_send_notification'];
-		$sendEmail        = $_POST['pushnews_send_email'];
+		$sendNotification        = $_POST['pushnews_send_notification'];
+		$sendEmail               = $_POST['pushnews_send_email'];
+		$allowDuplicatePush      = $_POST['pushnews_allow_duplicate_push'];
+		$dontReplacePreviousPush = $_POST['pushnews_dont_replace_previous_push'];
+
 
 		if ( $sendNotification ) {
             self::_debug("> updating sendNotification: $sendNotification");
@@ -156,6 +159,26 @@ MYHTML;
 			);
 		} else {
 			delete_post_meta( $post_id, 'sendEmail' );
+		}
+
+		if ( $allowDuplicatePush ) {
+			update_post_meta(
+				$post_id,
+				'allowDuplicatePush',
+				$allowDuplicatePush
+			);
+		} else {
+			delete_post_meta( $post_id, 'allowDuplicatePush' );
+		}
+
+		if ( $dontReplacePreviousPush ) {
+			update_post_meta(
+				$post_id,
+				'dontReplacePreviousPush',
+				$dontReplacePreviousPush
+			);
+		} else {
+			delete_post_meta( $post_id, 'dontReplacePreviousPush' );
 		}
 	}
 
