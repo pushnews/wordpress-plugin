@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+# 3.11.0
+- New logo
+- Tested with latest Wordpress version
+
 # 3.10.1
 - Config checkboxes should maintain their state when saving post as a draft
 
