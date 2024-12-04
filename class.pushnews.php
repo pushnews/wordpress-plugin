@@ -27,7 +27,7 @@ class Pushnews {
 	const CDN_DOMAIN = 'cdn.pn.vg';
 
 	const TAG = <<<MYHTML
-<script src="https://{%%cdn_domain%%}/sites/{%%app_id%%}.js" data-pn-plugin-url="{%%plugin_url%%}" data-pn-wp-plugin-version="{%%version%%}" type="text/javascript" async></script>
+<script src="https://{%%cdn_domain%%}/push/pushnews-launcher.js?appId={%%app_id%%}" data-pn-plugin-url="{%%plugin_url%%}" data-pn-wp-plugin-version="{%%version%%}" type="text/javascript" async></script>
 MYHTML;
 
 	/* Options: Basic */
@@ -88,6 +88,19 @@ MYHTML;
 		load_textdomain( 'pushnews', $mofile );
 	}
 
+	public static function get_headers( $token = null ) {
+		$headers = array(
+			'Content-Type' => 'application/json',
+			'X-Pushnews-Wp-Version' => PUSHNEWS_VERSION,
+            'X-Wordpress-Version' => get_bloginfo('version')
+		);
+		if ( $token ) {
+			$headers['X-Auth-Token'] = $token;
+		}
+
+		return $headers;
+	}
+
 	public static function plugin_activation() {
 		self::translations_init();
 
@@ -95,24 +108,24 @@ MYHTML;
 		$siteUrl64Encoded = PushnewsBase64Url::encode( $siteUrl );
 
 		$endpoint     = self::API_URL . "/v1/sites/{$siteUrl64Encoded}?filterBy=base64_url";
-		$response     = wp_remote_get( $endpoint, array( 'headers' => array( 'X-Pushnews-Wp-Version' => PUSHNEWS_VERSION ) ) );
+		$response     = wp_remote_get( $endpoint, array( 'headers' => self::get_headers() ) );
 		$pushnewsSite = wp_remote_retrieve_body( $response );
 		$pushnewsSite = json_decode( $pushnewsSite, true );
 
 		$options = array(
 			/* Toggles */
-				self::OPTION_NAME_TOGGLES_ACTIVE         => self::OPTION_DEFAULT_VALUE_TOGGLES_ACTIVE,
-				self::OPTION_NAME_TOGGLES_ACTIVE_METABOX => self::OPTION_DEFAULT_VALUE_TOGGLES_ACTIVE_METABOX,
+			self::OPTION_NAME_TOGGLES_ACTIVE         => self::OPTION_DEFAULT_VALUE_TOGGLES_ACTIVE,
+			self::OPTION_NAME_TOGGLES_ACTIVE_METABOX => self::OPTION_DEFAULT_VALUE_TOGGLES_ACTIVE_METABOX,
 
 			/* Advanced */
-				self::OPTION_NAME_MAX_CHARS_PUSH_TITLE   => self::OPTION_DEFAULT_VALUE_MAX_CHARS_PUSH_TITLE,
-				self::OPTION_NAME_MAX_CHARS_PUSH_BODY    => self::OPTION_DEFAULT_VALUE_MAX_CHARS_PUSH_BODY,
+			self::OPTION_NAME_MAX_CHARS_PUSH_TITLE   => self::OPTION_DEFAULT_VALUE_MAX_CHARS_PUSH_TITLE,
+			self::OPTION_NAME_MAX_CHARS_PUSH_BODY    => self::OPTION_DEFAULT_VALUE_MAX_CHARS_PUSH_BODY,
 
 			/* Woo-Commerce */
-				self::OPTION_NAME_WOO_COMMERCE_ACTIVE    => self::OPTION_DEFAULT_VALUE_WOO_COMMERCE_ACTIVE,
-				self::OPTION_NAME_WOO_COMMERCE_HOURS     => self::OPTION_DEFAULT_VALUE_WOO_COMMERCE_HOURS,
-				self::OPTION_NAME_WOO_COMMERCE_TITLE     => self::OPTION_DEFAULT_VALUE_WOO_COMMERCE_TITLE,
-				self::OPTION_NAME_WOO_COMMERCE_BODY      => self::OPTION_DEFAULT_VALUE_WOO_COMMERCE_BODY
+			self::OPTION_NAME_WOO_COMMERCE_ACTIVE    => self::OPTION_DEFAULT_VALUE_WOO_COMMERCE_ACTIVE,
+			self::OPTION_NAME_WOO_COMMERCE_HOURS     => self::OPTION_DEFAULT_VALUE_WOO_COMMERCE_HOURS,
+			self::OPTION_NAME_WOO_COMMERCE_TITLE     => self::OPTION_DEFAULT_VALUE_WOO_COMMERCE_TITLE,
+			self::OPTION_NAME_WOO_COMMERCE_BODY      => self::OPTION_DEFAULT_VALUE_WOO_COMMERCE_BODY,
 		);
 
 		if ( JSON_ERROR_NONE == json_last_error() && isset( $pushnewsSite['success'] ) && $pushnewsSite['success'] ) {
@@ -247,8 +260,8 @@ MYHTML;
 	 *
 	 * @param WP_Post| $post
 	 * @param array $pushConfigurations additional configuration consisting of:
-	 *   @param bool allowDuplicatePush send push even if another one was already sent for this post
-	 *   @param bool dontReplacePreviousPush don't replace previous push
+	 * @param bool allowDuplicatePush send push even if another one was already sent for this post
+	 * @param bool dontReplacePreviousPush don't replace previous push
 	 *
 	 * @return array
 	 */
@@ -308,10 +321,7 @@ MYHTML;
 		self::_debug( ">> API.sendNotification body: " . json_encode( $body ) );
 		$response = wp_remote_post( self::API_URL . "/v2/push/" . $appId, array(
 			"body"    => json_encode( $body ),
-			"headers" => array(
-				'X-Auth-Token' => $authToken,
-				"Content-Type" => "application/json",
-			),
+			"headers" => self::get_headers( $authToken ),
 		) );
 		self::_debug( ">> API.sendNotification response: " . json_encode( $response ) );
 	}
@@ -327,10 +337,7 @@ MYHTML;
 		self::_debug( ">> API.sendEmail message: " . json_encode( $message ) );
 		$response = wp_remote_post( self::API_URL . "/v2/mail/" . $appId, array(
 			"body"    => json_encode( $message ),
-			"headers" => array(
-				'X-Auth-Token' => $authToken,
-				"Content-Type" => "application/json",
-			),
+			"headers" => self::get_headers( $authToken ),
 		) );
 		self::_debug( ">> API.sendEmail response: " . json_encode( $response ) );
 	}

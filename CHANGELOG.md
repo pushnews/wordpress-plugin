@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+# 3.12.0
+- Changed Pushnews tag URI
+- Sending headers to the API
+
 # 3.11.0
 - New logo
 - Tested with latest Wordpress version

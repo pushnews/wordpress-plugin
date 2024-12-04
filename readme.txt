@@ -1,11 +1,11 @@
 === Pushnews ===
 Contributors: impactingdigital, tixastronauta, mariobalca, pnkaki
-Donate link: https://www.pushnews.eu/
-Tags: push, push notifications, web push, desktop notification, notifications, pushnews, onesignal, sendpulse, pushcrew, vwo, pushengage, pushwoosh, aimtell
+Donate link: https://pushnews.eu/
+Tags: pushnews, push, push notifications, web push, notifications
 Requires at least: 3.8
-Tested up to: 6.6.2
+Tested up to: 6.7.1
 Requires PHP: 5.3
-Stable tag: 3.11.0
+Stable tag: 3.12.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,6 +58,10 @@ First plugin release
 4. No HTTPS website is required
 
 == Changelog ==
+
+= 3.12.0 =
+* Changed Pushnews tag URI
+* Sending headers to the API
 
 = 3.11.0 =
 * New logo

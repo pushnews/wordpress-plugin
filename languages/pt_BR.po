@@ -29,8 +29,8 @@ msgstr "Pushnews"
 
 #. Plugin URI of the plugin
 #. Author URI of the plugin
-msgid "https://www.pushnews.eu/"
-msgstr "https://www.pushnews.com.br/"
+msgid "https://pushnews.eu/"
+msgstr "https://pushnews.com.br/"
 
 #. Description of the plugin
 msgid "Increase your website traffic with Pushnews Web Push Notifications."
