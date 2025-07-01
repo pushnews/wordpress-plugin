@@ -1,4 +1,4 @@
-=== Pushnews ===
+=== Pushnews – Push Notifications, OnSite Popups, Email, SMS and more ===
 Contributors: pushnewslda, tixastronauta, pnkaki, pnleonato
 Donate link: https://pushnews.eu/
 Tags: pushnews, push notifications, web push, notifications, push

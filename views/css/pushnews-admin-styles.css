@@ -5,51 +5,25 @@ License:            GPLv2 or later
 */
 
 @font-face {
-	font-family: "pushnews-font";
-	src: url("fonts/pushnews-font.eot");
-	src: url("fonts/pushnews-font.eot?#iefix") format("embedded-opentype"),
-	url("fonts/pushnews-font.woff") format("woff"),
-	url("fonts/pushnews-font.ttf") format("truetype"),
-	url("fonts/pushnews-font.svg#pushnews-font") format("svg");
+	font-family: 'pushnews';
+	src: url('fonts/pushnews.eot');
+	src: url('fonts/pushnews.eot?#iefix') format('embedded-opentype'),
+	url('fonts/pushnews.woff') format('woff'),
+	url('fonts/pushnews.ttf') format('truetype'),
+	url('fonts/pushnews.svg#pushnews') format('svg');
 	font-weight: normal;
 	font-style: normal;
-
-}
-
-[data-icon]:before {
-	font-family: "pushnews-font" !important;
-	content: attr(data-icon);
-	font-style: normal !important;
-	font-weight: normal !important;
-	font-variant: normal !important;
-	text-transform: none !important;
-	speak: none;
-	line-height: 1;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-[class^="icon-pn-"]:before,
-[class*=" icon-pn-"]:before {
-	font-family: "pushnews-font" !important;
-	font-style: normal !important;
-	font-weight: normal !important;
-	font-variant: normal !important;
-	text-transform: none !important;
-	speak: none;
-	line-height: 1;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-.icon-pn-ic-pushnews:before {
-	content: "\61";
 }
 
 #adminmenu .toplevel_page_pushnews.menu-icon-generic div.wp-menu-image:before {
-	font-family: 'pushnews-font' !important;
-	content: '\61';
-	font-size: 1.3em !important;
+	display: inline-block;
+	font-family: 'pushnews';
+	content:'\0041'; /* 42 is the legacy bell icon, 41 is the logo mark */
+	font-style: normal;
+	font-weight: normal;
+	line-height: 1;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale
 }
 
 body.toplevel_page_pushnews table.form-table {
