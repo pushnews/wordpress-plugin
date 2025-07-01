@@ -1,11 +1,11 @@
 === Pushnews ===
 Contributors: impactingdigital, tixastronauta, mariobalca, pnkaki
 Donate link: https://pushnews.eu/
-Tags: pushnews, push, push notifications, web push, notifications
+Tags: pushnews, push notifications, web push, notifications, push
 Requires at least: 3.8
-Tested up to: 6.7.1
+Tested up to: 6.8.1
 Requires PHP: 5.3
-Stable tag: 3.12.0
+Stable tag: 3.13.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -43,12 +43,12 @@ You can create a Pushnews account at [https://app.pushnews.eu/register](https://
 
 = How do I send a push notification? =
 
-In your wordpress dashboard, go to the Pushnews menu and click "Send Push". Then, login with your Pushnews credentials.
+In your WordPress dashboard, go to the Pushnews menu and click "Send Push". Then, login with your Pushnews credentials.
 
 == Upgrade Notice ==
 
-= 1.0.0 =
-First plugin release
+= 3.13.0 =
+This is a routine maintenance release to improve stability and performance.
 
 == Screenshots ==
 
@@ -58,6 +58,11 @@ First plugin release
 4. No HTTPS website is required
 
 == Changelog ==
+
+= 3.13.0 =
+* Avoiding PHP warnings when checking for Pushnews related POST parameters
+* Tested with the latest WordPress version
+* Code cleanup
 
 = 3.12.0 =
 * Changed Pushnews tag URI

@@ -29,7 +29,7 @@ class PushnewsBase64Url {
 
 	/**
 	 * @param string $data The data to encode
-	 * @param bool $use_padding If true, the "=" padding at end of the encoded value are kept, else it is removed
+	 * @param bool   $use_padding If true, the "=" padding at end of the encoded value are kept, else it is removed
 	 *
 	 * @return string The data encoded
 	 */

@@ -18,7 +18,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 */
 
 class Pushnews {
@@ -37,10 +37,10 @@ MYHTML;
 
 	/* Options: Toggles */
 	const OPTION_NAME_TOGGLES_ACTIVE = 'active';
-	CONST OPTION_DEFAULT_VALUE_TOGGLES_ACTIVE = 'true';
+	const OPTION_DEFAULT_VALUE_TOGGLES_ACTIVE = 'true';
 
 	const OPTION_NAME_TOGGLES_ACTIVE_METABOX = 'active_metabox';
-	CONST OPTION_DEFAULT_VALUE_TOGGLES_ACTIVE_METABOX = 'true';
+	const OPTION_DEFAULT_VALUE_TOGGLES_ACTIVE_METABOX = 'true';
 	/* Options: / Toggles */
 
 	/* Options: Advanced */
@@ -73,8 +73,27 @@ MYHTML;
 	const SESSION_KEY_ECOMMERCE_PRODUCT_ADDED = 'pushnews:ecommerce.itemAddedToCart';
 
 	public static function init() {
+		self::polyfills();
 		add_action( 'admin_menu', array( __CLASS__, 'add_admin_page' ) );
 		add_action( 'admin_init', array( __CLASS__, 'settings_init' ) );
+	}
+
+	public static function polyfills() {
+		if ( ! function_exists( 'mb_strimwidth' ) ) {
+			/**
+			 * Fallback for mb_strimwidth if not available.
+			 *
+			 * @param string $string The input string.
+			 * @param int    $start The starting position.
+			 * @param int    $width The width to trim to.
+			 * @param string $trimmarker The marker to append if trimmed.
+			 *
+			 * @return string The trimmed string.
+			 */
+			function mb_strimwidth( $string, $start, $width, $trimmarker = '' ) {
+				return substr( $string, $start, $width ) . $trimmarker;
+			}
+		}
 	}
 
 	public static function translations_init() {
@@ -90,9 +109,10 @@ MYHTML;
 
 	public static function get_headers( $token = null ) {
 		$headers = array(
-			'Content-Type' => 'application/json',
+			'Content-Type'          => 'application/json',
 			'X-Pushnews-Wp-Version' => PUSHNEWS_VERSION,
-            'X-Wordpress-Version' => get_bloginfo('version')
+			'X-Wordpress-Version'   => get_bloginfo( 'version' ),
+			'User-Agent'            => 'Pushnews/1.0' . ' (Plugin/ ' . PUSHNEWS_VERSION . ' WordPress/' . get_bloginfo( 'version' ) . ')',
 		);
 		if ( $token ) {
 			$headers['X-Auth-Token'] = $token;
@@ -107,7 +127,7 @@ MYHTML;
 		$siteUrl          = get_option( 'siteurl' );
 		$siteUrl64Encoded = PushnewsBase64Url::encode( $siteUrl );
 
-		$endpoint     = self::API_URL . "/v1/sites/{$siteUrl64Encoded}?filterBy=base64_url";
+		$endpoint     = self::API_URL . "/v1/sites/$siteUrl64Encoded?filterBy=base64_url";
 		$response     = wp_remote_get( $endpoint, array( 'headers' => self::get_headers() ) );
 		$pushnewsSite = wp_remote_retrieve_body( $response );
 		$pushnewsSite = json_decode( $pushnewsSite, true );
@@ -144,23 +164,29 @@ MYHTML;
 		require_once( plugin_dir_path( __FILE__ ) . '/views/metabox.php' );
 	}
 
+	/**
+	 * This function is hooked to the 'future_post' action, which is triggered when a post is scheduled to be published in the future.
+	 *
+	 * @param int $post_id The post ID.
+	 *
+	 * @return void
+	 */
 	public static function future_post_custom_hook( $post_id ) {
 		self::_debug( "future_post_custom_hook: $post_id" );
-		$sendNotification        = $_POST['pushnews_send_notification'];
-		$sendEmail               = $_POST['pushnews_send_email'];
-		$allowDuplicatePush      = $_POST['pushnews_allow_duplicate_push'];
-		$dontReplacePreviousPush = $_POST['pushnews_dont_replace_previous_push'];
-
+		$sendNotification        = isset( $_POST['pushnews_send_notification'] ) ? filter_var( $_POST['pushnews_send_notification'], FILTER_VALIDATE_BOOLEAN ) : false;
+		$sendEmail               = isset( $_POST['pushnews_send_email'] ) ? filter_var( $_POST['pushnews_send_email'], FILTER_VALIDATE_BOOLEAN ) : false;
+		$allowDuplicatePush      = isset( $_POST['pushnews_allow_duplicate_push'] ) ? filter_var( $_POST['pushnews_allow_duplicate_push'], FILTER_VALIDATE_BOOLEAN ) : false;
+		$dontReplacePreviousPush = isset( $_POST['pushnews_dont_replace_previous_push'] ) ? filter_var( $_POST['pushnews_dont_replace_previous_push'], FILTER_VALIDATE_BOOLEAN ) : false;
 
 		if ( $sendNotification ) {
-            self::_debug("> updating sendNotification: $sendNotification");
+			self::_debug( "> updating sendNotification: $sendNotification" );
 			update_post_meta(
 				$post_id,
 				'sendNotification',
 				$sendNotification
 			);
 		} else {
-			self::_debug("> deleting sendNotification");
+			self::_debug( "> deleting sendNotification" );
 			delete_post_meta( $post_id, 'sendNotification' );
 		}
 
@@ -196,33 +222,34 @@ MYHTML;
 	}
 
 	/**
+	 * This function is hooked to the 'save_post' action, which is triggered when a post is saved or updated.
 	 *
-	 * @param int $post_id The post ID.
+	 * @param int           $post_id The post ID.
 	 * @param WP_Post|array $post The post object.
-	 * @param bool $update Whether this is an existing post being updated or not.
+	 * @param bool          $update Whether this is an existing post being updated or not.
 	 */
 	public static function save_post_custom_hook( $post_id, $post, $update ) {
-
-		$sendNotification = isset($_POST['pushnews_send_notification']) || filter_var( $_POST['pushnews_send_notification'] || get_post_meta( $post_id, 'sendNotification', true ), FILTER_VALIDATE_BOOLEAN );
-		$sendEmail        = isset($_POST['pushnews_send_email']) || filter_var( $_POST['pushnews_send_email'] || get_post_meta( $post_id, 'sendEmail', true ), FILTER_VALIDATE_BOOLEAN );
-		$allowDuplicatePush = isset($_POST['pushnews_allow_duplicate_push']) || filter_var( $_POST['pushnews_allow_duplicate_push'] || get_post_meta( $post_id, 'allowDuplicatePush', true ), FILTER_VALIDATE_BOOLEAN );
-		$dontReplacePreviousPush = isset($_POST['pushnews_dont_replace_previous_push']) || filter_var( $_POST['pushnews_dont_replace_previous_push'] || get_post_meta( $post_id, 'dontReplacePreviousPush', true ), FILTER_VALIDATE_BOOLEAN );
-		$pushConfigurations = [
-			'allowDuplicatePush' => $allowDuplicatePush,
-			'dontReplacePreviousPush' => $dontReplacePreviousPush
+		self::_debug( "save_post_custom_hook: $post_id (update: $update)" );
+		$sendNotification        = isset( $_POST['pushnews_send_notification'] ) || filter_var( $_POST['pushnews_send_notification'] || get_post_meta( $post_id, 'sendNotification', true ), FILTER_VALIDATE_BOOLEAN );
+		$sendEmail               = isset( $_POST['pushnews_send_email'] ) || filter_var( $_POST['pushnews_send_email'] || get_post_meta( $post_id, 'sendEmail', true ), FILTER_VALIDATE_BOOLEAN );
+		$allowDuplicatePush      = isset( $_POST['pushnews_allow_duplicate_push'] ) || filter_var( $_POST['pushnews_allow_duplicate_push'] || get_post_meta( $post_id, 'allowDuplicatePush', true ), FILTER_VALIDATE_BOOLEAN );
+		$dontReplacePreviousPush = isset( $_POST['pushnews_dont_replace_previous_push'] ) || filter_var( $_POST['pushnews_dont_replace_previous_push'] || get_post_meta( $post_id, 'dontReplacePreviousPush', true ), FILTER_VALIDATE_BOOLEAN );
+		$pushConfigurations      = [
+			'allowDuplicatePush'      => $allowDuplicatePush,
+			'dontReplacePreviousPush' => $dontReplacePreviousPush,
 		];
-		$options          = get_option( 'pushnews_options' );
-		$now              = current_time( "mysql", 1 );
-		$postDate         = $post->post_date_gmt;
-		self::_debug("save_post_custom_hook: $post_id" );
-        self::_debug("- sendNotification: " . json_encode( $sendNotification ) );
-        self::_debug("- sendEmail: " . json_encode( $sendEmail ) );
-        self::_debug("- pushConfigurations: " . json_encode( $pushConfigurations ) );
-        self::_debug("- postStatus: " . $post->post_status);
+		$options                 = get_option( 'pushnews_options' );
+		$now                     = current_time( "mysql", 1 );
+		$postDate                = $post->post_date_gmt;
+		self::_debug( "save_post_custom_hook: $post_id" );
+		self::_debug( "- sendNotification: " . json_encode( $sendNotification ) );
+		self::_debug( "- sendEmail: " . json_encode( $sendEmail ) );
+		self::_debug( "- pushConfigurations: " . json_encode( $pushConfigurations ) );
+		self::_debug( "- postStatus: " . $post->post_status );
 
-		if ( ! isset( $options[self::OPTION_NAME_BASIC_API_TOKEN] ) || "" == $options[self::OPTION_NAME_BASIC_API_TOKEN] ) {
-            self::_debug(">> no api token, aborting");
-			// token not set, abort
+		if ( ! isset( $options[ self::OPTION_NAME_BASIC_API_TOKEN ] ) || "" == $options[ self::OPTION_NAME_BASIC_API_TOKEN ] ) {
+			self::_debug( ">> no api token, aborting" );
+
 			return;
 		}
 
@@ -232,23 +259,23 @@ MYHTML;
 					$body = self::buildNotificationBodyFromPost( $post, $pushConfigurations );
 
 					if ( true === $sendNotification ) {
-						self::sendNotification( $options[self::OPTION_NAME_BASIC_APP_ID], $options[self::OPTION_NAME_BASIC_API_TOKEN], $body );
-						self::_debug("> deleting post meta.sendNotification");
+						self::sendNotification( $options[ self::OPTION_NAME_BASIC_APP_ID ], $options[ self::OPTION_NAME_BASIC_API_TOKEN ], $body );
+						self::_debug( "> deleting post meta.sendNotification" );
 						delete_post_meta( $post_id, 'sendNotification' );
 					}
 					if ( true === $sendEmail ) {
 						if ( get_the_post_thumbnail_url( $post ) ) {
 							$body['message']['image'] = get_the_post_thumbnail_url( $post );
 						}
-						self::sendEmail( $options[self::OPTION_NAME_BASIC_APP_ID], $options[self::OPTION_NAME_BASIC_API_TOKEN], $body['message'] );
-						self::_debug("> deleting post meta.sendEmail");
+						self::sendEmail( $options[ self::OPTION_NAME_BASIC_APP_ID ], $options[ self::OPTION_NAME_BASIC_API_TOKEN ], $body['message'] );
+						self::_debug( "> deleting post meta.sendEmail" );
 						delete_post_meta( $post_id, 'sendEmail' );
 					}
 				}
 				break;
 			case "draft":
 			case "future":
-				// since post is still a draft, let's check if user has selected "send push" or "send email" checkboxes
+				// since the post is still a draft, let's check if user has selected "send push" or "send email" checkboxes
 				self::future_post_custom_hook( $post->ID );
 				break;
 		}
@@ -256,12 +283,10 @@ MYHTML;
 	}
 
 	/**
-	 * Build notification object to be sent to Pushnews API
+	 * Build a notification object to be sent to Pushnews API
 	 *
-	 * @param WP_Post| $post
-	 * @param array $pushConfigurations additional configuration consisting of:
-	 * @param bool allowDuplicatePush send push even if another one was already sent for this post
-	 * @param bool dontReplacePreviousPush don't replace previous push
+	 * @param WP_Post|array $post The post object.
+	 * @param array         $pushConfigurations additional configuration with the following keys: allowDuplicatePush, dontReplacePreviousPush
 	 *
 	 * @return array
 	 */
@@ -284,13 +309,8 @@ MYHTML;
 		$bigImage = get_the_post_thumbnail_url( $post );
 
 		// trim long title or body
-		if ( function_exists( 'mb_strimwidth' ) ) {
-			$title = mb_strimwidth( $title, 0, $option_max_chars_push_title, '...' );
-			$body  = mb_strimwidth( $body, 0, $option_max_chars_push_body, '...' );
-		} else {
-			$title = substr( $title, 0, $option_max_chars_push_title );
-			$body  = substr( $title, 0, $option_max_chars_push_body );
-		}
+		$title = mb_strimwidth( $title, 0, $option_max_chars_push_title, '...' );
+		$body  = mb_strimwidth( $body, 0, $option_max_chars_push_body, '...' );
 
 		// build the message
 		$message = array(
@@ -299,13 +319,13 @@ MYHTML;
 			"url"   => $url,
 		);
 		if ( $bigImage ) {
-			$message['bigImage'] = $bigImage;
+			$message["bigImage"] = $bigImage;
 		}
 
 		// return the Notification Body
 		return array(
 			"ignoreWarningSameHashPush" => $pushConfigurations['allowDuplicatePush'],
-			"replacePreviousPush"       => !$pushConfigurations['dontReplacePreviousPush'],
+			"replacePreviousPush"       => ! $pushConfigurations['dontReplacePreviousPush'],
 			"message"                   => $message,
 		);
 	}
@@ -343,8 +363,8 @@ MYHTML;
 	}
 
 	public static function add_custom_meta_box() {
-		$options          = get_option( 'pushnews_options' );
-		$option_active_metabox = filter_var(isset( $options[self::OPTION_NAME_TOGGLES_ACTIVE_METABOX] ) ? $options[self::OPTION_NAME_TOGGLES_ACTIVE_METABOX] : false, FILTER_VALIDATE_BOOLEAN);
+		$options               = get_option( 'pushnews_options' );
+		$option_active_metabox = filter_var( isset( $options[ self::OPTION_NAME_TOGGLES_ACTIVE_METABOX ] ) ? $options[ self::OPTION_NAME_TOGGLES_ACTIVE_METABOX ] : false, FILTER_VALIDATE_BOOLEAN );
 
 		if ( false === $option_active_metabox ) {
 			// metabox disabled
@@ -358,14 +378,13 @@ MYHTML;
 			array( __CLASS__, "custom_meta_box_markup" ),
 			"post",
 			"side",
-			"high",
-			null
+			"high"
 		);
 
 		// also add pushnews meta box on all other post types that are public but not built in to WordPress
 		$args       = array(
 			'public'   => true,
-			'_builtin' => false
+			'_builtin' => false,
 		);
 		$output     = 'names';
 		$operator   = 'and';
@@ -377,32 +396,31 @@ MYHTML;
 				array( __CLASS__, "custom_meta_box_markup" ),
 				$post_type,
 				"side",
-				"high",
-				null
+				"high"
 			);
 		}
 	}
 
 	public static function plugin_uninstall() {
-        self::_debug( "plugin_uninstall" );
+		self::_debug( "plugin_uninstall" );
 		delete_option( 'pushnews_options' );
 	}
 
 	public static function display_admin_notices() {
-		$options          = get_option( 'pushnews_options' );
-		if (isset($options[self::OPTION_NAME_WELCOME_NOTICE_DISPLAYED])) {
+		$options = get_option( 'pushnews_options' );
+		if ( isset( $options[ self::OPTION_NAME_WELCOME_NOTICE_DISPLAYED ] ) ) {
 			return;
 		}
 		?>
-		<div class="notice notice-info is-dismissible">
-			<p>
-				<?php _e('Pushnews installed. Now you need to configure it', 'pushnews'); ?>
-				<a href="<?php echo admin_url("admin.php?page=pushnews") ?>"><?php _e('here', 'pushnews'); ?></a>
-			</p>
-		</div>
+        <div class="notice notice-info is-dismissible">
+            <p>
+				<?php _e( 'Pushnews installed. Now you need to configure it', 'pushnews' ); ?>
+                <a href="<?php echo admin_url( "admin.php?page=pushnews" ) ?>"><?php _e( 'here', 'pushnews' ); ?></a>
+            </p>
+        </div>
 		<?php
-		$options[self::OPTION_NAME_WELCOME_NOTICE_DISPLAYED] = 'true';
-		update_option('pushnews_options', $options);
+		$options[ self::OPTION_NAME_WELCOME_NOTICE_DISPLAYED ] = 'true';
+		update_option( 'pushnews_options', $options );
 	}
 
 	public static function add_admin_page() {
@@ -434,7 +452,7 @@ MYHTML;
 			self::OPTION_NAME_WOO_COMMERCE_ACTIVE => __( "Active", "pushnews" ),
 			self::OPTION_NAME_WOO_COMMERCE_HOURS  => __( "Hours to wait before sending Notification", "pushnews" ),
 			self::OPTION_NAME_WOO_COMMERCE_TITLE  => __( "Notification title", "pushnews" ),
-			self::OPTION_NAME_WOO_COMMERCE_BODY   => __( "Notification content", "pushnews" )
+			self::OPTION_NAME_WOO_COMMERCE_BODY   => __( "Notification content", "pushnews" ),
 		);
 		if ( false === self::_isWooCommercePluginInstalled() ) {
 			$woo_commerce_section = null;
@@ -489,7 +507,7 @@ MYHTML;
 			);
 
 			foreach ( $section_items as $k => $translation ) {
-				$id = "pushnews_field_{$k}";
+				$id = "pushnews_field_$k";
 
 				$callback_function = array( __CLASS__, 'input_cb' );
 				if ( preg_match( "/^active/", $k ) ) {
@@ -508,14 +526,14 @@ MYHTML;
 						'input_type'   => array(
 							self::OPTION_NAME_MAX_CHARS_PUSH_TITLE => 'number',
 							self::OPTION_NAME_MAX_CHARS_PUSH_BODY  => 'number',
-							self::OPTION_NAME_WOO_COMMERCE_HOURS   => 'number'
+							self::OPTION_NAME_WOO_COMMERCE_HOURS   => 'number',
 						),
 						'supplemental' => array(
 							'active'             => array(
-								__( "If disabled, the Pushnews Javascript tag will not be injected on your website.", "pushnews" )
+								__( "If disabled, the Pushnews Javascript tag will not be injected on your website.", "pushnews" ),
 							),
 							'active_metabox'     => array(
-								__( "This adds a Pushnews sidebar on your Posts to allow you to send Push Notifications without leaving wordpress.", "pushnews" )
+								__( "This adds a Pushnews sidebar on your Posts to allow you to send Push Notifications without leaving wordpress.", "pushnews" ),
 							),
 							'app_id'             => array(
 								__( "Get your App ID", "pushnews" ),
@@ -527,8 +545,8 @@ MYHTML;
 							),
 							'hours_woo_commerce' => array(
 								__( "If user finishes the purchase before this time has passed, Push Notification will be canceled.", "pushnews" ),
-							)
-						)
+							),
+						),
 					)
 				);
 
@@ -569,17 +587,17 @@ MYHTML;
 	}
 
 	public static function checkbox_cb( $args ) {
-		$options = get_option( 'pushnews_options' );
-		$checked = isset( $options[ $args['label_for'] ] ) && true == filter_var( $options[ $args['label_for'] ], FILTER_VALIDATE_BOOLEAN );
+		$options      = get_option( 'pushnews_options' );
+		$checked      = isset( $options[ $args['label_for'] ] ) && true == filter_var( $options[ $args['label_for'] ], FILTER_VALIDATE_BOOLEAN );
 		$supplemental = isset( $args['supplemental'][ $args['label_for'] ] ) ? $args['supplemental'][ $args['label_for'] ] : null;
 		?>
-		<input
-			type="checkbox"
-			id="<?= esc_attr( $args['label_for'] ); ?>"
-			name="pushnews_options[<?= esc_attr( $args['label_for'] ); ?>]"
-			value="true"
-			<?= $checked == true ? 'checked' : '' ?>
-		>
+        <input
+                type="checkbox"
+                id="<?= esc_attr( $args['label_for'] ); ?>"
+                name="pushnews_options[<?= esc_attr( $args['label_for'] ); ?>]"
+                value="true"
+			<?= $checked ? 'checked' : '' ?>
+        >
 		<?php
 		if ( ! is_null( $supplemental ) ) {
 			printf( '<p class="description">%s</p>', $supplemental[0] );
@@ -590,13 +608,13 @@ MYHTML;
 
 		$options = get_option( 'pushnews_options' );
 
-		$app_id = trim( $options[self::OPTION_NAME_BASIC_APP_ID] );
+		$app_id = trim( $options[ self::OPTION_NAME_BASIC_APP_ID ] );
 
-		if ('' === $app_id) {
+		if ( '' === $app_id ) {
 			return;
 		}
 
-		if ( ! isset( $options[self::OPTION_NAME_TOGGLES_ACTIVE] ) || ! filter_var( $options[ self::OPTION_NAME_TOGGLES_ACTIVE ], FILTER_VALIDATE_BOOLEAN ) ) {
+		if ( ! isset( $options[ self::OPTION_NAME_TOGGLES_ACTIVE ] ) || ! filter_var( $options[ self::OPTION_NAME_TOGGLES_ACTIVE ], FILTER_VALIDATE_BOOLEAN ) ) {
 			return;
 		}
 
@@ -604,7 +622,7 @@ MYHTML;
 
 		$replaces = array(
 			'{%%cdn_domain%%}' => self::CDN_DOMAIN,
-			'{%%app_id%%}'     => trim( $options[self::OPTION_NAME_BASIC_APP_ID] ),
+			'{%%app_id%%}'     => trim( $options[ self::OPTION_NAME_BASIC_APP_ID ] ),
 			'{%%version%%}'    => PUSHNEWS_VERSION,
 			'{%%plugin_url%%}' => plugin_dir_url( __FILE__ ),
 		);
@@ -648,7 +666,7 @@ HTML;
 
 		foreach ( $woocommerce->cart->get_cart() as $cart_item_key => $product ) {
 			$product = $product['data'];
-			if ( ! $product instanceof WC_Abstract_Legacy_Product ) {
+			if ( ! class_exists( 'WC_Abstract_Legacy_Product' ) || ! function_exists( 'wc_get_cart_url' ) || ! $product instanceof WC_Abstract_Legacy_Product ) {
 				continue;
 			}
 			if ( $my_cart_item_key === $cart_item_key ) {
@@ -660,7 +678,7 @@ HTML;
 					'id'        => $product->get_id(),
 					'name'      => $product->get_name(),
 					'price'     => $product->get_price(),
-					'permalink' => $product->get_permalink()
+					'permalink' => $product->get_permalink(),
 				);
 
 				// default bigImage
@@ -678,7 +696,7 @@ HTML;
 				$data = array(
 					"notification" => $notification,
 					"delayMinutes" => $options[ self::OPTION_NAME_WOO_COMMERCE_HOURS ] * 60,
-					"context"      => $context
+					"context"      => $context,
 				);
 
 				$_SESSION[ self::SESSION_KEY_ECOMMERCE_PRODUCT_ADDED ] = $data;
@@ -688,7 +706,7 @@ HTML;
 				return;
 			}
 
-		};
+		}
 	}
 
 	/**
@@ -696,11 +714,11 @@ HTML;
 	 */
 	public static function woocommerce_thankyou( $order_id ) {
 
-		if ( false === self::_isWooCommercePluginInstalled() || false == self::_isWooCommerceOptionActive() ) {
+		if ( false === self::_isWooCommercePluginInstalled() || ! self::_isWooCommerceOptionActive() ) {
 			return;
 		}
 
-		self::_debug( "woocommerce_thankyou: {$order_id}" );
+		self::_debug( "woocommerce_thankyou: $order_id" );
 
 		$_SESSION[ self::SESSION_KEY_ECOMMERCE_CHECKOUT ] = true;
 	}
@@ -730,29 +748,7 @@ HTML;
 	}
 
 	/**
-	 * Replaces {{variables}} in the $template
-	 *
-	 * @param $template
-	 * @param $variables
-	 *
-	 * @return mixed
-	 */
-	public static function _replace_variables( $template, $variables ) {
-		if ( preg_match_all( "/%(.*?)%/", $template, $m ) ) {
-			foreach ( $m[1] as $i => $varname ) {
-				$replace = '';
-				if ( isset( $variables[ $varname ] ) ) {
-					$replace = $variables[ $varname ];
-				}
-				$template = str_replace( $m[0][ $i ], $replace, $template );
-			}
-		}
-
-		return $template;
-	}
-
-	/**
-	 * Appends message to a log file
+	 * Appends a message to a log file
 	 *
 	 * @param string|null $msg
 	 */
@@ -760,7 +756,7 @@ HTML;
 		$log_file = dirname( __FILE__ ) . '/pushnews.log';
 		$max_size = 5000000; // 5MB
 
-		// create file
+		// create a file
 		if ( ! file_exists( $log_file ) ) {
 			$log_file_exists = @touch( $log_file );
 		} else {
@@ -770,7 +766,7 @@ HTML;
 			return;
 		}
 
-		// if file is too big, clear its contents
+		// if the file is too big, clear its contents
 		if ( filesize( $log_file ) > $max_size ) {
 			@unlink( $log_file );
 			$log_file_exists = @touch( $log_file );
@@ -781,7 +777,7 @@ HTML;
 
 
 		// add timestamp
-		$msg         = '[' . date( 'Y-m-d H:i:s' ) . "] {$msg}\n";
+		$msg         = '[' . date( 'Y-m-d H:i:s' ) . "] $msg\n";
 		$file_handle = fopen( $log_file, "a+" );
 		if ( ! $file_handle ) {
 			return;
