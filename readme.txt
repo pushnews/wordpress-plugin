@@ -1,5 +1,5 @@
 === Pushnews ===
-Contributors: impactingdigital, tixastronauta, mariobalca, pnkaki, pushnewslda
+Contributors: pushnewslda, tixastronauta, pnkaki, pnleonato
 Donate link: https://pushnews.eu/
 Tags: pushnews, push notifications, web push, notifications, push
 Requires at least: 3.8
